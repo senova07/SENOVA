@@ -98,29 +98,6 @@ textarea.champ__saisie { padding: 10px 12px; min-height: 90px; }
 .toast__fermer { background: none; border: 0; color: inherit; font-size: 18px; line-height: 1; }
 @media (min-width: 900px) { .toast-pile { bottom: 16px; } }
 
-/* ---------- Ruban de progression FLOW ---------- */
-/* Pastilles rondes (seule exception au rayon léger : c'est la forme du ruban FLOW), flèche courte entre deux. */
-.ruban { list-style: none; margin: 0; padding: 0; display: flex; align-items: flex-start; }
-.ruban__etape { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; text-align: center; min-width: 0; }
-.ruban__etape:not(:last-child)::after {
-  content: ''; position: absolute; top: 21px; left: calc(50% + 30px); right: calc(-50% + 30px);
-  height: 2px; background: #cbd5e1;
-}
-.ruban__etape:not(:last-child)::before {
-  content: ''; position: absolute; top: 18px; right: calc(-50% + 30px); width: 7px; height: 7px;
-  border-top: 2px solid #cbd5e1; border-right: 2px solid #cbd5e1; transform: rotate(45deg);
-}
-.ruban__etape--faite:not(:last-child)::after { background: var(--turquoise); }
-.ruban__etape--faite:not(:last-child)::before { border-color: var(--turquoise); }
-.ruban__pastille {
-  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
-  background: #e2e8f0; color: #94a3b8; border: 2px solid var(--blanc); box-shadow: 0 1px 3px rgb(2 25 54 / 10%);
-}
-.ruban__etape--faite .ruban__pastille,
-.ruban__etape--courante .ruban__pastille { background: linear-gradient(135deg, var(--cyan), var(--turquoise)); color: var(--blanc); }
-.ruban__etape--courante .ruban__pastille { box-shadow: 0 0 0 4px rgb(2 202 204 / 18%), 0 2px 6px rgb(2 166 174 / 30%); }
-.ruban__libelle { font-size: 12.5px; color: var(--texte-doux); font-weight: 500; }
-.ruban__etape--courante .ruban__libelle { color: var(--navy); font-weight: 700; }
 
 /* ---------- État vide ---------- */
 .etat-vide { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 28px 16px; color: var(--texte-doux); }
