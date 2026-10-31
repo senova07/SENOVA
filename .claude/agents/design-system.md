@@ -25,3 +25,5 @@ Règles de la direction artistique :
 Accessibilité : libellés, rôles ARIA, navigation clavier, focus visible (anneau de la maquette), contrastes AA.
 
 Avant de rendre la main : `npm run typecheck`, `npm run lint`, `npm test`, `npx vite build` doivent passer. Résume en quelques lignes ce que tu as créé et ce qui reste.
+
+Git : ne lance aucune commande qui modifie l’index ou l’historique (`git add`, `git mv`, `git rm`, `git commit`, `git stash`, `git reset`). Déplace et supprime les fichiers avec le système de fichiers ; l’orchestrateur commite.

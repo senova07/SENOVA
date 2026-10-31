@@ -21,3 +21,5 @@ Règles : noms en français, TypeScript strict sans `any`, composants courts (mo
 N'ajoute aucune dépendance. Ne touche pas à `api/`.
 
 Avant de rendre la main : `npm run typecheck`, `npm run lint`, `npm test`, `npx vite build` passent. Résume en quelques lignes : fichiers créés, supprimés, ce qui n'est pas branché.
+
+Git : ne lance aucune commande qui modifie l’index ou l’historique (`git add`, `git mv`, `git rm`, `git commit`, `git stash`, `git reset`). Déplace et supprime les fichiers avec le système de fichiers ; l’orchestrateur commite.

@@ -23,3 +23,5 @@ Règles de frontière :
 Conventions : noms en français (convention du projet et de l'API), TypeScript strict sans `any`, composants courts à responsabilité unique, logique dans des fonctions pures testées.
 
 Pour vérifier les frontières : `grep -rn "from '@/features/" src/features/<x>` ne doit lister que sa propre feature ou `documents/rendu`.
+
+Git : ne lance aucune commande qui modifie l’index ou l’historique (`git add`, `git mv`, `git rm`, `git commit`, `git stash`, `git reset`). Déplace et supprime les fichiers avec le système de fichiers ; l’orchestrateur commite.
