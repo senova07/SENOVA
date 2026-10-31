@@ -1,6 +1,6 @@
 /* Notifications : bandeau marine, filet turquoise à gauche, empilées en bas au centre. */
 .toast-pile {
-  position: fixed; left: 50%; bottom: calc(var(--hauteur-nav-mobile) + 16px); transform: translateX(-50%); z-index: 200;
+  position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 200;
   display: flex; flex-direction: column; gap: 8px; width: min(420px, calc(100vw - 32px));
 }
 .toast {

@@ -1,7 +1,7 @@
-import { Route, Routes } from 'react-router-dom'
-import { AppLayout } from '@/components/layout/AppLayout'
-import { RouteProtegee, RoutePublique } from '@/components/layout/RouteProtegee'
-import { NAV_TOUTES } from '@/components/layout/navigation'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { AppLayout } from '@/app/AppLayout'
+import { RouteProtegee, RoutePublique } from '@/app/RouteProtegee'
+import { TOUTES_ENTREES } from '@/features/shell/navigation'
 import { PageAujourdhui } from '@/pages/PageAujourdhui'
 import { PageConnexion, PageInscription } from '@/pages/PageAuth'
 import { PageArticles } from '@/features/articles/PageArticles'
@@ -13,8 +13,12 @@ import { PageEspaceDevis } from '@/features/devis/PageEspaceDevis'
 import { PageModelesDevis } from '@/features/devis/PageModelesDevis'
 import { PageEditeurModele } from '@/features/devis/PageEditeurModele'
 
-/** Pages qui ont un écran réel ; les autres entrées de la navigation affichent « Bientôt ». */
-const PAGES_REELLES = ['/', '/articles', '/clients', '/devis', '/devis/modeles']
+/** Anciennes rubriques sorties du menu : les liens existants restent valides. */
+const ANCIENNES_PAGES = [
+  ['/avoirs', 'Avoirs'],
+  ['/relances', 'Relances'],
+  ['/facturation-electronique', 'Facture électronique'],
+] as const
 
 export function App() {
   return (
@@ -33,12 +37,12 @@ export function App() {
           <Route path="/devis/modeles" element={<PageModelesDevis />} />
           <Route path="/devis/modeles/:id" element={<PageEditeurModele />} />
           <Route path="/devis/:id" element={<PageEspaceDevis />} />
-          {NAV_TOUTES.filter((e) => !PAGES_REELLES.includes(e.chemin) && !e.chemin.includes('?')).map((e) => (
-            <Route
-              key={e.chemin}
-              path={e.chemin}
-              element={<PageBientot titre={e.libelle} icone={e.icone} />}
-            />
+          {TOUTES_ENTREES.filter((e) => !e.disponible).map((e) => (
+            <Route key={e.chemin} path={e.chemin} element={<PageBientot titre={e.libelle} icone={e.iconePage ?? 'vide'} />} />
+          ))}
+          <Route path="/fournisseurs" element={<Navigate replace to="/partenaires" />} />
+          {ANCIENNES_PAGES.map(([chemin, titre]) => (
+            <Route key={chemin} path={chemin} element={<PageBientot titre={titre} icone="vide" />} />
           ))}
           <Route path="*" element={<PageBientot titre="Page introuvable" icone="vide" />} />
         </Route>

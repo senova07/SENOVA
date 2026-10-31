@@ -222,7 +222,7 @@ export function PageClients() {
       className="btn btn--primaire"
       onClick={() => setDialogue({ genre: 'client', client: null })}
     >
-      <Icone nom="plus" taille={18} className="header__nouveau-plus" />
+      <Icone nom="plus" taille={18} />
       Nouveau client
     </button>
   ) : null

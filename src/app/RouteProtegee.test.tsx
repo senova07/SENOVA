@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import { RouteProtegee } from '@/components/layout/RouteProtegee'
+import { RouteProtegee } from '@/app/RouteProtegee'
 import { SessionContext, type EtatSession, type SessionContextValue } from '@/store/sessionContext'
 
 function rendre(etat: EtatSession) {

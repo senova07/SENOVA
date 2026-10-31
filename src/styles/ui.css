@@ -3,20 +3,9 @@
 
 .alerte-form { padding: 10px 12px; border-radius: var(--rayon); background: var(--danger-bg); color: var(--danger); font-size: 14px; border-left: 3px solid var(--danger); }
 
-/* ---------- Entête de page ---------- */
-.entete-page { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 24px; }
-.entete-page__titre { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
-.entete-page__sous { color: var(--texte-doux); margin-top: 2px; }
-.entete-page__actions { display: flex; gap: 8px; }
-
-/* ---------- Bouton principal de l'en-tête (Nouveau) ---------- */
-.btn-principal {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 42px; padding: 0 16px; border: 0; border-radius: var(--rayon);
-  background: var(--degrade-bouton); color: var(--blanc);
-  font-weight: 600; font-size: 15px; white-space: nowrap;
-  transition: box-shadow 150ms;
-}
-.btn-principal:hover:not(:disabled) { box-shadow: var(--shadow-pop); }
-.btn-principal:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-principal__chevron { margin-left: auto; opacity: 0.9; }
+/* ---------- Champ de recherche des listes (clients, articles) ---------- */
+.recherche { flex: 1; max-width: 670px; position: relative; display: flex; align-items: center; }
+.recherche__icone { position: absolute; left: 14px; color: var(--navy); pointer-events: none; display: inline-flex; }
+.recherche__saisie { width: 100%; min-height: 40px; padding: 0 56px 0 44px; background: var(--surface-soft); border: 1px solid var(--bordure-douce); border-radius: var(--rayon); font-size: 13.5px; transition: border-color 160ms, background 160ms; }
+.recherche__saisie::placeholder { color: var(--text-3); }
+.recherche__saisie:focus { background: var(--blanc); border-color: var(--bordure); }

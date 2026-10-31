@@ -1,4 +1,4 @@
-import { EntetePage } from '@/components/layout/EntetePage'
+import { EntetePage } from '@/ui/EntetePage'
 import { Badge } from '@/ui/Badge'
 import { Carte } from '@/ui/Carte'
 import { EtatVide } from '@/ui/EtatVide'
