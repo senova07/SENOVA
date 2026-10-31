@@ -1,47 +1,134 @@
-/* Jetons de design SENOVA. Toute couleur, tout rayon, toute ombre vient d'ici. */
+/*
+ * SENOVA : jetons de design (thème clair).
+ * Source : design-reference/senova-maquette/src/styles/tokens.css.
+ * Toute couleur, ombre et dimension de base vient d'ici ; ailleurs, uniquement des var(--…).
+ * Répartition visée : 80 % neutre · 15 % marine · 5 % turquoise.
+ */
 :root {
-  --navy: #031f3f;
-  --navy-dark: #021830;
-  --bleu: #034a78;
-  --turquoise: #02a6ae;
-  --cyan: #02cacc;
-  --gris-clair: #f4f8fb;
-  --gris: #dde7ef;
-  --blanc: #ffffff;
+  /* Marque */
+  --navy: #0c2a52;
+  --navy-hover: #0a2446;
+  --navy-deep: #081d38;
+  --navy-mid: #1c4677;        /* facette intermédiaire, sidebar uniquement */
+  --teal: #16b8b0;
+  --teal-dark: #0da39c;
+  --teal-ink: #0b8a84;        /* turquoise lisible en texte sur blanc */
+  --teal-soft: #ddf7f4;
+  --white: #ffffff;
 
-  /* Texte : navy adouci, jamais de noir pur. Contrastes AA sur blanc et #F5F8FB. */
-  --texte: #061b3a;
-  --texte-doux: #5e7392;
-  --texte-inverse: #f2f7fb;
-  --accent-texte: #01767d; /* turquoise assez sombre pour du texte (AA) */
+  /* Neutres */
+  --bg: #ffffff;
+  --bg-subtle: #f8f9fb;
+  --bg-tertiary: #f3f5f8;
+  --bg-hover: #f3f5f8;
+  --bg-row-hover: #f8f9fb;
+  --bg-input: #ffffff;
+  --border: #e6eaf0;
+  --border-soft: #edf0f4;
+  --border-strong: #d3d9e2;
 
-  --fond: #f7fafc;
-  --surface-soft: #f4f8fb;
-  --bordure-douce: #e8eff5;
-  --surface: var(--blanc);
-  --bordure: var(--gris);
-  --bordure-forte: #c9d8e4;
-  --focus: #0a7fb5;
+  --text: #18253a;
+  --text-2: #637087;
+  --text-3: #95a0af;
 
-  --succes: #1b7a4b;
-  --alerte: #a8610a;
-  --danger: #b3302f;
-  --danger-fond: #fbeeee;
+  /* Actions et états */
+  --primary: var(--navy);
+  --primary-hover: var(--navy-hover);
+  --primary-fg: #ffffff;
+  --danger: #c2412d;
+  --danger-bg: #fbeeeb;
+  --success: #1b7a4b;
+  --success-bg: #e3f4ec;
+  --warning: #a8610a;
+  --warning-bg: #fbf0dc;
+  --star: #f0a81c;
+  --overlay: rgba(8, 29, 56, 0.28);
+  --focus-ring: 0 0 0 2px rgba(22, 184, 176, 0.10);
 
-  --degrade-marque: linear-gradient(160deg, #021936 0%, #034a78 100%);
-  --degrade-bouton: linear-gradient(110deg, #06264b, #034b76 65%, #02bfc3);
+  /* Ombres */
+  --shadow-pop: 0 1px 2px rgba(24, 26, 30, 0.06), 0 8px 24px rgba(24, 26, 30, 0.10);
+  --shadow-drawer: -16px 0 40px rgba(8, 29, 56, 0.12);
+  --shadow-modal: 0 12px 40px rgba(8, 29, 56, 0.22);
+  --shadow-card: 0 1px 2px rgba(24, 26, 30, 0.05);
+  --shadow-knob: 0 1px 2px rgba(24, 26, 30, 0.2);
+  --shadow-seg: 0 1px 2px rgba(16, 24, 40, 0.08);
+  --facet-split: rgba(255, 255, 255, 0.28);   /* filet entre les deux moitiés d'un bouton scindé */
 
-  /* Angles quasi droits partout (demande du 26/10) : 2 px, 3 px pour les grandes surfaces. */
-  --rayon: 2px;
-  --rayon-lg: 3px;
+  /* Commandes */
+  --switch-off: #d9d9d5;
+  --scrollbar-track: #cfcfcb;
+  --scrollbar-thumb: #d6d6d2;
 
-  --ombre-carte: 0 1px 2px rgb(3 31 63 / 4%);
-  --ombre-modale: 0 12px 40px rgb(2 25 54 / 22%);
+  /* Sidebar (sur fond marine) */
+  --sb-bg: var(--navy);
+  --sb-text: rgba(255, 255, 255, 0.94);
+  --sb-icon: rgba(255, 255, 255, 0.92);
+  --sb-muted: rgba(255, 255, 255, 0.55);
+  --sb-line: rgba(255, 255, 255, 0.10);
+  --sb-hover: rgba(255, 255, 255, 0.07);
 
-  --police-titre: 'Space Grotesk', 'Instrument Sans', system-ui, sans-serif;
-  --police: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Types d'article : repères secondaires */
+  --type-service: #4a6fd6;
+  --type-produit: #4daf68;
+  --type-mo: #18a8c7;
+  --type-deplacement: #e8962e;
+  --type-abonnement: #8b64d8;
+  --type-autre: #95a0af;
 
+  /* Typo */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fs-xs: 11px;
+  --fs-sm: 12.5px;
+  --fs-base: 13.5px;
+  --fs-md: 14.5px;
+  --fs-lg: 20px;
+  --fs-xl: 32px;
+
+  /* Rayons */
+  --r-sm: 5px;
+  --r-md: 7px;
+  --r-lg: 9px;
+
+  --sidebar-w: 256px;
+  --sidebar-rail: 76px;
+  --topbar-h: 68px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  color-scheme: light;
+}
+
+/* Compatibilité : anciens noms, à supprimer quand tous les écrans seront migrés (phase 4) */
+:root {
+  --blanc: var(--white);
+  --texte: var(--text);
+  --texte-doux: var(--text-2);
+  --texte-inverse: var(--white);
+  --accent-texte: var(--teal-ink);
+  --turquoise: var(--teal);
+  --cyan: var(--teal);
+  --bleu: var(--navy-mid);
+  --fond: var(--bg-subtle);
+  --surface: var(--bg);
+  --surface-soft: var(--bg-subtle);
+  --gris-clair: var(--bg-tertiary);
+  --gris: var(--border);
+  --bordure: var(--border);
+  --bordure-douce: var(--border-soft);
+  --bordure-forte: var(--border-strong);
+  --focus: var(--teal-dark);
+  --succes: var(--success);
+  --alerte: var(--warning);
+  --danger-fond: var(--danger-bg);
+  --degrade-marque: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
+  --degrade-bouton: linear-gradient(110deg, var(--navy), var(--navy-mid) 65%, var(--teal));
+  --rayon: var(--r-sm);
+  --rayon-lg: var(--r-md);
+  --ombre-carte: var(--shadow-card);
+  --ombre-modale: var(--shadow-modal);
+  --police: var(--font-sans);
+  --police-titre: var(--font-sans);
+  /* Valeurs en dur : le tracé SVG de l'ancienne barre latérale est dessiné pour 200 px. */
   --largeur-sidebar: 200px;
-  --hauteur-header: 64px;
+  --hauteur-header: var(--topbar-h);
   --hauteur-nav-mobile: 62px;
 }
