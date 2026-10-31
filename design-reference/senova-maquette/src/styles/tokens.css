@@ -1,0 +1,80 @@
+/*
+ * SENOVA — design tokens (thème clair)
+ * Layout : sidebar marine (256 px) avec zone logo blanche à transition facettée,
+ * zone de travail blanche, neutres francs (sans gris bleutés).
+ * Répartition visée : 80 % neutre · 15 % marine · 5 % turquoise.
+ */
+:root {
+  /* Marque */
+  --navy: #0c2a52;
+  --navy-hover: #0a2446;
+  --navy-deep: #081d38;
+  --navy-mid: #1c4677;        /* facette intermédiaire, sidebar uniquement */
+  --teal: #16b8b0;
+  --teal-dark: #0da39c;
+  --teal-ink: #0b8a84;        /* turquoise lisible en texte sur blanc */
+  --teal-soft: #ddf7f4;
+
+  /* Neutres */
+  --bg: #ffffff;
+  --bg-subtle: #f8f9fb;
+  --bg-tertiary: #f3f5f8;
+  --bg-hover: #f3f5f8;
+  --bg-row-hover: #f8f9fb;
+  --bg-input: #ffffff;
+  --border: #e6eaf0;
+  --border-soft: #edf0f4;
+  --border-strong: #d3d9e2;
+
+  --text: #18253a;
+  --text-2: #637087;
+  --text-3: #95a0af;
+
+  --primary: var(--navy);
+  --primary-hover: var(--navy-hover);
+  --primary-fg: #ffffff;
+  --danger: #c2412d;
+  --danger-bg: #fbeeeb;
+  --star: #f0a81c;
+  --overlay: rgba(8, 29, 56, 0.28);
+  --shadow-pop: 0 1px 2px rgba(24, 26, 30, 0.06), 0 8px 24px rgba(24, 26, 30, 0.10);
+  --shadow-drawer: -16px 0 40px rgba(8, 29, 56, 0.12);
+  --focus-ring: 0 0 0 2px rgba(22, 184, 176, 0.10);
+
+  /* Sidebar (sur fond marine) */
+  --sb-bg: var(--navy);
+  --sb-text: rgba(255, 255, 255, 0.94);
+  --sb-icon: rgba(255, 255, 255, 0.92);
+  --sb-muted: rgba(255, 255, 255, 0.55);
+  --sb-line: rgba(255, 255, 255, 0.10);
+  --sb-hover: rgba(255, 255, 255, 0.07);
+
+  /* Types d'article : repères secondaires */
+  --type-service: #4a6fd6;
+  --type-produit: #4daf68;
+  --type-mo: #18a8c7;
+  --type-deplacement: #e8962e;
+  --type-abonnement: #8b64d8;
+  --type-autre: #95a0af;
+
+  /* Typo */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fs-xs: 11px;
+  --fs-sm: 12.5px;
+  --fs-base: 13.5px;
+  --fs-md: 14.5px;
+  --fs-lg: 20px;
+  --fs-xl: 32px;
+
+  /* Rayons */
+  --r-sm: 5px;
+  --r-md: 7px;
+  --r-lg: 9px;
+
+  --sidebar-w: 256px;
+  --sidebar-rail: 76px;
+  --topbar-h: 68px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  color-scheme: light;
+}

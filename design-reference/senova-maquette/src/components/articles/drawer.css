@@ -1,0 +1,86 @@
+/* Drawer « Nouvel article » — reste blanc ; niveau 2 de la DA limité au coin de l'en-tête. */
+.drawer-root { position: fixed; inset: 0; z-index: 80; }
+.drawer-scrim { position: absolute; inset: 0; background: var(--overlay); animation: fade-in .22s ease-out; }
+.drawer {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: min(420px, 100vw);
+  display: flex; flex-direction: column;
+  background: var(--bg); border-left: 1px solid var(--border);
+  box-shadow: var(--shadow-drawer);
+  animation: slide-in .24s var(--ease);
+}
+.drawer-root[data-closing] .drawer { animation: slide-out .18s ease-in forwards; }
+.drawer-root[data-closing] .drawer-scrim { animation: fade-out .18s ease-in forwards; }
+@keyframes slide-in { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes slide-out { to { transform: translateX(40px); opacity: 0; } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes fade-out { to { opacity: 0; } }
+
+.drawer__head {
+  position: relative;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding: calc(24px + env(safe-area-inset-top, 0px)) max(22px, env(safe-area-inset-right, 0px)) 26px 28px;
+  background: var(--bg-subtle);
+  overflow: hidden;
+}
+.drawer__title { font-size: 25px; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+.drawer__sub { margin-top: 6px; font-size: 13.5px; color: var(--text-2); }
+.drawer__close { position: relative; z-index: 1; color: var(--navy); }
+/* Petite combinaison turquoise + marine dans le coin de l'en-tête */
+.drawer__facet {
+  position: absolute; right: 0; bottom: 0; width: 76px; height: 64px; pointer-events: none;
+  background: linear-gradient(315deg, var(--navy) 0 22px, var(--teal) 22px 30px, transparent 30px);
+}
+
+.drawer__body {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 20px;
+  padding: 24px max(28px, env(safe-area-inset-right, 0px)) 28px 28px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.mono-input { font-family: var(--font-mono); font-size: 13px; }
+
+.select-icon { position: relative; display: flex; align-items: center; }
+.select-icon__icon { position: absolute; left: 13px; color: var(--navy); pointer-events: none; }
+.select-icon .select { height: 44px; padding-left: 42px; font-weight: 500; }
+
+.field__hint[data-negative] .margin { color: var(--danger); }
+.margin { font-weight: 600; color: var(--teal-ink); }
+
+.fav-row { display: flex; align-items: flex-start; gap: 12px; padding-top: 4px; cursor: pointer; }
+.fav-row .switch { margin-top: 1px; }
+.fav-row__star { flex: none; color: var(--navy); }
+.fav-row__star[data-on] { color: var(--star); }
+.fav-row__text { display: flex; flex-direction: column; gap: 3px; }
+.fav-row__label { font-weight: 600; color: var(--navy); }
+
+.drawer__note {
+  display: flex; gap: 9px; align-items: flex-start;
+  padding: 10px 12px;
+  border-left: 2px solid var(--teal); background: var(--bg-subtle);
+  font-size: var(--fs-sm); color: var(--text-2); border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+.drawer__note svg { color: var(--teal-ink); flex: none; margin-top: 1px; }
+
+.drawer__foot {
+  display: flex; align-items: center; gap: 12px;
+  margin: 0 28px; padding: 18px 0 calc(22px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--border);
+}
+.drawer__cancel { flex: 0 0 38%; }
+.drawer__save { flex: 1; }
+.drawer__foot-msg { margin-right: auto; font-size: var(--fs-sm); color: var(--text-2); }
+.btn--danger { color: var(--danger); }
+
+/* Desktop large : panneau ancré à droite du contenu, sans voile, comme sur la maquette */
+@media (min-width: 1200px) {
+  .drawer-root { position: relative; inset: auto; z-index: 5; flex: 0 0 400px; }
+  .drawer-scrim { display: none; }
+  .drawer { position: absolute; inset: 0; width: 100%; box-shadow: -8px 0 24px rgba(8, 29, 56, 0.05); }
+}
+
+@media (max-width: 560px) {
+  .form-row { grid-template-columns: 1fr; }
+  .drawer__head, .drawer__body { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+  .drawer__foot { margin: 0 18px; }
+}

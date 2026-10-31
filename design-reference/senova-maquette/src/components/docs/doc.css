@@ -1,0 +1,319 @@
+/*
+ * Rendu A4 des documents (794 × 1123 px à 96 dpi), mis à l'échelle par transform.
+ * Variables : --p couleur principale, --a accent, --p-on / --a-on texte lisible dessus,
+ * --p-soft / --p-tint / --p-line / --a-soft : teintes obtenues par mélange avec le blanc (pas d'opacité).
+ *
+ * Base commune : marges 44 / 48 px, titre 25 px gras, entreprise 16 px gras, corps 11 px,
+ * tableau 10,5 px, mentions légales 8,5 px, total TTC 17 px gras, montants alignés à droite en chiffres tabulaires.
+ */
+.doc-frame { position: relative; flex: none; background: #fff; }
+.doc {
+  position: absolute; top: 0; left: 0;
+  width: 794px;
+  display: flex; flex-direction: column;
+  padding: 44px 48px 28px;
+  background: #fff; color: #1f2a3a;
+  font-size: 11px; line-height: 1.42;
+  transform-origin: top left;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.doc[data-thumb] { pointer-events: none; }
+.doc * { box-sizing: border-box; }
+.doc p { margin: 0; }
+.doc svg { flex: none; }
+
+/* Zones cliquables (aller au champ correspondant) */
+.doc-area { position: relative; }
+.doc-area[data-jump] { cursor: pointer; border-radius: 4px; }
+.doc-area[data-jump]:hover { outline: 2px dashed color-mix(in srgb, var(--a) 55%, transparent); outline-offset: 6px; }
+.doc-area--footer { margin-top: auto; }
+.doc-area--bleed[data-jump]:hover { outline-offset: -4px; }
+.doc-flash {
+  position: absolute; inset: -8px; border-radius: 6px; pointer-events: none;
+  background: color-mix(in srgb, var(--a) 16%, transparent);
+  box-shadow: 0 0 0 2px var(--a);
+  animation: doc-flash 1.2s ease-out forwards;
+}
+@keyframes doc-flash { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 0; } }
+
+.doc-label { font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--p); margin-bottom: 4px; }
+.doc-muted { color: #95a0af; }
+
+/* ───── En-tête ───── */
+.doc-header { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 24px; }
+.doc-company { display: flex; align-items: flex-start; gap: 14px; }
+.doc-company__name { font-size: 16px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; color: var(--p); line-height: 1.2; }
+.doc-company__activity { font-size: 11px; color: #5d6878; margin-top: 2px; }
+.doc-company__contact { font-size: 10.5px; color: #5d6878; margin-top: 8px; line-height: 1.5; }
+
+.doc-title { text-align: right; min-width: 190px; }
+.doc-title__label { font-size: 25px; font-weight: 700; color: var(--p); line-height: 1.05; letter-spacing: .01em; text-transform: uppercase; }
+.doc-title__number { margin-top: 6px; font-size: 12px; font-weight: 700; color: #1f2a3a; font-variant-numeric: tabular-nums; }
+.doc-title__meta { margin: 4px 0 0; font-size: 10.5px; color: #5d6878; }
+.doc-title__meta div { display: flex; justify-content: flex-end; gap: 5px; }
+.doc-title__meta dt::after { content: " :"; }
+.doc-title__meta dd { margin: 0; color: #1f2a3a; font-variant-numeric: tabular-nums; }
+
+/* Logo centré (modèles à en-tête classique) */
+.doc[data-logo="center"] .doc-header { flex-direction: column; align-items: center; }
+.doc[data-logo="center"] .doc-header > .doc-company { flex-direction: column; align-items: center; text-align: center; }
+.doc[data-logo="center"] .doc-header > .doc-title { align-self: stretch; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; text-align: left; border-top: 1px solid var(--p-line); padding-top: 12px; }
+.doc[data-logo="center"] .doc-header > .doc-title .doc-title__number { margin: 0; }
+.doc[data-logo="center"] .doc-header > .doc-title .doc-title__meta { display: flex; gap: 14px; margin: 0; }
+
+/* Plaque blanche du logo sur fond coloré */
+.doc-plate { display: inline-flex; align-items: center; justify-content: center; padding: 8px 10px; border-radius: 6px; background: #fff; }
+
+/* ───── Parties ───── */
+.doc-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+.doc-party { padding: 10px 12px; border: 1px solid #dfe4eb; border-radius: 6px; }
+.doc-party__body { font-size: 11px; line-height: 1.5; }
+.doc-party__note { display: block; font-size: 9.5px; color: #8a95a5; }
+.doc-party__empty { font-size: 11px; color: #b4561c; font-style: italic; }
+.doc-object { margin-bottom: 16px !important; font-size: 11.5px; }
+.doc-object span { font-weight: 700; color: var(--p); }
+
+/* ═════ Tableaux ═════ */
+.doc-tablewrap { margin-bottom: 16px; }
+.doc-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10.5px; }
+.doc-table th { text-align: left; font-size: 9.5px; font-weight: 700; padding: 7px 8px; white-space: nowrap; overflow: hidden; }
+.doc-table td { padding: 6px 8px; vertical-align: top; }
+.doc-c-num { text-align: right !important; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.doc-c-total { font-weight: 600; }
+.doc-c-ref, .doc-c-unit { color: #5d6878; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.doc-c-n { color: #8a95a5; font-variant-numeric: tabular-nums; font-weight: 600; }
+.doc-discount { display: block; font-size: 9.5px; color: #5d6878; }
+.doc-row--section td { font-weight: 700; color: var(--p); }
+.doc-row--text td { font-style: italic; color: #5d6878; }
+.doc-empty { text-align: center; color: #95a0af; padding: 24px !important; font-style: italic; }
+
+/* 1. Standard : en-tête gris clair, lignes séparées */
+.doc-table--standard th { background: #eef1f5; color: #1f2a3a; }
+.doc-table--standard td { border-bottom: 1px solid #e6eaf0; }
+.doc-table--standard .doc-row--section td { background: #f7f8fa; padding-top: 7px; }
+
+/* 2. En-tête coloré : couleur principale */
+.doc-table--entete th { background: var(--p); color: var(--p-on); }
+.doc-table--entete td { border-bottom: 1px solid #e6eaf0; }
+.doc-table--entete .doc-row--section td { background: var(--p-soft); border-bottom-color: var(--p-line); }
+
+/* 3. Lignes alternées */
+.doc-table--alterne th { color: var(--p); border-bottom: 2px solid var(--p); }
+.doc-table--alterne .doc-row[data-zebra] td { background: var(--p-soft); }
+.doc-table--alterne .doc-row--section td { padding-top: 11px; border-bottom: 1px solid var(--p-line); }
+
+/* 4. Avec numéros */
+.doc-table--numeros th { background: var(--p-soft); color: var(--p); border-bottom: 1px solid var(--p-line); }
+.doc-table--numeros td { border-bottom: 1px solid #e6eaf0; }
+.doc-table--numeros .doc-c-n { color: var(--p); }
+.doc-table--numeros .doc-row--section td { padding-top: 10px; }
+
+/* 5. Sections en cartes : un en-tête commun, une carte par section */
+.doc-table--cartes .doc-table--head th { color: #5d6878; padding-bottom: 4px; text-transform: uppercase; letter-spacing: .06em; font-size: 8.5px; }
+.doc-card { margin-top: 6px; border: 1px solid var(--p-line); border-radius: 6px; overflow: hidden; }
+.doc-table--cartes .doc-row--section td { background: var(--p-soft); border-bottom: 1px solid var(--p-line); padding: 6px 8px; }
+.doc-table--cartes .doc-row td { border-bottom: 1px solid #eef1f5; }
+.doc-table--cartes .doc-card tbody tr:last-child td { border-bottom: 0; }
+
+/* 6. Minimaliste : aucun fond, fines séparations */
+.doc-table--minimal th { color: #5d6878; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; font-size: 8.5px; border-bottom: 1px solid #1f2a3a; padding-left: 0; }
+.doc-table--minimal td { border-bottom: 1px solid #eef1f5; padding-left: 0; }
+.doc-table--minimal th:last-child, .doc-table--minimal td:last-child { padding-right: 0; }
+.doc-table--minimal .doc-row--section td { padding-top: 12px; font-weight: 600; border-bottom-color: #d3d9e2; }
+
+/* 7. Montant mis en avant : colonne Total HT teintée */
+.doc-table--montant th { background: #eef1f5; color: #1f2a3a; }
+.doc-table--montant th[data-col="total"] { background: var(--p); color: var(--p-on); }
+.doc-table--montant td { border-bottom: 1px solid #e6eaf0; }
+.doc-table--montant .doc-row .doc-c-total { background: var(--a-soft); font-weight: 700; color: var(--p); }
+.doc-table--montant .doc-row--section td { padding-top: 10px; }
+
+/* 8. Sans colonne TVA : structure allégée */
+.doc-table--sans-tva th { background: var(--p-soft); color: var(--p); border-bottom: 1.5px solid var(--p); }
+.doc-table--sans-tva td { border-bottom: 1px solid #e6eaf0; }
+.doc-table--sans-tva .doc-row--section td { padding-top: 10px; }
+
+/* 9. Groupes visuels : sections en bandeaux pleins */
+.doc-table--groupes th { color: #5d6878; border-bottom: 1px solid #d3d9e2; }
+.doc-table--groupes .doc-row--section td { background: var(--p); color: var(--p-on); padding: 6px 8px; }
+.doc-table--groupes tbody + tbody .doc-row--section td { border-top: 8px solid #fff; }
+.doc-table--groupes .doc-row td { border-bottom: 1px solid #eef1f5; }
+.doc-table--groupes .doc-row td:first-child { box-shadow: inset 3px 0 0 var(--a); padding-left: 11px; }
+
+/* 10. Bordures modernes : quadrillage fin, coins arrondis */
+.doc-table--bordures .doc-table { border-collapse: separate; border-spacing: 0; border: 1px solid var(--p-line); border-radius: 6px; overflow: hidden; }
+.doc-table--bordures th, .doc-table--bordures td { border-right: 1px solid var(--p-line); border-bottom: 1px solid var(--p-line); }
+.doc-table--bordures th:last-child, .doc-table--bordures td:last-child { border-right: 0; }
+.doc-table--bordures tbody:last-child tr:last-child td { border-bottom: 0; }
+.doc-table--bordures th { background: var(--p-soft); color: var(--p); }
+.doc-table--bordures .doc-row--section td { background: #f7f8fa; }
+
+/* ───── Totaux ───── */
+.doc-totals { align-self: flex-end; width: 280px; margin-left: auto; margin-bottom: 14px; }
+.doc-totals dl { margin: 0; }
+.doc-totals dl div, .doc-totals__row { display: flex; justify-content: space-between; padding: 2px 0; font-variant-numeric: tabular-nums; font-size: 11px; }
+.doc-totals dt { color: #5d6878; }
+.doc-totals dd { margin: 0; }
+.doc-totals__ttc { margin-top: 5px; padding-top: 7px !important; border-top: 2px solid var(--p); }
+.doc-totals__ttc dt, .doc-totals__ttc dd { font-size: 17px; font-weight: 700; color: var(--p); line-height: 1.2; }
+.doc-totals__ttc dt { font-size: 13px; align-self: center; }
+.doc-deposit { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding: 7px 10px; border-radius: 6px; background: var(--a-soft); color: #1f2a3a; font-size: 10.5px; }
+.doc-deposit strong { font-size: 12px; color: var(--p); font-variant-numeric: tabular-nums; }
+
+/* ───── Conditions ───── */
+.doc-conditions { display: flex; flex-direction: column; gap: 7px; }
+.doc-conditions__cols { display: flex; gap: 24px; font-size: 10.5px; color: #3c4757; }
+.doc-conditions__cols > div { flex: 1; }
+.doc-conditions__cols > .doc-qr { flex: none; display: flex; align-items: center; gap: 8px; font-size: 9.5px; color: #5d6878; }
+.doc-bank { margin-top: 3px !important; font-variant-numeric: tabular-nums; }
+.doc-notes { padding: 7px 10px; border-left: 3px solid var(--a); background: #f7f8fa; font-size: 10.5px; }
+.doc-small { font-size: 9.5px; color: #5d6878; }
+.doc-closing { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-top: 6px; }
+.doc-thanks { font-style: italic; font-size: 13px; color: var(--p); font-family: Georgia, "Times New Roman", serif; }
+.doc-sign { width: 250px; min-height: 68px; padding: 8px 10px; border: 1px solid #d3d9e2; border-radius: 6px; }
+.doc-sign p { font-size: 9px; color: #95a0af; }
+
+/* ───── Pied de page ───── */
+.doc-footer { margin-top: 16px; padding-top: 9px; border-top: 1px solid #e6eaf0; text-align: center; font-size: 9px; color: #6b7686; line-height: 1.45; }
+.doc-footer__legal { margin-top: 2px !important; font-size: 8.5px; }
+
+.doc-pagebreak { position: absolute; left: 0; right: 0; height: 0; border-top: 2px dashed #c9d1dc; z-index: 1; }
+.doc-pagebreak span { position: absolute; right: 12px; top: 4px; font-size: 10px; color: #95a0af; }
+
+/* ═════ Modèles de mise en page ═════ */
+
+/* 1. Classique pro : filet sous l'en-tête, facette dans le coin, parties encadrées */
+.doc-corner { position: absolute; top: 0; right: 0; width: 64px; height: 64px; pointer-events: none; }
+.doc-corner::before, .doc-corner::after { content: ""; position: absolute; inset: 0; }
+.doc-corner::before { background: var(--a); clip-path: polygon(0 0, 100% 0, 100% 100%); }
+.doc-corner::after { background: var(--p); clip-path: polygon(38% 0, 100% 0, 100% 62%); }
+.doc--classique-pro .doc-header { padding-bottom: 16px; border-bottom: 2px solid var(--p); margin-bottom: 18px; }
+
+/* 2. Colonne latérale : informations clés dans une colonne de couleur */
+.doc--colonne { flex-direction: row; align-items: stretch; padding: 0; }
+.doc-side {
+  flex: none; width: 210px; padding: 40px 20px 28px;
+  display: flex; flex-direction: column; gap: 20px;
+  background: var(--p); color: var(--p-on);
+  font-size: 10.5px;
+}
+.doc-side__brand { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.doc-side__brand .doc-plate { margin-bottom: 8px; }
+.doc-side .doc-company__name, .doc-side .doc-company__activity { color: inherit; }
+.doc-side .doc-company__activity { opacity: .8; }
+.doc-side__list { list-style: none; margin: 0; padding: 0 0 18px; display: flex; flex-direction: column; gap: 7px; border-bottom: 1px solid color-mix(in srgb, var(--p-on) 22%, var(--p)); }
+.doc-side__list li { display: flex; gap: 7px; align-items: flex-start; line-height: 1.4; }
+.doc-side__list svg { margin-top: 1px; color: var(--a); }
+.doc-side__blocks { display: flex; flex-direction: column; gap: 16px; }
+.doc-side__label { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--a); margin-bottom: 4px; }
+.doc-side .doc-party__body { font-size: 10.5px; }
+.doc-side .doc-party__note { color: inherit; opacity: .7; }
+.doc-side__kv { display: flex; justify-content: space-between; gap: 6px; font-variant-numeric: tabular-nums; }
+.doc-side__kv span { opacity: .78; }
+.doc-side .doc-party__empty { color: inherit; opacity: .8; }
+.doc-main { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 40px 36px 28px 30px; }
+.doc-main__title { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 2px solid var(--p); }
+.doc-main__title .doc-title__number { margin: 0; }
+.doc--colonne .doc-totals { width: 260px; }
+
+/* 3. Hero image : photo de réalisation en ouverture */
+.doc-hero { margin: -44px -48px 18px; }
+.doc-hero__photo { height: 176px; overflow: hidden; background: var(--p-soft); clip-path: polygon(0 0, 100% 0, 100% 74%, 0 100%); }
+.doc-hero__photo img, .doc-hero__photo svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.doc-hero__bar { display: flex; align-items: flex-end; gap: 16px; padding: 0 48px; margin-top: -34px; position: relative; }
+.doc-hero__bar .doc-plate { box-shadow: 0 2px 10px rgba(16, 24, 40, .14); padding: 10px 12px; }
+.doc-hero__company { flex: 1; padding-bottom: 2px; }
+.doc-hero__company .doc-company__contact { margin-top: 4px; }
+.doc-hero .doc-title { padding-top: 40px; }
+.doc--hero .doc-parties { margin-top: 4px; }
+
+/* 4. Plan chantier : quadrillage technique et cartouche */
+.doc-grid {
+  position: absolute; top: 0; left: 0; right: 0; height: 250px; pointer-events: none;
+  background-image:
+    linear-gradient(var(--p-tint) 1px, transparent 1px),
+    linear-gradient(90deg, var(--p-tint) 1px, transparent 1px);
+  background-size: 18px 18px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent);
+}
+.doc--plan .doc-header { margin-bottom: 18px; }
+.doc--plan .doc-company__name { letter-spacing: .06em; }
+.doc-cartouche { display: grid; grid-template-columns: 1fr 1fr; min-width: 250px; background: #fff; border: 1.5px solid var(--p); }
+.doc-cartouche__title { grid-column: 1 / -1; padding: 6px 10px; background: var(--p); color: var(--p-on); font-size: 20px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.doc-cartouche__cell { display: flex; flex-direction: column; padding: 5px 10px; border-top: 1px solid var(--p-line); font-variant-numeric: tabular-nums; }
+.doc-cartouche__cell:nth-child(even) { border-right: 1px solid var(--p-line); }
+.doc-cartouche__cell:last-child:nth-child(even) { grid-column: 1 / -1; border-right: 0; }
+.doc-cartouche__cell span { font-size: 8.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #6b7686; }
+.doc-cartouche__cell strong { font-size: 11px; font-weight: 600; }
+.doc-parties--plan { grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 18px; border: 1px solid var(--p-line); border-radius: 0; background: #fff; }
+.doc-parties--plan .doc-party { border: 0; border-radius: 0; border-right: 1px solid var(--p-line); }
+.doc-parties--plan .doc-party:last-child { border-right: 0; }
+.doc-parties--plan:has(.doc-party:nth-child(2):last-child) { grid-template-columns: 1fr 1fr; }
+.doc--plan .doc-label { letter-spacing: .12em; }
+.doc--plan .doc-footer { border-top: 1.5px solid var(--p); }
+
+/* 5. Épuré premium : blanc dominant, typographie légère */
+.doc--epure { padding: 54px 60px 32px; }
+.doc--epure .doc-header { margin-bottom: 32px; }
+.doc--epure .doc-company__name { font-weight: 600; text-transform: none; letter-spacing: 0; font-size: 17px; }
+.doc--epure .doc-title__label { font-size: 12px; font-weight: 600; letter-spacing: .3em; color: #5d6878; }
+.doc--epure .doc-title__number { font-size: 20px; font-weight: 400; color: var(--p); margin-top: 6px; }
+.doc--epure .doc-label { color: #95a0af; font-weight: 600; }
+.doc--epure .doc-party { border: 0; padding: 0; }
+.doc--epure .doc-parties { margin-bottom: 20px; }
+.doc--epure .doc-totals__ttc { border-top-width: 1px; }
+.doc--epure .doc-totals__ttc dd { font-weight: 600; }
+.doc--epure .doc-deposit { background: none; border: 1px solid #e6eaf0; }
+.doc--epure .doc-footer { border-top: 0; }
+
+/* 6. Bandeau moderne : bande de couleur à bord biseauté, liseré d'accent */
+.doc-band {
+  position: relative; display: flex; align-items: center; gap: 16px;
+  margin: -44px -48px 0; padding: 26px 48px 44px;
+  color: var(--p-on);
+}
+.doc-band::before, .doc-band::after { content: ""; position: absolute; inset: 0; }
+.doc-band::before { background: var(--a); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 26px), 0 100%); }
+.doc-band::after { background: var(--p); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 33px), 0 calc(100% - 7px)); }
+.doc-band > * { position: relative; z-index: 1; }
+.doc[data-logo="center"] .doc-band { flex-direction: column; text-align: center; gap: 8px; }
+.doc[data-logo="center"] .doc-band .doc-title { text-align: center; }
+.doc[data-logo="center"] .doc-band .doc-title__meta div { justify-content: center; }
+.doc-band__company { flex: 1; }
+.doc-band .doc-company__name, .doc-band .doc-company__activity { color: inherit; }
+.doc-band .doc-company__activity { opacity: .8; }
+.doc-band .doc-title__label { color: inherit; }
+.doc-band .doc-title__number, .doc-band .doc-title__meta, .doc-band .doc-title__meta dd { color: inherit; }
+.doc-band .doc-title__meta { opacity: .85; }
+.doc-band__contact { margin: 4px 0 14px; font-size: 10px; color: #5d6878; }
+.doc--bandeau .doc-area--bleed + .doc-area { margin-top: 18px; }
+.doc--bandeau .doc-band__contact + .doc-area { margin-top: 0; }
+.doc--bandeau .doc-party { border: 0; background: var(--p-soft); }
+.doc--bandeau .doc-footer { border-top: 3px solid var(--p); }
+
+/* 7. Bloc client : client, chantier et travaux mis en avant */
+.doc--bloc-client .doc-header { margin-bottom: 18px; }
+.doc-cards { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.doc-cards__item { display: flex; gap: 10px; padding: 12px 14px; border-radius: 6px; background: var(--p-soft); border: 1px solid var(--p-line); }
+.doc-cards__item:first-child { background: var(--p); border-color: var(--p); color: var(--p-on); }
+.doc-cards__item:first-child .doc-label, .doc-cards__item:first-child svg { color: var(--a); }
+.doc-cards__item:first-child .doc-party__empty { color: inherit; }
+.doc-cards__item svg { color: var(--p); margin-top: 1px; }
+.doc-cards__item .doc-party__body { font-variant-numeric: tabular-nums; }
+
+/* 8. Artisan : photo, réassurance avant le pied de page */
+.doc-artisan { display: grid; grid-template-columns: 1fr 280px; gap: 24px; margin: -44px -48px 18px 0; }
+.doc-artisan__left { display: flex; flex-direction: column; gap: 18px; padding-top: 44px; }
+.doc-artisan .doc-title { text-align: left; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; padding-top: 14px; border-top: 2px solid var(--p); }
+.doc-artisan .doc-title__number { margin: 0; }
+.doc-artisan .doc-title__meta { display: flex; gap: 12px; margin: 0; width: 100%; }
+.doc-artisan__photo { height: 200px; overflow: hidden; background: var(--p-soft); clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%); }
+.doc-artisan__photo img, .doc-artisan__photo svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.doc[data-logo="center"] .doc-artisan__left > .doc-company { flex-direction: column; }
+.doc-assure { display: grid; grid-template-columns: 100px repeat(3, 1fr); gap: 14px; align-items: center; margin-top: 12px; padding: 10px 14px; border-radius: 6px; background: var(--p-soft); border-top: 2px solid var(--a); }
+.doc-assure__title { font-size: 11px; font-weight: 700; color: var(--p); line-height: 1.25; }
+.doc-assure__item { display: flex; gap: 8px; align-items: flex-start; font-size: 9.5px; color: #5d6878; line-height: 1.35; }
+.doc-assure__item svg { color: var(--p); }
+.doc-assure__item strong { display: block; font-size: 10.5px; color: #1f2a3a; }
