@@ -7,9 +7,9 @@
 .devis-etiquette { font-size: var(--fs-base); font-weight: 600; color: var(--text); }
 .devis-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .devis-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.devis-verrou { background: var(--bg-subtle); color: var(--text-2); padding-right: 30px; }
+.devis-verrou { background: var(--bg-subtle); color: var(--text-2); padding-left: 10px; padding-right: 26px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 .devis-verrou-champ { position: relative; display: flex; align-items: center; }
-.devis-verrou-champ svg { position: absolute; right: 11px; color: var(--text-3); pointer-events: none; }
+.devis-verrou-champ svg { position: absolute; right: 9px; color: var(--text-3); pointer-events: none; }
 .devis-trio .field__hint { white-space: nowrap; }
 
 /* ───── Client ───── */
