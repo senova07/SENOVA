@@ -1,10 +1,12 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import { AppLayout } from '@/app/AppLayout'
+import { PageErreur } from '@/app/PageErreur'
 import { RouteProtegee, RoutePublique } from '@/app/RouteProtegee'
 import { TOUTES_ENTREES } from '@/features/shell/navigation'
 import { PageAujourdhui } from '@/pages/PageAujourdhui'
 import { PageConnexion, PageInscription } from '@/pages/PageAuth'
 import { PageArticles } from '@/features/articles/PageArticles'
+import { PageImportArticles } from '@/features/articles/import/PageImportArticles'
 import { PageClients } from '@/features/clients/PageClients'
 import { PageFicheClient } from '@/features/clients/PageFicheClient'
 import { PageBientot } from '@/pages/PageBientot'
@@ -20,17 +22,20 @@ const ANCIENNES_PAGES = [
   ['/facturation-electronique', 'Facture électronique'],
 ] as const
 
-export function App() {
-  return (
-    <Routes>
+/** Routeur de données : nécessaire à useBlocker (garde des modifications non enregistrées). */
+export const routeur = createBrowserRouter(
+  createRoutesFromElements(
+    <Route errorElement={<PageErreur />}>
       <Route element={<RoutePublique />}>
         <Route path="/connexion" element={<PageConnexion />} />
         <Route path="/inscription" element={<PageInscription />} />
       </Route>
       <Route element={<RouteProtegee />}>
         <Route element={<AppLayout />}>
+          <Route errorElement={<PageErreur />}>
           <Route index element={<PageAujourdhui />} />
           <Route path="/articles" element={<PageArticles />} />
+          <Route path="/articles/import" element={<PageImportArticles />} />
           <Route path="/clients" element={<PageClients />} />
           <Route path="/clients/:id" element={<PageFicheClient />} />
           <Route path="/devis" element={<PageDevis />} />
@@ -45,8 +50,9 @@ export function App() {
             <Route key={chemin} path={chemin} element={<PageBientot titre={titre} icone="vide" />} />
           ))}
           <Route path="*" element={<PageBientot titre="Page introuvable" icone="vide" />} />
+          </Route>
         </Route>
       </Route>
-    </Routes>
-  )
-}
+    </Route>,
+  ),
+)
