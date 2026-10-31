@@ -1,0 +1,69 @@
+/* ---------- Aujourd'hui : chiffres clés en texte ---------- */
+.aujourdhui-chiffres { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--surface); border: 1px solid var(--bordure-douce); border-radius: var(--rayon-lg); }
+.aujourdhui-chiffres li { border-top: 1px solid var(--bordure-douce); }
+.aujourdhui-chiffres li:nth-child(-n + 2) { border-top: 0; }
+.aujourdhui-chiffres li:nth-child(even) { border-left: 1px solid var(--bordure-douce); }
+.aujourdhui-chiffre { display: flex; flex-direction: column; gap: 2px; padding: 16px 20px; height: 100%; color: inherit; text-decoration: none; transition: background 140ms; }
+.aujourdhui-chiffre:hover { background: var(--surface-soft); }
+.aujourdhui-chiffre:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.aujourdhui-chiffre__libelle { font-size: 13.5px; color: var(--texte-doux); }
+.aujourdhui-chiffre__valeur { font-size: 26px; line-height: 1.2; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+.aujourdhui-chiffre__sous { font-size: 13px; color: var(--texte-doux); }
+.aujourdhui-chiffre__sous--danger { color: var(--danger); font-weight: 600; }
+@media (min-width: 900px) {
+  .aujourdhui-chiffres { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .aujourdhui-chiffres li { border-top: 0; border-left: 1px solid var(--bordure-douce); }
+  .aujourdhui-chiffres li:first-child { border-left: 0; }
+}
+
+/* ---------- Aujourd'hui : grille et blocs ---------- */
+.aujourdhui-grille { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (min-width: 1100px) { .aujourdhui-grille { grid-template-columns: minmax(0, 1fr) 380px; } }
+.aujourdhui-lateral { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.aujourdhui-bloc { background: var(--surface); border: 1px solid var(--bordure-douce); border-radius: var(--rayon-lg); }
+.aujourdhui-bloc__entete { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--bordure-douce); }
+.aujourdhui-bloc__entete h2 { font-size: 16px; font-weight: 700; color: var(--navy); }
+.aujourdhui-lien { padding: 0; background: none; border: 0; font: inherit; font-size: 13px; font-weight: 600; color: var(--accent-texte); text-decoration: none; }
+.aujourdhui-lien:hover { text-decoration: underline; text-underline-offset: 3px; }
+.aujourdhui-note { padding: 16px 20px; margin: 0; color: var(--texte-doux); font-size: 13.5px; }
+.aujourdhui-liste { list-style: none; margin: 0; padding: 0; }
+.aujourdhui-liste > li + li { border-top: 1px solid var(--bordure-douce); }
+
+/* ---------- À faire ---------- */
+.aujourdhui-actions { list-style: none; margin: 0; padding: 0; }
+.aujourdhui-action { display: flex; align-items: center; gap: 14px; padding: 12px 12px 12px 20px; border-top: 1px solid var(--bordure-douce); }
+.aujourdhui-action:first-child { border-top: 0; }
+.aujourdhui-action--masquee { opacity: 0.55; }
+.aujourdhui-action__icone { flex: none; color: var(--bleu); }
+.aujourdhui-action__icone--danger { flex: none; color: var(--danger); }
+.aujourdhui-action__texte { flex: 1; min-width: 0; }
+.aujourdhui-action__titre { margin: 0; font-size: 14px; font-weight: 600; color: var(--navy); overflow-wrap: anywhere; }
+.aujourdhui-action__titre span { font-weight: 400; color: var(--texte); }
+.aujourdhui-action__contexte { margin: 1px 0 0; font-size: 13px; color: var(--texte-doux); }
+.aujourdhui-action__contexte--danger { color: var(--danger); }
+.aujourdhui-fait { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--succes); white-space: nowrap; }
+.aujourdhui-action .btn { flex: none; text-decoration: none; }
+.aujourdhui-action .menu__liste { min-width: 160px; }
+.aujourdhui-action .ligne-actions { width: 32px; height: 32px; display: grid; place-items: center; background: none; border: 0; border-radius: var(--rayon); color: var(--navy); }
+.aujourdhui-action .ligne-actions:hover, .aujourdhui-action .ligne-actions[aria-expanded='true'] { background: var(--surface-soft); }
+@media (max-width: 599px) {
+  .aujourdhui-action { flex-wrap: wrap; padding-left: 16px; }
+  .aujourdhui-action__texte { flex-basis: calc(100% - 40px); }
+}
+.aujourdhui-vide { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 40px 16px; text-align: center; color: var(--texte-doux); font-size: 13.5px; }
+.aujourdhui-vide svg { color: var(--succes); }
+.aujourdhui-vide p { margin: 0; }
+.aujourdhui-vide__titre { font-size: 16px; font-weight: 700; color: var(--navy); }
+
+/* ---------- Colonne latérale ---------- */
+.aujourdhui-intervention { display: flex; gap: 14px; padding: 12px 20px; }
+.aujourdhui-intervention__heure { flex: none; width: 46px; font-size: 14px; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+.aujourdhui-intervention__adresse { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 13px; color: var(--accent-texte); text-decoration: none; }
+.aujourdhui-intervention__adresse:hover { text-decoration: underline; text-underline-offset: 3px; }
+.aujourdhui-devis { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 12px 20px; color: inherit; text-decoration: none; transition: background 140ms; }
+.aujourdhui-devis:hover { background: var(--surface-soft); }
+.aujourdhui-devis:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.aujourdhui-devis__texte { display: flex; flex-direction: column; min-width: 0; }
+.aujourdhui-devis__droite { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex: none; }
+.aujourdhui-devis__montant { font-size: 13.5px; font-weight: 600; color: var(--navy); font-variant-numeric: tabular-nums; }
+.aujourdhui-statut { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; color: var(--texte-doux); }

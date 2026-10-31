@@ -1,0 +1,31 @@
+node_modules
+dist
+dist-ssr
+build
+coverage
+*.local
+*.tsbuildinfo
+.playwright-mcp
+
+# Fichiers d'environnement locaux (le modèle .env.example reste versionné)
+.env
+.env.*
+!.env.example
+deploy/.env
+
+# Stockage et temporaires de l'API
+api/storage
+api/tmp/*
+!api/tmp/.gitkeep
+api/.adonisjs
+
+.DS_Store
+Thumbs.db
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,0 +1,94 @@
+/* Feuille A4 du devis : couleurs de la feuille (papier), pas de l'interface. */
+.feuille-a4 {
+  --encre: #1c2733;
+  --encre-douce: #5b6773;
+  --filet: #d9dee3;
+  box-sizing: border-box; display: flex; flex-direction: column;
+  width: 210mm; min-height: 297mm; padding: 16mm; background: #fff; color: var(--encre);
+  font-size: 9.5pt; line-height: 1.4; box-shadow: 0 1px 4px rgb(3 31 63 / 14%);
+  overflow-wrap: anywhere;
+}
+.feuille-a4 p { margin: 0; }
+.feuille-multiligne { white-space: pre-line; }
+
+.feuille-entete { display: grid; grid-template-columns: 1fr auto; gap: 8mm 10mm; align-items: start; margin-bottom: 8mm; }
+.feuille-entete > :nth-child(2) { text-align: right; }
+.feuille-entete > :nth-child(4) { grid-column: 2; }
+.feuille-entete--centre { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 5mm; }
+.feuille-entete--centre > * { text-align: center !important; }
+.feuille-entete--centre .feuille-emetteur { flex-direction: column; align-items: center; }
+.feuille-entete--centre .feuille-client { align-self: flex-end; text-align: left !important; }
+
+.feuille-bandeau {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 10mm;
+  margin: -16mm -16mm 8mm; padding: 11mm 16mm; background: var(--accent); color: var(--sur-accent);
+}
+.feuille-bandeau .feuille-titre { text-align: right; }
+.feuille-bandeau .feuille-titre__mot { color: inherit; }
+.feuille-bandeau .feuille-logo { border-color: currentColor; color: inherit; }
+.feuille-bandeau__suite { display: flex; justify-content: flex-end; margin-bottom: 8mm; }
+
+.feuille-emetteur { display: flex; gap: 4mm; align-items: flex-start; font-size: 8.5pt; }
+.feuille-emetteur__nom { font-size: 13pt; font-weight: 700; margin-bottom: 1mm; }
+.feuille-logo {
+  flex: none; display: grid; place-items: center; width: 14mm; height: 14mm;
+  border: 1.5px solid var(--accent); color: var(--accent); font-weight: 700; font-size: 13pt;
+}
+.feuille-titre { font-size: 9pt; }
+.feuille-titre__mot { font-size: 22pt; font-weight: 700; letter-spacing: 0.06em; color: var(--accent); line-height: 1.1; }
+.feuille-titre__numero { font-weight: 700; font-size: 11pt; margin-bottom: 1mm; }
+.feuille-client { min-width: 64mm; max-width: 80mm; padding: 3mm 4mm; border-left: 2px solid var(--accent); background: #f6f8fa; }
+.feuille-client__etiquette { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.08em; color: var(--encre-douce); }
+.feuille-client__nom { font-weight: 700; font-size: 11pt; }
+
+.feuille-objet { margin: 0 0 2mm; font-size: 12pt; font-weight: 700; }
+.feuille-intro { margin-bottom: 4mm; color: var(--encre-douce); white-space: pre-line; }
+
+.feuille-table { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: 3mm; }
+.feuille-table th { padding: 2mm; text-align: left; font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); border-bottom: 2px solid var(--accent); }
+.feuille-table td { padding: 2.4mm 2mm; vertical-align: top; border-bottom: 1px solid var(--filet); }
+.feuille-a4--compacte .feuille-table td { padding: 1.1mm 2mm; }
+.feuille-col-qte { width: 11mm; }
+.feuille-col-unite { width: 15mm; }
+.feuille-col-pu { width: 24mm; }
+.feuille-col-petit { width: 15mm; }
+.feuille-col-total { width: 26mm; }
+.feuille-table .feuille-num { text-align: right; font-variant-numeric: tabular-nums; }
+.feuille-total { font-weight: 600; }
+.feuille-designation { font-weight: 600; }
+.feuille-ref { color: var(--encre-douce); font-size: 8pt; }
+.feuille-description { display: block; margin-top: 0.5mm; font-size: 8pt; color: var(--encre-douce); white-space: pre-line; }
+.feuille-ligne-section td { padding-top: 3.5mm; font-weight: 700; background: color-mix(in srgb, var(--accent) 8%, #fff); border-bottom: 1px solid var(--accent); }
+.feuille-ligne-texte td { font-style: italic; color: var(--encre-douce); white-space: pre-line; }
+
+.feuille-a4--zebre .feuille-table th { background: var(--accent); color: var(--sur-accent); border-bottom: 0; }
+.feuille-a4--zebre .feuille-table td { border-bottom: 0; }
+.feuille-a4--zebre .feuille-table tbody tr:nth-child(even) td { background: #f3f5f7; }
+.feuille-a4--zebre .feuille-table .feuille-ligne-section td { background: color-mix(in srgb, var(--accent) 12%, #fff); }
+.feuille-a4--grille .feuille-table th { background: color-mix(in srgb, var(--accent) 10%, #fff); border: 1px solid var(--accent); }
+.feuille-a4--grille .feuille-table td { border: 1px solid var(--filet); }
+
+.feuille-totaux { display: flex; justify-content: flex-end; margin-top: 5mm; break-inside: avoid; }
+.feuille-totaux dl { margin: 0; width: 82mm; }
+.feuille-totaux dl > div { display: flex; justify-content: space-between; gap: 6mm; padding: 1.2mm 2mm; }
+.feuille-totaux dt { color: var(--encre-douce); }
+.feuille-totaux dd { margin: 0; font-variant-numeric: tabular-nums; text-align: right; }
+.feuille-totaux__fort { border-top: 1px solid var(--filet); font-weight: 700; }
+.feuille-totaux__fort dt { color: var(--encre); }
+.feuille-totaux dl > .feuille-totaux__ttc { margin: 1.5mm 0; padding: 2.4mm 2mm; background: var(--accent); color: var(--sur-accent); font-size: 12pt; font-weight: 700; }
+.feuille-totaux__ttc dt { color: inherit; }
+
+.feuille-bloc { margin-top: 7mm; font-size: 8.5pt; break-inside: avoid; }
+.feuille-bloc h3 { margin: 0 0 1mm; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+.feuille-signature { margin-top: 7mm; width: 78mm; margin-left: auto; font-size: 8.5pt; break-inside: avoid; }
+.feuille-signature__zone { height: 24mm; margin-top: 1.5mm; border: 1px solid var(--filet); }
+
+.feuille-pied { margin-top: auto; padding-top: 8mm; text-align: center; font-size: 7.5pt; color: var(--encre-douce); }
+.feuille-pied::before { content: ''; display: block; border-top: 1px solid var(--filet); margin-bottom: 2mm; }
+
+@media print {
+  @page { size: A4; margin: 0; }
+  body * { visibility: hidden; }
+  .feuille-a4, .feuille-a4 * { visibility: visible; }
+  .feuille-a4 { position: absolute; left: 0; top: 0; box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

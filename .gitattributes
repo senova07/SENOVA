@@ -1,0 +1,15 @@
+# Les fichiers exécutés par le serveur Linux gardent des fins de ligne LF,
+# quel que soit le poste qui les a écrits : un CRLF dans un script shell ou un
+# Dockerfile le rend inexécutable sur la machine de production.
+*.sh text eol=lf
+Dockerfile* text eol=lf
+Caddyfile text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Tout ce que le serveur lit doit rester en LF, y compris ce qui n'est pas un
+# script : un CRLF dans un fichier d'environnement colle un retour chariot à la
+# fin de chaque valeur, et « APP_KEY » devient invalide sans le moindre message.
+*.env.example text eol=lf
+.env.example text eol=lf
+*.md text eol=lf

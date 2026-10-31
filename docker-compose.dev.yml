@@ -1,0 +1,36 @@
+# Services de développement : MariaDB 11 et Redis 7.
+# Lancement : docker compose -f docker-compose.dev.yml up -d
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: senova-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: senova_root_dev
+      MARIADB_DATABASE: senova
+      MARIADB_USER: senova
+      MARIADB_PASSWORD: senova_dev
+    ports:
+      - '127.0.0.1:3306:3306'
+    volumes:
+      - senova_mariadb:/var/lib/mysql
+      # Crée la base de test au premier démarrage du volume.
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ['CMD', 'healthcheck.sh', '--connect', '--innodb_initialized']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7
+    container_name: senova-redis
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:6379:6379'
+    volumes:
+      - senova_redis:/data
+
+volumes:
+  senova_mariadb:
+  senova_redis:

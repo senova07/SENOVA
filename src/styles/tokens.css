@@ -1,0 +1,47 @@
+/* Jetons de design SENOVA. Toute couleur, tout rayon, toute ombre vient d'ici. */
+:root {
+  --navy: #031f3f;
+  --navy-dark: #021830;
+  --bleu: #034a78;
+  --turquoise: #02a6ae;
+  --cyan: #02cacc;
+  --gris-clair: #f4f8fb;
+  --gris: #dde7ef;
+  --blanc: #ffffff;
+
+  /* Texte : navy adouci, jamais de noir pur. Contrastes AA sur blanc et #F5F8FB. */
+  --texte: #061b3a;
+  --texte-doux: #5e7392;
+  --texte-inverse: #f2f7fb;
+  --accent-texte: #01767d; /* turquoise assez sombre pour du texte (AA) */
+
+  --fond: #f7fafc;
+  --surface-soft: #f4f8fb;
+  --bordure-douce: #e8eff5;
+  --surface: var(--blanc);
+  --bordure: var(--gris);
+  --bordure-forte: #c9d8e4;
+  --focus: #0a7fb5;
+
+  --succes: #1b7a4b;
+  --alerte: #a8610a;
+  --danger: #b3302f;
+  --danger-fond: #fbeeee;
+
+  --degrade-marque: linear-gradient(160deg, #021936 0%, #034a78 100%);
+  --degrade-bouton: linear-gradient(110deg, #06264b, #034b76 65%, #02bfc3);
+
+  /* Angles quasi droits partout (demande du 26/10) : 2 px, 3 px pour les grandes surfaces. */
+  --rayon: 2px;
+  --rayon-lg: 3px;
+
+  --ombre-carte: 0 1px 2px rgb(3 31 63 / 4%);
+  --ombre-modale: 0 12px 40px rgb(2 25 54 / 22%);
+
+  --police-titre: 'Space Grotesk', 'Instrument Sans', system-ui, sans-serif;
+  --police: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --largeur-sidebar: 200px;
+  --hauteur-header: 64px;
+  --hauteur-nav-mobile: 62px;
+}

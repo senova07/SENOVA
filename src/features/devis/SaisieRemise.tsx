@@ -1,0 +1,55 @@
+import { arrondir, type Remise } from './donnees'
+import { ChampNombre } from './ChampNombre'
+
+interface SaisieRemiseProps {
+  remise: Remise
+  /** Total HT avant remise, pour convertir % et € sans changer le montant. */
+  totalHtBrut: number
+  /** Montant effectivement déduit (plafonné au total). */
+  remiseMontant: number
+  onChange(remise: Remise): void
+}
+
+/** Remise globale : en %, elle suit les lignes ; en €, le montant reste fixe quand les lignes changent. */
+export function SaisieRemise({ remise, totalHtBrut, remiseMontant, onChange }: SaisieRemiseProps) {
+  const basculer = (mode: Remise['mode']) => {
+    if (mode === remise.mode) return
+    onChange(
+      mode === 'montant'
+        ? { mode, valeur: remiseMontant }
+        : { mode, valeur: totalHtBrut > 0 ? arrondir((remiseMontant / totalHtBrut) * 100) : 0 },
+    )
+  }
+
+  return (
+    <div className="espace-remise">
+      <div className="espace-bascule" role="group" aria-label="Type de remise">
+        <button
+          type="button"
+          aria-pressed={remise.mode === 'pourcent'}
+          onClick={() => basculer('pourcent')}
+        >
+          %
+        </button>
+        <button
+          type="button"
+          aria-pressed={remise.mode === 'montant'}
+          onClick={() => basculer('montant')}
+        >
+          €
+        </button>
+      </div>
+      <ChampNombre
+        className="espace-remise__valeur"
+        aria-label={
+          remise.mode === 'pourcent' ? 'Remise globale en pourcentage' : 'Remise globale en euros'
+        }
+        valeur={remise.valeur}
+        min={0}
+        max={remise.mode === 'pourcent' ? 100 : undefined}
+        decimales={[0, 2]}
+        onValeur={(valeur) => onChange({ ...remise, valeur })}
+      />
+    </div>
+  )
+}
