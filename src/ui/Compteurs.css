@@ -1,0 +1,27 @@
+/* Compteurs en texte (maquette Articles). Le filet gauche d'un compteur ne doit pas rester orphelin quand celui-ci
+   passe à la ligne : la liste est décalée de l'écart, et clip-path masque la colonne de filets du début de ligne. */
+.compteurs-barre { display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; padding: 24px 0 18px; }
+.compteurs-barre__actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+
+.compteurs {
+  --compteurs-ecart: 22px;
+  display: flex; align-items: flex-start; flex-wrap: wrap; gap: 8px 0;
+  margin: 0 calc(-1 * var(--compteurs-ecart)); padding: 0; list-style: none;
+  clip-path: inset(-8px -8px -8px 1px);
+}
+.compteurs__item { position: relative; padding: 0 var(--compteurs-ecart); font-size: var(--fs-md); color: var(--text-2); }
+.compteurs__item::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; border-left: 1px solid var(--border); }
+.compteurs__corps { display: block; color: inherit; text-decoration: none; }
+.compteurs__lien { border-radius: var(--r-sm); }
+.compteurs__lien:focus-visible { outline-offset: 4px; }
+.compteurs__lien:hover .compteurs__libelle { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.compteurs__ligne { display: flex; align-items: baseline; gap: 0 7px; white-space: nowrap; }
+.compteurs__valeur { font-size: 21px; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.compteurs__sous { display: block; font-size: var(--fs-sm); color: var(--text-3); }
+.compteurs__item--danger .compteurs__valeur { color: var(--danger); }
+.compteurs__item--danger .compteurs__sous { color: var(--danger); font-weight: 600; }
+
+@media (max-width: 760px) {
+  .compteurs { --compteurs-ecart: 12px; }
+  .compteurs__valeur { font-size: 18px; }
+}

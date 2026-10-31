@@ -74,7 +74,7 @@ describe('PageArticles', () => {
     expect(within(ligne).getByText(/10 %/)).toBeInTheDocument()
     expect(screen.getByText('Peinture murale')).toBeInTheDocument()
     expect(screen.queryByText('Ancien tarif')).not.toBeInTheDocument()
-    expect(screen.getByText('articles').closest('dd')).toHaveTextContent('2 articles')
+    expect(screen.getByText('articles').closest('li')).toHaveTextContent('2 articles')
     expect(screen.queryByText(/utilisés ce mois/)).not.toBeInTheDocument()
   })
 

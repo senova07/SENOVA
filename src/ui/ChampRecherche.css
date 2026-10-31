@@ -1,0 +1,5 @@
+.zone-recherche { position: relative; display: flex; align-items: center; width: 100%; margin-bottom: 8px; }
+.zone-recherche__icone { position: absolute; left: 14px; color: var(--text-2); pointer-events: none; }
+.zone-recherche__saisie { height: 42px; padding-left: 42px; padding-right: 40px; font-size: var(--fs-md); }
+.zone-recherche__saisie::-webkit-search-cancel-button { display: none; }
+.zone-recherche + .tabs { margin: 10px 0 0; }

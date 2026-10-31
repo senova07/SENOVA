@@ -105,7 +105,7 @@ export function ModaleOrdre({ articles, onEnregistre, onFermer }: Props) {
             <Icone nom="glisser" taille={20} className="ordre__poignee" />
             <input
               key={`${a.id}-${rang}`}
-              className="champ__saisie ordre__rang"
+              className="input ordre__rang"
               type="number"
               min={1}
               max={liste.length}

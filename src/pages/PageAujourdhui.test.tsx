@@ -46,7 +46,7 @@ describe('PageAujourdhui', () => {
   it('« Relancer » marque la ligne comme relancée', () => {
     monter()
     const bloc = screen.getByRole('region', { name: 'À faire' })
-    const ligne = within(bloc).getByText('Garage Rossi').closest('li') as HTMLElement
+    const ligne = within(bloc).getByText('Garage Rossi').closest('tr') as HTMLElement
     fireEvent.click(within(ligne).getByRole('button', { name: 'Relancer' }))
     expect(within(ligne).getByText("Relancé aujourd'hui")).toBeInTheDocument()
     expect(within(ligne).queryByRole('button', { name: 'Relancer' })).not.toBeInTheDocument()

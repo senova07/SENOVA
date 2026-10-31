@@ -13,7 +13,6 @@ interface ChampBase {
   erreur?: string
 }
 
-/* Les classes `champ*` sont les anciens noms, encore ciblés par des CSS d'écrans (retirer en phase 4). */
 function Enveloppe({
   id,
   libelle,
@@ -22,18 +21,18 @@ function Enveloppe({
   children,
 }: ChampBase & { id: string; children: ReactNode }) {
   return (
-    <div className={['field', 'champ', erreur ? 'field--error champ--erreur' : ''].filter(Boolean).join(' ')}>
-      <label className="field__label champ__libelle" htmlFor={id}>
+    <div className={erreur ? 'field field--error' : 'field'}>
+      <label className="field__label" htmlFor={id}>
         {libelle}
       </label>
       {children}
       {aide && !erreur ? (
-        <p className="field__hint champ__aide" id={`${id}-aide`}>
+        <p className="field__hint" id={`${id}-aide`}>
           {aide}
         </p>
       ) : null}
       {erreur ? (
-        <p className="field__error champ__erreur" id={`${id}-erreur`} role="alert">
+        <p className="field__error" id={`${id}-erreur`} role="alert">
           {erreur}
         </p>
       ) : null}
@@ -62,7 +61,7 @@ export function ChampTexte({ libelle, aide, erreur, suffixe, className, ...reste
   const saisie = (
     <input
       id={id}
-      className={classes('input', 'champ__saisie', className)}
+      className={classes('input', className)}
       {...aria(id, aide, erreur)}
       {...reste}
     />
@@ -93,7 +92,7 @@ export function ChampZone({
   const id = useId()
   return (
     <Enveloppe id={id} libelle={libelle} aide={aide} erreur={erreur}>
-      <textarea id={id} className={classes('textarea', 'champ__saisie', className)} {...aria(id, aide, erreur)} {...reste} />
+      <textarea id={id} className={classes('textarea', className)} {...aria(id, aide, erreur)} {...reste} />
     </Enveloppe>
   )
 }
@@ -109,7 +108,7 @@ export function ChampSelect({
   const id = useId()
   return (
     <Enveloppe id={id} libelle={libelle} aide={aide} erreur={erreur}>
-      <select id={id} className={classes('select', 'champ__saisie', className)} {...aria(id, aide, erreur)} {...reste}>
+      <select id={id} className={classes('select', className)} {...aria(id, aide, erreur)} {...reste}>
         {children}
       </select>
     </Enveloppe>

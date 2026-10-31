@@ -37,7 +37,7 @@ describe('PageDevis', () => {
     fireEvent.click(screen.getByRole('tab', { name: /Refusés/ }))
     // refusé + expiré
     expect(lignesTableau()).toHaveLength(2)
-    expect(screen.getByRole('tab', { name: 'Brouillons (1)' })).toBeTruthy()
+    expect(screen.getByRole('tab', { name: /^Brouillons\s*1$/ })).toBeTruthy()
   })
 
   it('la recherche filtre par client et propose de réinitialiser quand rien ne correspond', () => {

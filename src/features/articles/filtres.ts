@@ -1,3 +1,4 @@
+import { sansAccent } from '@/lib/texte'
 import { LIBELLES_TYPE_ARTICLE, type Article, type CategorieArticle, type TypeArticle } from '@shared/articles'
 
 export type Onglet = 'tous' | 'favoris' | TypeArticle
@@ -28,9 +29,6 @@ export const ONGLETS: readonly { id: Onglet; libelle: string }[] = [
   { id: 'abonnement', libelle: 'Abonnements' },
   { id: 'forfait', libelle: 'Packs / forfaits' },
 ]
-
-export const sansAccent = (texte: string) =>
-  texte.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 /** Retire les catégories filtrées qui n'existent plus (supprimées entre-temps). */
 export function filtresValides(f: FiltresAvances, categories: readonly CategorieArticle[]): FiltresAvances {

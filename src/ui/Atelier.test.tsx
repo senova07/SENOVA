@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { Atelier, BarreApercu, SectionAtelier } from '@/ui/Atelier'
+import { Atelier, SectionAtelier } from '@/ui/Atelier'
+import { BarreApercu } from '@/ui/ApercuAtelier'
 import { allerASection, echelleAjustee, zoomMoins, zoomPlus, type ModeZoom } from '@/ui/AtelierFonctions'
 
 function Zoom() {

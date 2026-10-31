@@ -2,6 +2,8 @@
  * SENOVA : jetons de design (thème clair).
  * Source : design-reference/senova-maquette/src/styles/tokens.css.
  * Toute couleur, ombre et dimension de base vient d'ici ; ailleurs, uniquement des var(--…).
+ * Aucun alias d'ancien nom : une variable utilisée est soit définie ici, soit posée localement par son composant
+ * (--compteurs-ecart, --sb-*) ou en ligne pour une valeur dynamique (--doc-*, --echelle, --x, --y…).
  * Répartition visée : 80 % neutre · 15 % marine · 5 % turquoise.
  */
 :root {
@@ -43,6 +45,7 @@
   --warning-bg: #fbf0dc;
   --star: #f0a81c;
   --overlay: rgba(8, 29, 56, 0.28);
+  --focus: var(--teal-dark);                   /* contour de focus des composants à cadre propre */
   --focus-ring: 0 0 0 2px rgba(22, 184, 176, 0.10);
 
   /* Ombres */
@@ -104,37 +107,4 @@
   --topbar-h: 68px;
   --ease: cubic-bezier(.2, .7, .2, 1);
   color-scheme: light;
-}
-
-/* Compatibilité : anciens noms, à supprimer quand tous les écrans seront migrés (phase 4) */
-:root {
-  --blanc: var(--white);
-  --texte: var(--text);
-  --texte-doux: var(--text-2);
-  --texte-inverse: var(--white);
-  --accent-texte: var(--teal-ink);
-  --turquoise: var(--teal);
-  --cyan: var(--teal);
-  --bleu: var(--navy-mid);
-  --fond: var(--bg-subtle);
-  --surface: var(--bg);
-  --surface-soft: var(--bg-subtle);
-  --gris-clair: var(--bg-tertiary);
-  --gris: var(--border);
-  --bordure: var(--border);
-  --bordure-douce: var(--border-soft);
-  --bordure-forte: var(--border-strong);
-  --focus: var(--teal-dark);
-  --succes: var(--success);
-  --alerte: var(--warning);
-  --danger-fond: var(--danger-bg);
-  --degrade-marque: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
-  --degrade-bouton: linear-gradient(110deg, var(--navy), var(--navy-mid) 65%, var(--teal));
-  --rayon: var(--r-sm);
-  --rayon-lg: var(--r-md);
-  --ombre-carte: var(--shadow-card);
-  --ombre-modale: var(--shadow-modal);
-  --police: var(--font-sans);
-  --police-titre: var(--font-sans);
-  --hauteur-header: var(--topbar-h);
 }

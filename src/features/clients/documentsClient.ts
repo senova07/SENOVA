@@ -1,6 +1,5 @@
-import { calculerTotaux, sansAccent } from '@/features/devis/calculs'
-import { FACTURES_DEMO, type FactureDemo } from '@/features/devis/demo'
-import type { Devis } from '@/features/devis/types'
+import { FACTURES_DEMO, totalTtcDevis, type Devis, type FactureDemo } from '@/features/devis'
+import { sansAccent } from '@/lib/texte'
 import { nomAffichageClient, type Client } from '@shared/clients'
 
 /** Maquette : les pièces de vente sont rattachées au client par son nom affiché. */
@@ -12,8 +11,6 @@ export const facturesDuClient = (c: Client): FactureDemo[] =>
 export const resteDuClient = (c: Client): number =>
   facturesDuClient(c).reduce((somme, f) => somme + f.resteDu, 0)
 
-export const devisTtc = (d: Devis): number => calculerTotaux(d.lignes, d.remise).totalTtc
-
 export function documentsClient(c: Client, tousLesDevis: readonly Devis[]) {
   const devis = tousLesDevis.filter((d) => memeClient(c, d.clientNom))
   const factures = facturesDuClient(c)
@@ -24,7 +21,7 @@ export function documentsClient(c: Client, tousLesDevis: readonly Devis[]) {
     factures,
     totaux: {
       // Un brouillon n'est pas encore une proposition faite au client.
-      devise: devis.filter((d) => d.statut !== 'brouillon').reduce((s, d) => s + devisTtc(d), 0),
+      devise: devis.filter((d) => d.statut !== 'brouillon').reduce((s, d) => s + totalTtcDevis(d), 0),
       facture,
       encaisse: facture - resteDu,
       resteDu,

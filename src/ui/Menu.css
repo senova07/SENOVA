@@ -1,7 +1,7 @@
 .menu-ancre { position: relative; display: inline-flex; }
 
-/* Panneau : `.menu` (composant Menu) et `.menu__liste` (ancien usage, panneau écrit par l'appelant) */
-.menu, .menu__liste {
+/* Panneau du composant Menu (ou panneau écrit par l'appelant avec la classe `menu`). */
+.menu {
   position: absolute; z-index: 70; top: calc(100% + 6px); min-width: 200px; padding: 5px;
   display: flex; flex-direction: column;
   background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg);
@@ -9,7 +9,9 @@
   animation: menu-entree .12s ease-out;
 }
 .menu--gauche { left: 0; }
-.menu--droite, .menu__liste { right: 0; }
+.menu--droite { right: 0; }
+/* Menu ⋮ des dernières lignes d'un tableau : s'ouvre vers le haut. */
+.menu-ligne--haut .menu { top: auto; bottom: calc(100% + 6px); }
 
 .menu__item {
   display: flex; align-items: center; gap: 10px; width: 100%;

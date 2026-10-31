@@ -1,0 +1,31 @@
+/* Fenêtre « Nouveau client » / « Modifier le client ». */
+.form-client { display: flex; flex-direction: column; gap: 14px; }
+.form-client__duo, .form-client__trio { display: grid; align-items: start; grid-template-columns: 1fr; gap: 14px; }
+.form-client__groupe { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.form-client__groupe > legend { font-size: var(--fs-base); font-weight: 600; color: var(--navy); padding: 0; margin-bottom: 8px; }
+.form-client__groupe > .form-client__trio, .form-client__ligne { align-self: stretch; }
+.form-client__ligne {
+  display: flex; flex-direction: column; gap: 12px; padding: 12px;
+  border: 1px solid var(--border); border-left: 2px solid var(--teal); border-radius: var(--r-sm);
+  background: var(--bg-subtle);
+}
+.form-client__ligne-pied { display: flex; align-items: center; justify-content: space-between; }
+.form-client__case { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: var(--fs-base); cursor: pointer; }
+.form-client__case input { width: 18px; height: 18px; accent-color: var(--navy); }
+@media (min-width: 560px) {
+  .form-client__duo { grid-template-columns: 1fr 1fr; }
+  .form-client__trio { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Saisie des tags */
+.client-tags-saisie {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-height: 40px; padding: 5px 8px;
+  background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--r-md);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.client-tags-saisie:hover { border-color: var(--border-strong); }
+.client-tags-saisie:focus-within { border-color: var(--teal); box-shadow: var(--focus-ring); }
+.field--error .client-tags-saisie { border-color: var(--danger); }
+.client-tags-saisie__champ { flex: 1; min-width: 120px; min-height: 28px; border: 0; outline: 0; background: transparent; font-size: var(--fs-base); color: var(--text); }
+.client-tag__retirer { display: inline-flex; padding: 4px; margin: -4px -4px -4px 0; color: var(--text-3); border-radius: var(--r-sm); }
+.client-tag__retirer:hover { color: var(--danger); }

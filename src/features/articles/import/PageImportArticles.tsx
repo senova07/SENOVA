@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { CategorieArticle } from '@shared/articles'
+import { pluriel } from '@/lib/texte'
 import { apiCategories } from '@/services/articlesApi'
 import { useSession } from '@/store/sessionContext'
 import { useToast } from '@/store/toastContext'
@@ -16,6 +17,7 @@ import { MAX_ENVOI, envoyerLignes } from './envoi'
 import { GrilleImport } from './GrilleImport'
 import { ErreurTableau, MAX_LIGNES, type Matrice } from './csv'
 import { COLONNES, estVide, validerLignes, type CleChamp } from './modele'
+import { PiedImport } from './PiedImport'
 import { RecapEnvoi, type Recap } from './RecapEnvoi'
 import { retirerDuBrouillon, useLignesImport } from './useLignesImport'
 import './import.css'
@@ -64,7 +66,6 @@ export function PageImportArticles() {
   const occupe = progression !== null
   const colonnes = COLONNES.filter((c) => !masquees.has(c.cle))
   const colonnesNav = colonnes.filter((c) => c.genre !== 'etoile').map((c) => c.cle)
-  const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? 's' : ''}`
 
   if (!peut('articles.gerer')) {
     return <EtatVide icone="attention" titre="Accès non autorisé" texte="Votre rôle ne permet pas d'ajouter des articles. Demandez l'accès à un administrateur." />
@@ -179,18 +180,14 @@ export function PageImportArticles() {
         <EtapeSource key={mode} mode={mode} onCharger={(nom, matrice) => setSource({ nom, matrice })} />
       )}
 
-      <footer className="import-pied">
-        <div className="import-pied__etat" aria-live="polite">
-          <span><strong className="num">{remplies.length}</strong> article{remplies.length > 1 ? 's' : ''}</span>
-          <span data-ton={erreurs.size ? 'erreur' : undefined}><span className="num">{erreurs.size}</span> erreur{erreurs.size > 1 ? 's' : ''}</span>
-          <span data-ton="ok"><span className="num">{pretes.length}</span> prêt{pretes.length > 1 ? 's' : ''} à enregistrer</span>
-          {pretes.length > aEnvoyer.length ? <span>Envoi limité à {MAX_ENVOI} lignes à la fois</span> : null}
-          {progression ? <span role="status">Envoi en cours : {progression.faits} / {progression.total}</span> : null}
-        </div>
-        <Bouton variante="primaire" taille="lg" signature disabled={!pretes.length || occupe} onClick={() => void enregistrer()}>
-          {occupe ? 'Enregistrement…' : `Enregistrer ${pluriel(aEnvoyer.length, 'article')}`}
-        </Bouton>
-      </footer>
+      <PiedImport
+        nbRemplies={remplies.length}
+        nbErreurs={erreurs.size}
+        nbPretes={pretes.length}
+        nbAEnvoyer={aEnvoyer.length}
+        progression={progression}
+        onEnregistrer={() => void enregistrer()}
+      />
 
       <GardeModifications
         actif={remplies.length > 0 || occupe}

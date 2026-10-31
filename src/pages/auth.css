@@ -1,0 +1,28 @@
+/* Connexion et inscription : panneau marine discret à gauche, formulaire sobre à droite. */
+.auth { min-height: 100vh; display: grid; grid-template-columns: 1fr; background: var(--bg); }
+.auth__marque { display: none; }
+.auth__panneau { display: flex; flex-direction: column; justify-content: center; width: 100%; max-width: 460px; margin: 0 auto; padding: 28px 20px; }
+.auth__logo { margin-bottom: 32px; }
+.auth__titre { font-size: 26px; font-weight: 700; color: var(--navy); letter-spacing: -0.03em; }
+.auth__sous { margin: 6px 0 24px; color: var(--text-2); font-size: var(--fs-md); }
+.auth__form { display: flex; flex-direction: column; gap: 16px; }
+.auth__pied { margin-top: 24px; font-size: var(--fs-base); color: var(--text-2); }
+.auth__pied a { color: var(--teal-ink); font-weight: 600; text-decoration: none; }
+.auth__pied a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (min-width: 900px) {
+  .auth { grid-template-columns: 1.1fr 1fr; }
+  .auth__panneau { padding: 40px 56px; }
+  .auth__marque {
+    position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 56px; color: var(--white);
+    background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 100%);
+  }
+  /* Facettes en biais, comme la barre latérale : une plaque discrète et un filet turquoise. */
+  .auth__marque::before, .auth__marque::after { content: ""; position: absolute; transform: skewX(-28deg); }
+  .auth__marque::before { top: -10%; bottom: -10%; left: 46%; width: 24%; background: var(--sb-hover); }
+  .auth__marque::after { top: -10%; bottom: 30%; left: 72%; width: 6px; background: var(--teal); }
+  .auth__marque h2, .auth__marque p { position: relative; }
+  .auth__marque h2 { max-width: 16ch; font-size: 32px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
+  .auth__marque p { max-width: 36ch; margin-top: 12px; color: var(--sb-text); font-size: var(--fs-md); }
+}

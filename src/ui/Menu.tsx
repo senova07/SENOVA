@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import { BoutonIcone } from '@/ui/Bouton'
 import { Icone, type NomIcone } from '@/ui/Icone'
 import { useMenu } from '@/ui/useMenu'
 import './Menu.css'
@@ -11,7 +12,7 @@ interface MenuProps {
   aligne?: 'gauche' | 'droite'
   /** Nom accessible du menu. */
   libelle?: string
-  /** `false` : pas de panneau, l'appelant fournit le sien (ancien usage `.menu__liste`). */
+  /** `false` : pas de panneau, l'appelant fournit le sien (popover de filtres, panneaux d'outils). */
   panneau?: boolean
 }
 
@@ -34,9 +35,36 @@ export function Menu({ declencheur, children, aligne = 'gauche', libelle, pannea
   )
 }
 
-/** Alias de l'ancien nom : le panneau reste à la charge de l'appelant. À retirer en phase 4. */
-export function MenuDeroulant(props: Omit<MenuProps, 'panneau' | 'aligne' | 'libelle'>) {
-  return <Menu {...props} panneau={false} />
+interface MenuLigneProps {
+  /** Nom accessible du bouton ⋮ et du menu (« Actions : … »). */
+  libelle: string
+  /** Ouvre vers le haut (dernières lignes d'un tableau). */
+  versLeHaut?: boolean
+  children(fermer: () => void): ReactNode
+}
+
+/** Menu ⋮ d'une ligne de tableau : bouton icône, panneau aligné à droite, ouverture vers le haut si besoin. */
+export function MenuLigne({ libelle, versLeHaut = false, children }: MenuLigneProps) {
+  return (
+    <div className={versLeHaut ? 'menu-ligne menu-ligne--haut' : 'menu-ligne'}>
+      <Menu
+        aligne="droite"
+        libelle={libelle}
+        declencheur={({ ouvert, basculer }) => (
+          <BoutonIcone
+            icone="actions"
+            poids="bold"
+            libelle={libelle}
+            aria-haspopup="menu"
+            aria-expanded={ouvert}
+            onClick={basculer}
+          />
+        )}
+      >
+        {children}
+      </Menu>
+    </div>
+  )
 }
 
 interface ElementMenuProps extends ButtonHTMLAttributes<HTMLButtonElement> {

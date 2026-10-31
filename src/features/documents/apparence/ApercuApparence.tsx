@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BarreApercu, ZoneApercu } from '@/ui/Atelier'
+import { BarreApercu, ZoneApercu } from '@/ui/ApercuAtelier'
 import { useEchelleApercu, type ModeZoom } from '@/ui/AtelierFonctions'
 import { ControleSegmente } from '@/ui/ControleSegmente'
 import { ApercuDocument, type ChartePage, type TypeDocument, type ZoneDocument } from '../rendu'

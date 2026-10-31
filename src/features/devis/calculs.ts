@@ -7,10 +7,6 @@ export const arrondir = (n: number) => Math.round(n * 100) / 100
 /** Date du jour en heure locale (AAAA-MM-JJ) ; `toISOString` donnerait la date UTC. */
 export const aujourdhuiIso = (): string => new Date().toLocaleDateString('sv-SE')
 
-/** Comparaison sans casse ni accents. */
-export const sansAccent = (t: string): string =>
-  t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-
 /** Date ISO affichée à la française (31/10/2026). */
 export const dateFr = (iso: string): string =>
   new Date(`${iso}T12:00:00`).toLocaleDateString('fr-FR')
@@ -62,6 +58,9 @@ export function calculerTotaux(
 /** Totaux d'un devis, avec sa remise et son acompte. */
 export const totauxDevis = (d: Pick<Devis, 'lignes' | 'remise' | 'acomptePourcent'>): Totaux =>
   calculerTotaux(d.lignes, d.remise, d.acomptePourcent)
+
+/** Total TTC du devis, pour les listes et les fiches qui n'ont besoin que de ce montant. */
+export const totalTtcDevis = (d: Pick<Devis, 'lignes' | 'remise'>): number => calculerTotaux(d.lignes, d.remise).totalTtc
 
 /** Sous-total HT de la section qui commence à l'index donné (jusqu'à la section suivante). */
 export function sousTotalSection(lignes: readonly LigneDevis[], index: number): number {

@@ -5,6 +5,7 @@ import { ChampTexte } from '@/ui/Formulaire'
 import { Logo } from '@/ui/Logo'
 import { ErreurApi } from '@/services/http'
 import { useSession } from '@/store/sessionContext'
+import './auth.css'
 
 function Cadre({
   titre,
@@ -20,7 +21,6 @@ function Cadre({
   return (
     <div className="auth">
       <aside className="auth__marque" aria-hidden="true">
-        <span className="auth__facette" />
         <h2>L'utilisateur fait son métier ; SENOVA s'occupe du reste.</h2>
         <p>Clients, devis, factures et paiements, au même endroit.</p>
       </aside>

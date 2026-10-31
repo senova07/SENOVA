@@ -1,4 +1,1 @@
-/* Hauteurs du symbole et du mot fixées par le contexte (barre latérale, connexion). */
-.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--navy); }
-.logo__symbole { height: 34px; width: auto; }
-.logo__mot { height: 18px; width: auto; }
+.logo { display: flex; align-items: center; gap: 10px; }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ApercuDocument, useCharteAppliquee, type DocumentRendu, type ZoneDocument } from '@/features/documents'
-import { BarreApercu, ZoneApercu } from '@/ui/Atelier'
+import { BarreApercu, ZoneApercu } from '@/ui/ApercuAtelier'
 import { useEchelleApercu, type ModeZoom } from '@/ui/AtelierFonctions'
 import { Icone } from '@/ui/Icone'
 

@@ -11,7 +11,7 @@
 .entete-page__sous { margin-top: 8px; color: var(--text-2); font-size: var(--fs-md); max-width: 62ch; text-wrap: pretty; }
 .entete-page__actions { display: flex; gap: 10px; flex: none; padding-top: 4px; }
 .entete-page__actions .btn { height: 42px; }
-.entete-page__actions .btn:not(.btn-menu__fleche) { padding: 0 22px; }
+.entete-page__actions .btn:not(.btn-menu__fleche):not(.btn--icone) { padding: 0 22px; }
 
 .entete-page__ariane { margin-bottom: 10px; font-size: 13px; color: var(--text-2); }
 .entete-page__ariane ol { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding: 0; list-style: none; }

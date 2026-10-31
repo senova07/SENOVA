@@ -1,5 +1,5 @@
 import { Bouton } from '@/ui/Bouton'
-import { PiedAtelier } from '@/ui/Atelier'
+import { PiedAtelier } from '@/ui/ApercuAtelier'
 import type { EtatBrouillon } from './useBrouillonDevis'
 
 interface Props {

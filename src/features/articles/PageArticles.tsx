@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Bouton } from '@/ui/Bouton'
+import { ChampRecherche } from '@/ui/ChampRecherche'
 import { EntetePage } from '@/ui/EntetePage'
 import { EtatVide } from '@/ui/EtatVide'
 import { Pagination } from '@/ui/Pagination'
@@ -10,7 +11,6 @@ import { BarreOutilsArticles } from './BarreOutilsArticles'
 import { CalquesArticles, type Calque } from './CalquesArticles'
 import { compterArticles } from './filtres'
 import { OngletsArticles, PREFIXE_ONGLETS } from './OngletsArticles'
-import { RechercheArticles } from './RechercheArticles'
 import { TableauArticles } from './TableauArticles'
 import { useActionsArticles } from './useActionsArticles'
 import { useCatalogue } from './useCatalogue'
@@ -93,7 +93,13 @@ export function PageArticles() {
 
       {cat.etat === 'pret' && cat.articles.length > 0 ? (
         <>
-          <RechercheArticles valeur={vue.recherche} onChange={vue.changerRecherche} inputRef={rechercheRef} />
+          <ChampRecherche
+            valeur={vue.recherche}
+            onChange={vue.changerRecherche}
+            libelle="Rechercher un article"
+            placeholder="Rechercher un article…"
+            inputRef={rechercheRef}
+          />
           <OngletsArticles actif={vue.onglet} onChoisir={vue.changerOnglet} />
           <BarreOutilsArticles
             filtres={vue.filtres}

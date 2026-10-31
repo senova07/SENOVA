@@ -6,7 +6,7 @@ import { useMenu } from '@/ui/useMenu'
 import { formaterEuro } from '@/lib/format'
 import { apiArticles } from '@/services/articlesApi'
 import type { Article } from '@shared/articles'
-import { sansAccent } from './calculs'
+import { sansAccent } from '@/lib/texte'
 
 interface Props {
   onArticle(article: Article): void

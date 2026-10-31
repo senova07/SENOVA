@@ -1,4 +1,4 @@
-import { reinitialiserDemoDevis } from '@/features/devis/api'
+import { reinitialiserDemoDevis } from '@/features/devis'
 import { reinitialiserDemoDocuments } from '@/features/documents'
 
 /** undefined = rien vu encore ; null = personne de connecté. */

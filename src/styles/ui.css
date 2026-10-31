@@ -1,11 +1,4 @@
-/* Anciennes classes, encore utilisées par les écrans pas encore migrés (phase 4).
-   Les composants de src/ui/ ont leur propre CSS. */
+/* Classes transverses sans composant React : alerte de formulaire, écran de chargement. Les composants de src/ui/ ont leur propre CSS. */
 
-.alerte-form { padding: 10px 12px; border-radius: var(--rayon); background: var(--danger-bg); color: var(--danger); font-size: 14px; border-left: 3px solid var(--danger); }
-
-/* ---------- Champ de recherche des listes (clients, articles) ---------- */
-.recherche { flex: 1; max-width: 670px; position: relative; display: flex; align-items: center; }
-.recherche__icone { position: absolute; left: 14px; color: var(--navy); pointer-events: none; display: inline-flex; }
-.recherche__saisie { width: 100%; min-height: 40px; padding: 0 56px 0 44px; background: var(--surface-soft); border: 1px solid var(--bordure-douce); border-radius: var(--rayon); font-size: 13.5px; transition: border-color 160ms, background 160ms; }
-.recherche__saisie::placeholder { color: var(--text-3); }
-.recherche__saisie:focus { background: var(--blanc); border-color: var(--bordure); }
+.alerte-form { padding: 10px 12px; border-radius: var(--r-sm); background: var(--danger-bg); color: var(--danger); font-size: var(--fs-md); border-left: 3px solid var(--danger); }
+.chargement { min-height: 100vh; display: grid; place-items: center; color: var(--text-2); }

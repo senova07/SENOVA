@@ -1,5 +1,4 @@
-import { dateFinValidite } from '@/features/devis/calculs'
-import type { Devis } from '@/features/devis/types'
+import { dateFinValidite, type Devis } from '@/features/devis'
 
 /** Devis à traiter : brouillons, plus les envoyés dont la validité est dépassée. */
 export function devisATraiter(devis: readonly Devis[], aujourdhui: string): number {

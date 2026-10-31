@@ -71,7 +71,7 @@ export function ModaleCategories({ categories, articles, onChange, onFermer }: P
       </form>
 
       {categories.length === 0 ? (
-        <p className="champ__aide categories__vide">Aucune catégorie pour le moment.</p>
+        <p className="field__hint categories__vide">Aucune catégorie pour le moment.</p>
       ) : (
         <ul className="categories">
           {categories.map((c) => {
@@ -111,7 +111,7 @@ export function ModaleCategories({ categories, articles, onChange, onFermer }: P
                 ) : (
                   <>
                     <span className="categories__nom">
-                      {c.nom} <span className="champ__aide">({nombre})</span>
+                      {c.nom} <span className="field__hint">({nombre})</span>
                     </span>
                     <Bouton
                       variante="fantome"

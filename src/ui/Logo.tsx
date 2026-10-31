@@ -1,15 +1,13 @@
+import marqueUrl from '@/assets/mark.png'
+import motUrl from '@/assets/wordmark.png'
 import './Logo.css'
 
-interface LogoProps {
-  className?: string
-}
-
-/** Symbole S + mot SENOVA, tirés des fichiers du logo officiel (sans le slogan). */
-export function Logo({ className }: LogoProps) {
+/** Symbole S + mot SENOVA (sans le slogan), pour les écrans hors coque ; la barre latérale a son propre en-tête SVG. */
+export function Logo({ className }: { className?: string }) {
   return (
     <span className={['logo', className ?? ''].filter(Boolean).join(' ')}>
-      <img className="logo__symbole" src="/logo-symbole.png" alt="" />
-      <img className="logo__mot" src="/logo-mot.png" alt="SENOVA" />
+      <img src={marqueUrl} alt="" width={27} height={44} />
+      <img src={motUrl} alt="SENOVA" width={140} height={18} />
     </span>
   )
 }
