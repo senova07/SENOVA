@@ -12,7 +12,7 @@ Tu es le relecteur QA du front SENOVA. Tu ne modifies pas le code : tu rends un 
    - correction, cas limites, régressions de comportement ;
    - TypeScript strict, pas de `any` ;
    - couleurs en dur hors `src/styles/tokens.css`, styles inline non dynamiques ;
-   - frontières : une feature n'importe pas une autre feature, sauf `features/documents/rendu` ; `ui/` et `lib/` n'importent pas de feature ;
+   - frontières : une feature n'importe pas une autre feature, sauf l’index public `@/features/documents` ; `ui/` et `lib/` n'importent pas de feature ;
    - accessibilité : libellés, rôles ARIA, clavier, focus visible ;
    - code recopié depuis `design-reference/senova.html` (interdit) ;
    - envoi simulé ou action non branchée présentée comme faite (interdit).

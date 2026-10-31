@@ -15,13 +15,13 @@ Architecture cible (voir `docs/AUDIT.md` §5) :
 - `src/features/<domaine>/` : `shell`, `auth`, `articles`, `clients`, `devis`, `documents`, `aujourdhui`.
 
 Règles de frontière :
-- une feature n'importe jamais une autre feature, sauf `features/documents/rendu`, conçu pour être partagé ;
+- une feature n'importe jamais une autre feature, sauf l’index public `@/features/documents` (rendu + charte appliquée), conçu pour être partagé ;
 - `ui/` et `lib/` n'importent jamais une feature ;
 - les données de démo (devis, apparence) passent par un `api.ts` de la feature, remplaçable par l'API réelle sans toucher aux composants ;
 - l'API (`api/`) est hors périmètre, sauf les types partagés lus via `@shared/*`.
 
 Conventions : noms en français (convention du projet et de l'API), TypeScript strict sans `any`, composants courts à responsabilité unique, logique dans des fonctions pures testées.
 
-Pour vérifier les frontières : `grep -rn "from '@/features/" src/features/<x>` ne doit lister que sa propre feature ou `documents/rendu`.
+Pour vérifier les frontières : `grep -rn "from '@/features/" src/features/<x>` ne doit lister que sa propre feature ou `@/features/documents` (son index, jamais ses fichiers internes).
 
 Git : ne lance aucune commande qui modifie l’index ou l’historique (`git add`, `git mv`, `git rm`, `git commit`, `git stash`, `git reset`). Déplace et supprime les fichiers avec le système de fichiers ; l’orchestrateur commite.
