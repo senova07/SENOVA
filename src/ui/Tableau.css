@@ -1,0 +1,41 @@
+/*
+ * Tableau de données générique, au style du tableau Articles de la maquette
+ * (articles.css de design-reference). Chargé globalement par main.tsx.
+ * Usage : <div class="tableau-cadre"><table class="tableau">… <tr class="tableau__ligne"> …
+ * Colonnes : .tableau__col-principale (prend la place), .tableau__col-nombre (aligné à droite),
+ * .tableau__col-actions (menu ⋮). Tri : <button class="tableau__tri" data-trie>.
+ */
+@media (max-width: 900px) { .tableau-cadre { overflow-x: auto; } }
+.tableau { width: 100%; border-collapse: separate; border-spacing: 0; }
+.tableau th {
+  height: 38px; padding: 0 8px; background: var(--bg-tertiary); text-align: left; white-space: nowrap;
+  font-size: var(--fs-sm); font-weight: 500; color: var(--text);
+}
+.tableau th:first-child { border-radius: var(--r-md) 0 0 var(--r-md); }
+.tableau th:last-child { border-radius: 0 var(--r-md) var(--r-md) 0; }
+.tableau td {
+  height: 54px; padding: 7px 8px; border-bottom: 1px solid var(--border-soft);
+  color: var(--text-2); font-size: var(--fs-sm); white-space: nowrap; vertical-align: middle;
+  transition: background-color .15s ease, box-shadow .15s ease;
+}
+.tableau__ligne:hover td { background: var(--bg-row-hover); }
+.tableau__ligne:hover td:first-child { box-shadow: inset 2px 0 0 var(--teal); }
+
+.tableau__col-principale { width: 100%; min-width: 180px; }
+.tableau td.tableau__col-principale { white-space: normal; }
+.tableau__col-nombre { width: 1%; text-align: right; font-variant-numeric: tabular-nums; }
+.tableau th.tableau__col-nombre { text-align: right; }
+.tableau td.tableau__col-nombre { color: var(--text); }
+.tableau .tableau__col-actions { width: 48px; padding-left: 0; padding-right: 6px; text-align: right; }
+
+.tableau__titre { font-size: var(--fs-base); font-weight: 600; color: var(--navy); letter-spacing: -0.005em; }
+a.tableau__titre, button.tableau__titre { padding: 0; text-align: left; text-decoration: none; }
+a.tableau__titre:hover, button.tableau__titre:hover { text-decoration: underline; text-decoration-color: var(--teal); text-underline-offset: 3px; }
+.tableau__sous { margin-top: 1px; max-width: 46ch; overflow: hidden; text-overflow: ellipsis; font-size: var(--fs-sm); color: var(--text-3); white-space: nowrap; }
+
+.tableau__tri {
+  display: inline-flex; align-items: center; gap: 4px; height: 26px; margin: 0 -5px; padding: 0 5px;
+  border-radius: var(--r-sm); color: inherit; font: inherit;
+}
+.tableau__tri:hover, .tableau__tri[data-trie] { color: var(--navy); }
+.tableau__tri[data-trie] svg { color: var(--teal-dark); }
