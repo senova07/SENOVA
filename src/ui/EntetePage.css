@@ -12,12 +12,14 @@
 .entete-page__actions .btn { height: 42px; }
 .entete-page__actions .btn:not(.btn-menu__fleche) { padding: 0 22px; }
 
-.entete-page__ariane { margin-bottom: 6px; font-size: var(--fs-sm); color: var(--text-2); }
-.entete-page__ariane ol { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.entete-page__ariane li + li::before { content: "/"; margin-right: 6px; color: var(--text-3); }
+.entete-page__ariane { margin-bottom: 10px; font-size: 13px; color: var(--text-2); }
+.entete-page__ariane ol { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding: 0; list-style: none; }
+/* Chevron comme la maquette (CaretRight 11 px, gras) */
+.entete-page__ariane li { display: inline-flex; align-items: center; }
+.entete-page__ariane li + li::before { content: ""; width: 5px; height: 5px; margin-right: 10px; border-top: 1.5px solid var(--text-3); border-right: 1.5px solid var(--text-3); transform: rotate(45deg); }
 .entete-page__ariane a { color: var(--text-2); text-decoration: none; }
-.entete-page__ariane a:hover { color: var(--navy); text-decoration: underline; }
-.entete-page__ariane [aria-current="page"] { color: var(--text); }
+.entete-page__ariane a:hover { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.entete-page__ariane [aria-current="page"] { color: var(--navy); font-weight: 600; }
 
 @media (max-width: 760px) {
   .entete-page__titre { font-size: 24px; }
