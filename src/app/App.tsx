@@ -7,6 +7,7 @@ import { PageAujourdhui } from '@/pages/PageAujourdhui'
 import { PageConnexion, PageInscription } from '@/pages/PageAuth'
 import { PageArticles } from '@/features/articles/PageArticles'
 import { PageImportArticles } from '@/features/articles/import/PageImportArticles'
+import { PageApparence } from '@/features/documents/apparence'
 import { PageClients } from '@/features/clients/PageClients'
 import { PageFicheClient } from '@/features/clients/PageFicheClient'
 import { PageBientot } from '@/pages/PageBientot'
@@ -34,6 +35,7 @@ export const routeur = createBrowserRouter(
           <Route index element={<PageAujourdhui />} />
           <Route path="/articles" element={<PageArticles />} />
           <Route path="/articles/import" element={<PageImportArticles />} />
+          <Route path="/documents/apparence" element={<PageApparence />} />
           <Route path="/clients" element={<PageClients />} />
           <Route path="/clients/:id" element={<PageFicheClient />} />
           <Route path="/devis" element={<PageDevis />} />

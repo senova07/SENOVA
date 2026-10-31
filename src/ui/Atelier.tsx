@@ -140,7 +140,7 @@ interface BarreApercuProps {
   onZoom(zoom: ModeZoom): void
   /** À gauche des contrôles de zoom : par ex. un `ControleSegmente`. */
   gauche?: ReactNode
-  /** Entre le zoom et l'action : par ex. « Page 1 sur 2 ». */
+  /** Après `gauche`, avant le zoom (à droite) : par ex. « Page 1 sur 2 ». */
   children?: ReactNode
   /** À droite : par ex. « Modifier l'apparence ». */
   droite?: ReactNode
@@ -150,6 +150,8 @@ export function BarreApercu({ zoom, echelle, onZoom, gauche, children, droite }:
   return (
     <div className="barre-apercu">
       {gauche}
+      {children ? <span className="barre-apercu__info">{children}</span> : null}
+      <span className="barre-apercu__espace" />
       <div className="zoom" role="group" aria-label="Zoom de l’aperçu">
         <button type="button" className="zoom__ajuster" aria-pressed={zoom === 'ajuster'} onClick={() => onZoom('ajuster')} title="Ajuster à la largeur">
           <ArrowsHorizontal size={15} aria-hidden="true" /> Ajuster
@@ -165,8 +167,6 @@ export function BarreApercu({ zoom, echelle, onZoom, gauche, children, droite }:
           <MagnifyingGlassPlus size={16} aria-hidden="true" />
         </button>
       </div>
-      {children ? <span className="barre-apercu__info">{children}</span> : null}
-      <span className="barre-apercu__espace" />
       {droite}
     </div>
   )

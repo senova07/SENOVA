@@ -2,6 +2,8 @@
 
 /* L'écran occupe la hauteur sous la barre du haut ; seuls le formulaire et l'aperçu défilent. */
 .page:has(> .atelier) {
+  flex: none; /* sinon flex: 1 de .page ignore la hauteur ci-dessous et le pied sort de l'écran */
+  overflow-x: clip; /* le trait du pied s'étend en ±100vmax */
   max-width: none;
   display: flex; flex-direction: column;
   height: calc(100dvh - var(--topbar-h));
@@ -11,6 +13,8 @@
 }
 .atelier { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .atelier .entete-page { margin-bottom: 14px; }
+.atelier .entete-page__titre { font-size: 26px; }
+.atelier .entete-page__actions { padding-top: 0; align-self: flex-end; }
 
 .atelier__grille { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); gap: 20px; }
 .atelier__formulaire { min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 0 6px 18px 0; scroll-padding-top: 8px; }
@@ -26,6 +30,9 @@
   background: var(--bg); border-bottom: 1px solid var(--border);
 }
 .barre-apercu__espace { flex: 1; }
+/* Onglet actif plein navy comme la maquette (surcharge locale : le ControleSegmente global ne change pas) */
+.barre-apercu .seg__opt[aria-checked="true"] { background: var(--navy); color: var(--white); box-shadow: none; }
+.barre-apercu .seg__opt[aria-checked="true"]:hover { color: var(--white); }
 .barre-apercu__info { font-size: var(--fs-sm); color: var(--text-2); font-variant-numeric: tabular-nums; }
 
 /* Zoom */
@@ -71,7 +78,7 @@
   box-shadow: 0 0 0 100vmax var(--bg); clip-path: inset(0 -100vmax);
 }
 .pied-atelier::before { content: ""; position: absolute; top: 0; left: -100vmax; right: -100vmax; height: 1px; background: var(--border); }
-.pied-atelier__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.pied-atelier__actions { display: flex; gap: 10px; flex-wrap: wrap; margin-left: auto; }
 .pied-atelier .btn { height: 42px; padding: 0 18px; }
 .pied-atelier__statut { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-base); color: var(--text-2); }
 .pied-atelier__pastille { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 0 3px var(--success-bg); }

@@ -1,0 +1,1 @@
+export { PageApparence } from './PageApparence'

@@ -63,7 +63,8 @@ async (page) => {
   await page.setViewportSize({ width: 1440, height: 900 })
   const ecrans = [
     ['aujourdhui', '/'], ['articles', '/articles'], ['clients', '/clients'], ['fiche-client', '/clients/1'],
-    ['devis', '/devis'], ['devis-modeles', '/devis/modeles'],
+    ['devis', '/devis'], ['devis-nouveau', '/devis?nouveau=1'], ['articles-import', '/articles/import'],
+    ['documents-apparence', '/documents/apparence'],
   ]
   const faits = []
   for (const [nom, chemin] of ecrans) {
