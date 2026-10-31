@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Icone } from '@/components/ui/Icone'
-import { useMenu } from '@/hooks/useMenu'
+import { Icone } from '@/ui/Icone'
+import { useMenu } from '@/ui/useMenu'
 import { formaterEuro } from '@/lib/format'
 import { ICONE_STATUT_DEVIS, LIBELLES_STATUT_DEVIS, type Devis, type Totaux } from './donnees'
 
@@ -42,7 +42,7 @@ function MenuLigne({
   }
   const reponse = d.statut === 'envoye'
   return (
-    <div className="menu" ref={ancre}>
+    <div className="menu-ancre" ref={ancre}>
       <button
         type="button"
         className="ligne-actions"

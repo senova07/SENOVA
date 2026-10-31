@@ -1,8 +1,8 @@
 import { useState, type FormEvent, type KeyboardEvent } from 'react'
-import { Bouton } from '@/components/ui/Bouton'
-import { ChampSelect, ChampTexte, ChampZone } from '@/components/ui/Formulaire'
-import { Icone } from '@/components/ui/Icone'
-import { Modale } from '@/components/ui/Modale'
+import { Bouton } from '@/ui/Bouton'
+import { ChampSelect, ChampTexte, ChampZone } from '@/ui/Formulaire'
+import { Icone } from '@/ui/Icone'
+import { Dialogue } from '@/ui/Dialogue'
 import { ErreurApi } from '@/services/http'
 import { apiClients } from '@/services/clientsApi'
 import { useToast } from '@/store/toastContext'
@@ -225,7 +225,7 @@ export function ModaleClient({ client, onFermer, onEnregistre }: Props) {
   const erreurTags = Object.entries(erreurs).find(([champ]) => champ.startsWith('tags'))?.[1]
 
   return (
-    <Modale
+    <Dialogue
       ouvert
       onFermer={onFermer}
       titre={client ? 'Modifier le client' : 'Nouveau client'}
@@ -518,6 +518,6 @@ export function ModaleClient({ client, onFermer, onEnregistre }: Props) {
           maxLength={5000}
         />
       </form>
-    </Modale>
+    </Dialogue>
   )
 }

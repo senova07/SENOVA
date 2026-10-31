@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Bouton } from '@/components/ui/Bouton'
-import { EtatVide } from '@/components/ui/EtatVide'
-import { ChampTexte, ChampZone } from '@/components/ui/Formulaire'
-import { Modale } from '@/components/ui/Modale'
-import { Onglets } from '@/components/ui/Onglets'
+import { Bouton } from '@/ui/Bouton'
+import { EtatVide } from '@/ui/EtatVide'
+import { ChampTexte, ChampZone } from '@/ui/Formulaire'
+import { Dialogue } from '@/ui/Dialogue'
+import { Onglets } from '@/ui/Onglets'
 import { useToast } from '@/store/toastContext'
 import { BarreDevis } from './BarreDevis'
 import { BlocTotaux } from './BlocTotaux'
@@ -396,10 +396,10 @@ function ApercuPleinEcran({
   onFermer(): void
 }) {
   return (
-    <Modale ouvert onFermer={onFermer} titre="Aperçu du devis" soustitre={devis.numero}>
+    <Dialogue ouvert onFermer={onFermer} titre="Aperçu du devis" soustitre={devis.numero}>
       <div className="espace-plein">
         <PanneauApercu devis={devis} modele={modele} />
       </div>
-    </Modale>
+    </Dialogue>
   )
 }

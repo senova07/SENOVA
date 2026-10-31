@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import { Icone, type NomIcone } from '@/components/ui/Icone'
-import { Logo } from '@/components/ui/Logo'
-import { useMenu } from '@/hooks/useMenu'
+import { Icone, type NomIcone } from '@/ui/Icone'
+import { Logo } from '@/ui/Logo'
+import { useMenu } from '@/ui/useMenu'
 import { useToast } from '@/store/toastContext'
 
 const CREATIONS: readonly { libelle: string; icone: NomIcone; chemin?: string }[] = [
@@ -49,7 +49,7 @@ export function Header() {
         <button type="button" className="header__icone header__aide" aria-label="Aide" onClick={bientot}>
           <Icone nom="aide" taille={22} />
         </button>
-        <div className="menu" ref={ancre}>
+        <div className="menu-ancre" ref={ancre}>
           <button
             type="button"
             className="btn-principal header__nouveau"

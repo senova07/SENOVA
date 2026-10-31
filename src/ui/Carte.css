@@ -1,0 +1,18 @@
+/* Pour les écrans pas encore migrés (phase 4) : pas de nouvelle grosse carte. */
+.carte {
+  position: relative; background: var(--bg);
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  box-shadow: var(--shadow-card); padding: 20px;
+}
+.carte--coin::after {
+  content: ''; position: absolute; top: -1px; right: -1px; width: 34px; height: 34px;
+  background: linear-gradient(225deg, var(--teal) 0 50%, transparent 50%);
+  border-top-right-radius: var(--r-sm);
+}
+.carte--kpi { overflow: hidden; }
+/* Dessin de fond très pâle, en bas à droite, sous le texte. */
+.kpi__illustration { position: absolute; right: -8px; bottom: -18px; color: var(--text-3); opacity: 0.25; pointer-events: none; }
+.kpi { position: relative; display: flex; flex-direction: column; gap: 2px; }
+.kpi__libelle { font-size: var(--fs-base); color: var(--text-2); font-weight: 500; }
+.kpi__valeur { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); font-variant-numeric: tabular-nums; }
+.kpi__sous { font-size: var(--fs-base); color: var(--text-2); }

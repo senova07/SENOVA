@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Bouton } from '@/components/ui/Bouton'
-import { EtatVide } from '@/components/ui/EtatVide'
-import { Icone } from '@/components/ui/Icone'
-import { Modale } from '@/components/ui/Modale'
-import { Onglets } from '@/components/ui/Onglets'
-import { Pagination } from '@/components/ui/Pagination'
+import { Bouton } from '@/ui/Bouton'
+import { EtatVide } from '@/ui/EtatVide'
+import { Icone } from '@/ui/Icone'
+import { Dialogue } from '@/ui/Dialogue'
+import { Onglets } from '@/ui/Onglets'
+import { Pagination } from '@/ui/Pagination'
 import { formaterEuro } from '@/lib/format'
 import { apiClients } from '@/services/clientsApi'
 import { useToast } from '@/store/toastContext'
@@ -410,7 +410,7 @@ export function PageDevis() {
       </section>
 
       <ModaleApresAccord devis={accord} onFermer={() => setAccord(null)} />
-      <Modale
+      <Dialogue
         ouvert={aSupprimer !== null}
         onFermer={() => setASupprimer(null)}
         titre="Supprimer ce brouillon ?"
@@ -434,7 +434,7 @@ export function PageDevis() {
         }
       >
         <p>Le brouillon disparaît définitivement. Seuls les brouillons peuvent être supprimés.</p>
-      </Modale>
+      </Dialogue>
     </>
   )
 }

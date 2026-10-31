@@ -1,0 +1,50 @@
+.btn {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 36px; padding: 0 14px;
+  border-radius: var(--r-md);
+  font-size: var(--fs-base); font-weight: 500; white-space: nowrap; text-decoration: none;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.btn svg { flex: none; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn--primary, .btn--primaire { background: var(--primary); color: var(--primary-fg); font-weight: 600; }
+.btn--primary:hover:not(:disabled), .btn--primaire:hover:not(:disabled) { background: var(--primary-hover); }
+.btn--secondary, .btn--secondaire { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.btn--secondary:hover:not(:disabled), .btn--secondaire:hover:not(:disabled) { background: var(--bg-subtle); border-color: var(--border-strong); }
+.btn--ghost, .btn--fantome { color: var(--text-2); }
+.btn--ghost:hover:not(:disabled), .btn--fantome:hover:not(:disabled) { background: var(--bg-hover); color: var(--text); }
+.btn--danger { color: var(--danger); }
+.btn--danger:hover:not(:disabled) { background: var(--danger-bg); border-color: var(--danger); }
+
+.btn--sm { height: 32px; padding: 0 11px; font-size: var(--fs-sm); }
+.btn--lg { height: 44px; padding: 0 20px; font-size: var(--fs-md); }
+.btn--bloc { width: 100%; }
+.btn--icone { padding: 0; width: 36px; }
+.btn--sm.btn--icone { width: 32px; }
+.btn--lg.btn--icone { width: 44px; }
+.btn[aria-pressed="true"] { background: var(--teal-soft); border-color: var(--teal); color: var(--navy); }
+
+/* Micro-facette turquoise dans le coin des boutons principaux */
+.btn--signature { overflow: hidden; }
+.btn--signature::after {
+  content: ""; position: absolute; right: 0; bottom: 0; width: 9px; height: 9px;
+  background: linear-gradient(315deg, var(--teal) 0 50%, transparent 50%);
+  pointer-events: none;
+}
+
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 32px; height: 32px; border-radius: var(--r-sm);
+  color: var(--text-3);
+  transition: background-color .15s ease, color .15s ease;
+}
+.icon-btn:hover:not(:disabled), .icon-btn[aria-expanded="true"] { background: var(--bg-hover); color: var(--text); }
+.icon-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Bouton scindé : action principale + flèche du menu */
+.btn-menu { display: inline-flex; }
+.btn-menu__principal { border-radius: var(--r-md) 0 0 var(--r-md); padding-right: 18px; }
+.btn-menu .menu-ancre { display: flex; }
+.btn-menu__fleche { width: 34px; padding: 0; border-radius: 0 var(--r-md) var(--r-md) 0; box-shadow: inset 1px 0 0 var(--facet-split); }

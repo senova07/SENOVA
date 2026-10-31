@@ -152,15 +152,15 @@ select.lignes-saisie { padding: 0 2px; }
 .espace-echelle { margin: 0 auto; background: var(--blanc); box-shadow: 0 1px 4px rgb(3 31 63 / 14%); overflow: hidden; }
 .espace-feuille { transform-origin: top left; }
 
-.modale[aria-label='Aperçu du devis'] { width: min(1000px, 100%); height: 92vh; }
-.modale[aria-label='Aperçu du devis'] .modale__corps { flex: 1; min-height: 0; padding: 0; }
+.dialogue[aria-label='Aperçu du devis'] { width: min(1000px, 100%); height: 92vh; }
+.dialogue[aria-label='Aperçu du devis'] .dialogue__corps { flex: 1; min-height: 0; padding: 0; }
 .espace-plein { height: 100%; }
 .espace-plein .espace-apercu-panneau { border: 0; border-radius: 0; }
 
 /* ---------- Écrans moyens et petits : onglets Édition / Aperçu ---------- */
 @media (max-width: 1099px) {
   .espace-onglets { display: block; margin-top: 8px; }
-  .espace-onglets .onglets { margin-bottom: 0; }
+  .espace-onglets .tabs { margin-bottom: 0; }
   .espace-corps { display: block; }
   .espace-separateur { display: none; }
   .espace-edition { padding-right: 0; }

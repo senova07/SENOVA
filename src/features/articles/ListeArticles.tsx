@@ -1,5 +1,5 @@
-import { Icone } from '@/components/ui/Icone'
-import { useMenu } from '@/hooks/useMenu'
+import { Icone } from '@/ui/Icone'
+import { useMenu } from '@/ui/useMenu'
 import { formaterEuro, formaterTaux } from '@/lib/format'
 import { LIBELLES_TYPE_ARTICLE, margeArticle, type Article } from '@shared/articles'
 import { COLONNES, ICONE_TYPE, type CleTri, type Colonne, type Tri } from './catalogue'
@@ -37,7 +37,7 @@ function MenuLigne({
     action(a)
   }
   return (
-    <div className="menu" ref={ancre}>
+    <div className="menu-ancre" ref={ancre}>
       <button
         type="button"
         className="ligne-actions"

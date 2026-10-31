@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
-import { Icone, type NomIcone } from '@/components/ui/Icone'
+import { Icone, type NomIcone } from '@/ui/Icone'
+import './EtatVide.css'
 
 interface EtatVideProps {
   icone?: NomIcone

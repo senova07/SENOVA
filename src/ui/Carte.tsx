@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
-import { Icone, type NomIcone } from '@/components/ui/Icone'
+import { Icone, type NomIcone } from '@/ui/Icone'
+import './Carte.css'
 
 interface CarteProps {
   /** Petit triangle turquoise en haut à droite (signature FACET). */

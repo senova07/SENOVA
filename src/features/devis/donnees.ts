@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import type { NomIcone } from '@/components/ui/Icone'
+import type { NomIcone } from '@/ui/Icone'
 
 /**
  * Maquette du lot 2 : devis, modèles de devis et pièces de vente vivent en mémoire côté front.

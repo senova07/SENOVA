@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Bouton } from '@/components/ui/Bouton'
-import { Icone } from '@/components/ui/Icone'
-import { Modale } from '@/components/ui/Modale'
+import { Bouton } from '@/ui/Bouton'
+import { Icone } from '@/ui/Icone'
+import { Dialogue } from '@/ui/Dialogue'
 import { apiArticles } from '@/services/articlesApi'
 import { useToast } from '@/store/toastContext'
 import type { Article } from '@shared/articles'
@@ -56,7 +56,7 @@ export function ModaleOrdre({ articles, onEnregistre, onFermer }: Props) {
   }
 
   return (
-    <Modale
+    <Dialogue
       ouvert
       onFermer={onFermer}
       titre="Ordre des articles"
@@ -137,6 +137,6 @@ export function ModaleOrdre({ articles, onEnregistre, onFermer }: Props) {
           </li>
         ))}
       </ol>
-    </Modale>
+    </Dialogue>
   )
 }

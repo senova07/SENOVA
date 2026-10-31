@@ -78,6 +78,7 @@ import {
   Image,
   HandCoins,
   ArrowSquareOut,
+  Info,
   type IconProps,
 } from '@phosphor-icons/react'
 
@@ -163,6 +164,7 @@ const ICONES = {
   image: Image,
   encaisser: HandCoins,
   ouvrir: ArrowSquareOut,
+  info: Info,
 } satisfies Record<string, ComponentType<IconProps>>
 
 export type NomIcone = keyof typeof ICONES

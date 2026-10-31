@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Icone } from '@/components/ui/Icone'
-import { useMenu } from '@/hooks/useMenu'
+import { Icone } from '@/ui/Icone'
+import { useMenu } from '@/ui/useMenu'
 import { formaterEuro } from '@/lib/format'
 import { nomAffichageClient, type Client } from '@shared/clients'
 import { resteDuClient } from './documentsClient'
@@ -29,7 +29,7 @@ function MenuLigne({
     action(c)
   }
   return (
-    <div className="menu" ref={ancre}>
+    <div className="menu-ancre" ref={ancre}>
       <button
         type="button"
         className="ligne-actions"

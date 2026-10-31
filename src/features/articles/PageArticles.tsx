@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Bouton } from '@/components/ui/Bouton'
-import { Carte } from '@/components/ui/Carte'
-import { EtatVide } from '@/components/ui/EtatVide'
-import { Icone } from '@/components/ui/Icone'
-import { MenuDeroulant } from '@/components/ui/MenuDeroulant'
-import { Modale } from '@/components/ui/Modale'
-import { Onglets } from '@/components/ui/Onglets'
-import { Pagination } from '@/components/ui/Pagination'
+import { Bouton } from '@/ui/Bouton'
+import { Carte } from '@/ui/Carte'
+import { EtatVide } from '@/ui/EtatVide'
+import { Icone } from '@/ui/Icone'
+import { MenuDeroulant } from '@/ui/Menu'
+import { Dialogue } from '@/ui/Dialogue'
+import { Onglets } from '@/ui/Onglets'
+import { Pagination } from '@/ui/Pagination'
 import { formaterTaux } from '@/lib/format'
 import { apiArticles } from '@/services/articlesApi'
 import { useSession } from '@/store/sessionContext'
@@ -589,7 +589,7 @@ export function PageArticles() {
           onFermer={() => changerParametre('categories', null, true)}
         />
       ) : null}
-      <Modale
+      <Dialogue
         ouvert={dialogue?.genre === 'suppression'}
         onFermer={fermer}
         titre="Supprimer cet article ?"
@@ -611,7 +611,7 @@ export function PageArticles() {
           L’article disparaît du catalogue. Pour le garder sans le proposer, passez-le plutôt en
           inactif.
         </p>
-      </Modale>
+      </Dialogue>
     </>
   )
 }

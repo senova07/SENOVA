@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
-import { Bouton } from '@/components/ui/Bouton'
-import { ChampTexte } from '@/components/ui/Formulaire'
-import { Modale } from '@/components/ui/Modale'
+import { Bouton } from '@/ui/Bouton'
+import { ChampTexte } from '@/ui/Formulaire'
+import { Dialogue } from '@/ui/Dialogue'
 import { apiCategories } from '@/services/articlesApi'
 import type { Article, CategorieArticle } from '@shared/articles'
 
@@ -46,7 +46,7 @@ export function ModaleCategories({ categories, articles, onChange, onFermer }: P
   }
 
   return (
-    <Modale
+    <Dialogue
       ouvert
       onFermer={onFermer}
       titre="Catégories"
@@ -132,6 +132,6 @@ export function ModaleCategories({ categories, articles, onChange, onFermer }: P
           })}
         </ul>
       )}
-    </Modale>
+    </Dialogue>
   )
 }

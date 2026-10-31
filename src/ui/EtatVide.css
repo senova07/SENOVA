@@ -1,0 +1,4 @@
+/* Icône sobre, sans cadre ni cercle. */
+.etat-vide { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 28px 16px; color: var(--text-2); }
+.etat-vide__icone { color: var(--text-3); }
+.etat-vide__titre { font-weight: 600; color: var(--navy); font-size: var(--fs-md); }

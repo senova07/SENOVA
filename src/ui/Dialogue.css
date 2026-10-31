@@ -1,0 +1,14 @@
+.dialogue-calque { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; background: var(--overlay); animation: dialogue-fondu .18s ease-out; }
+.dialogue {
+  display: flex; flex-direction: column; width: min(520px, 100%); max-height: 90vh;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-modal); animation: dialogue-entree .2s var(--ease);
+}
+.dialogue:focus { outline: none; }
+.dialogue__entete { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 20px 20px 8px; }
+.dialogue__titre { font-size: var(--fs-lg); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+.dialogue__soustitre { margin-top: 2px; color: var(--text-2); font-size: var(--fs-base); }
+.dialogue__corps { padding: 8px 20px 20px; overflow-y: auto; }
+.dialogue__pied { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--border); background: var(--bg-subtle); border-radius: 0 0 var(--r-lg) var(--r-lg); }
+@keyframes dialogue-fondu { from { opacity: 0; } }
+@keyframes dialogue-entree { from { opacity: 0; transform: translateY(6px); } }

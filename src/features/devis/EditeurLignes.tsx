@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { Bouton } from '@/components/ui/Bouton'
-import { Icone } from '@/components/ui/Icone'
+import { Bouton } from '@/ui/Bouton'
+import { Icone } from '@/ui/Icone'
 import { formaterEuro, formaterTaux } from '@/lib/format'
 import { TAUX_TVA, TAUX_TVA_DEFAUT, UNITES_PAR_DEFAUT, type Article } from '@shared/articles'
 import { ChampNombre } from './ChampNombre'

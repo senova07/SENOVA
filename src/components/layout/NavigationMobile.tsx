@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Icone } from '@/components/ui/Icone'
+import { Icone } from '@/ui/Icone'
 import { CHEMINS_BARRE_MOBILE, NAV_TOUTES } from '@/components/layout/navigation'
 import { useToast } from '@/store/toastContext'
 

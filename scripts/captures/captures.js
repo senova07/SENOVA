@@ -3,7 +3,7 @@
 // Vite lancé avec `npx vite --port 5174` (5173 sert souvent à Relook).
 // Dossier de sortie : variable DOSSIER ci-dessous (avant / apres).
 async (page) => {
-  const DOSSIER = 'docs/captures/avant'
+  const DOSSIER = 'docs/captures/apres'
   const BASE = 'http://localhost:5174'
 
   const organisation = {

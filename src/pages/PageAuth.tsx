@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Bouton } from '@/components/ui/Bouton'
-import { ChampTexte } from '@/components/ui/Formulaire'
-import { Logo } from '@/components/ui/Logo'
+import { Bouton } from '@/ui/Bouton'
+import { ChampTexte } from '@/ui/Formulaire'
+import { Logo } from '@/ui/Logo'
 import { ErreurApi } from '@/services/http'
 import { useSession } from '@/store/sessionContext'
 

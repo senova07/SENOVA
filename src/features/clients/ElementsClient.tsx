@@ -1,5 +1,5 @@
-import { Badge } from '@/components/ui/Badge'
-import { Icone, type NomIcone } from '@/components/ui/Icone'
+import { Badge } from '@/ui/Badge'
+import { Icone, type NomIcone } from '@/ui/Icone'
 import type { Client } from '@shared/clients'
 
 const LIBELLES_NATURE = { particulier: 'Particulier', entreprise: 'Entreprise' } as const

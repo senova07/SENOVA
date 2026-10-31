@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Bouton } from '@/components/ui/Bouton'
-import { Carte } from '@/components/ui/Carte'
-import { Icone } from '@/components/ui/Icone'
-import { MenuDeroulant } from '@/components/ui/MenuDeroulant'
-import { Modale } from '@/components/ui/Modale'
+import { Bouton } from '@/ui/Bouton'
+import { Carte } from '@/ui/Carte'
+import { Icone } from '@/ui/Icone'
+import { MenuDeroulant } from '@/ui/Menu'
+import { Dialogue } from '@/ui/Dialogue'
 import { useToast } from '@/store/toastContext'
 import { ApercuDevis } from './ApercuDevis'
 import { DEVIS_DEMO, magasinModeles, modeleParDefaut, nouvelId, type ModeleDevis } from './donnees'
@@ -174,7 +174,7 @@ export function PageModelesDevis() {
         })}
       </ul>
 
-      <Modale
+      <Dialogue
         ouvert={aSupprimer !== null}
         onFermer={() => setASupprimer(null)}
         titre="Supprimer ce modèle ?"
@@ -189,7 +189,7 @@ export function PageModelesDevis() {
         }
       >
         <p>Les devis déjà créés avec ce modèle utiliseront le modèle par défaut.</p>
-      </Modale>
+      </Dialogue>
     </>
   )
 }

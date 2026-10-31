@@ -21,6 +21,8 @@ export function useMenu() {
     }
     const touche = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        // Capture + arrêt : un calque (Dialogue, PanneauLateral) contenant le menu ne doit pas se fermer aussi.
+        e.stopPropagation()
         setOuvert(false)
         conteneur.querySelector<HTMLElement>('[aria-expanded]')?.focus()
         return
@@ -33,10 +35,10 @@ export function useMenu() {
       liste[(rang + delta + liste.length) % liste.length]?.focus()
     }
     document.addEventListener('mousedown', clic)
-    document.addEventListener('keydown', touche)
+    document.addEventListener('keydown', touche, true)
     return () => {
       document.removeEventListener('mousedown', clic)
-      document.removeEventListener('keydown', touche)
+      document.removeEventListener('keydown', touche, true)
     }
   }, [ouvert, conteneur])
 

@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { ToastContext, type Toast, type ToastContextValue } from '@/store/toastContext'
+import { BoutonIcone } from '@/ui/Bouton'
+import { Icone, type NomIcone } from '@/ui/Icone'
+import { ToastContext, type Toast, type ToastContextValue, type TonToast } from '@/store/toastContext'
+import '@/ui/Toast.css'
 
 const DUREE_MS = 4200
+
+const ICONE_TON: Record<TonToast, NomIcone> = { succes: 'accepte', info: 'info', alerte: 'attention' }
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([])
@@ -34,19 +39,17 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       <div className="toast-pile" role="status" aria-live="polite">
         {toasts.map((toast) => (
           <div key={toast.id} className={`toast toast--${toast.ton}`}>
-            <span className="toast__marqueur" aria-hidden="true" />
+            <Icone nom={ICONE_TON[toast.ton]} taille={18} poids="fill" className="toast__icone" />
             <div className="toast__corps">
               <p className="toast__titre">{toast.titre}</p>
               {toast.message ? <p className="toast__message">{toast.message}</p> : null}
             </div>
-            <button
-              type="button"
+            <BoutonIcone
+              icone="fermer"
+              libelle="Fermer la notification"
               className="toast__fermer"
               onClick={() => retirer(toast.id)}
-              aria-label="Fermer la notification"
-            >
-              ×
-            </button>
+            />
           </div>
         ))}
       </div>

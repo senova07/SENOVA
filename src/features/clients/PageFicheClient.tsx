@@ -1,15 +1,15 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Badge } from '@/components/ui/Badge'
-import { Bouton } from '@/components/ui/Bouton'
-import { Carte } from '@/components/ui/Carte'
-import { EtatVide } from '@/components/ui/EtatVide'
-import { ChampTexte } from '@/components/ui/Formulaire'
-import { Icone } from '@/components/ui/Icone'
-import { Modale } from '@/components/ui/Modale'
-import { Onglets } from '@/components/ui/Onglets'
+import { Badge } from '@/ui/Badge'
+import { Bouton } from '@/ui/Bouton'
+import { Carte } from '@/ui/Carte'
+import { EtatVide } from '@/ui/EtatVide'
+import { ChampTexte } from '@/ui/Formulaire'
+import { Icone } from '@/ui/Icone'
+import { Dialogue } from '@/ui/Dialogue'
+import { Onglets } from '@/ui/Onglets'
 import { magasinDevis } from '@/features/devis/donnees'
-import { useMenu } from '@/hooks/useMenu'
+import { useMenu } from '@/ui/useMenu'
 import { formaterEuro } from '@/lib/format'
 import { apiClients } from '@/services/clientsApi'
 import { ErreurApi } from '@/services/http'
@@ -65,7 +65,7 @@ function MenuFiche({ archive, enCours, onArchiver, onRestaurer, onSupprimer }: M
     action()
   }
   return (
-    <div className="menu" ref={ancre}>
+    <div className="menu-ancre" ref={ancre}>
       <button
         type="button"
         className="btn btn--secondaire btn--icone"
@@ -385,7 +385,7 @@ export function PageFicheClient() {
         />
       ) : null}
 
-      <Modale
+      <Dialogue
         ouvert={dialogue === 'archiver'}
         onFermer={fermer}
         titre="Archiver ce client"
@@ -405,9 +405,9 @@ export function PageFicheClient() {
           onChange={(e) => setMotif(e.target.value)}
           maxLength={255}
         />
-      </Modale>
+      </Dialogue>
 
-      <Modale
+      <Dialogue
         ouvert={dialogue === 'supprimer'}
         onFermer={fermer}
         titre="Supprimer ce client"
@@ -425,7 +425,7 @@ export function PageFicheClient() {
           Supprimer <strong>{nom}</strong> effacera aussi ses adresses et ses contacts. Pour le
           garder sans qu’il encombre la liste, archivez-le plutôt.
         </p>
-      </Modale>
+      </Dialogue>
     </>
   )
 }

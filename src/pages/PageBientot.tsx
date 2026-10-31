@@ -1,8 +1,8 @@
 import { EntetePage } from '@/components/layout/EntetePage'
-import { Badge } from '@/components/ui/Badge'
-import { Carte } from '@/components/ui/Carte'
-import { EtatVide } from '@/components/ui/EtatVide'
-import type { NomIcone } from '@/components/ui/Icone'
+import { Badge } from '@/ui/Badge'
+import { Carte } from '@/ui/Carte'
+import { EtatVide } from '@/ui/EtatVide'
+import type { NomIcone } from '@/ui/Icone'
 
 interface PageBientotProps {
   titre: string

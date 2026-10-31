@@ -1,3 +1,5 @@
+import './Logo.css'
+
 interface LogoProps {
   className?: string
 }

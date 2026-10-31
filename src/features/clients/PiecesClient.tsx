@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { EtatVide } from '@/components/ui/EtatVide'
-import { Icone, type NomIcone } from '@/components/ui/Icone'
+import { EtatVide } from '@/ui/EtatVide'
+import { Icone, type NomIcone } from '@/ui/Icone'
 import { formaterEuro } from '@/lib/format'
 import {
   LIBELLES_STATUT_DEVIS,

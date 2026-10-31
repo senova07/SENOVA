@@ -1,4 +1,4 @@
-import type { NomIcone } from '@/components/ui/Icone'
+import type { NomIcone } from '@/ui/Icone'
 import type { TypeArticle } from '@shared/articles'
 
 /** Colonnes masquables du tableau des articles (« Article » et « Actions » restent toujours). */

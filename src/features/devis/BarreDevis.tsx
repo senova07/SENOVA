@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { Badge, type TonBadge } from '@/components/ui/Badge'
-import { Bouton } from '@/components/ui/Bouton'
-import { Icone } from '@/components/ui/Icone'
-import { MenuDeroulant } from '@/components/ui/MenuDeroulant'
+import { Badge, type TonBadge } from '@/ui/Badge'
+import { Bouton } from '@/ui/Bouton'
+import { Icone } from '@/ui/Icone'
+import { MenuDeroulant } from '@/ui/Menu'
 import { LIBELLES_STATUT_DEVIS, type Devis, type ModeleDevis, type StatutDevis } from './donnees'
 
 const TON: Record<StatutDevis, TonBadge> = {

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { Icone } from '@/components/ui/Icone'
-import { Logo } from '@/components/ui/Logo'
+import { Icone } from '@/ui/Icone'
+import { Logo } from '@/ui/Logo'
 import { NAVIGATION, cheminActif, type RubriqueNav } from '@/components/layout/navigation'
-import { useMenu } from '@/hooks/useMenu'
+import { useMenu } from '@/ui/useMenu'
 import { useSession } from '@/store/sessionContext'
 import { useToast } from '@/store/toastContext'
 
@@ -38,7 +38,7 @@ function RubriqueFlottante({ rubrique, actif }: { rubrique: RubriqueNav; actif?:
   const { ouvert, ancre, basculer, fermer } = useMenu()
   const [haut, setHaut] = useState(0)
   return (
-    <li className="menu" ref={ancre}>
+    <li className="menu-ancre" ref={ancre}>
       <button
         type="button"
         className={`nav-item ${actif ? 'nav-item--contient-actif' : ''}`}

@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
-import { Bouton } from '@/components/ui/Bouton'
-import { ChampTexte, ChampZone } from '@/components/ui/Formulaire'
-import { Modale } from '@/components/ui/Modale'
+import { Bouton } from '@/ui/Bouton'
+import { ChampTexte, ChampZone } from '@/ui/Formulaire'
+import { Dialogue } from '@/ui/Dialogue'
 import type { Devis } from './donnees'
 
 export interface MessageEnvoi {
@@ -59,7 +59,7 @@ function FormulaireEnvoi({ devis, onEnvoyer }: Pick<ModaleEnvoiProps, 'devis' | 
 
 export function ModaleEnvoi({ ouvert, devis, onFermer, onEnvoyer }: ModaleEnvoiProps) {
   return (
-    <Modale
+    <Dialogue
       ouvert={ouvert}
       onFermer={onFermer}
       titre="Envoyer le devis"
@@ -74,6 +74,6 @@ export function ModaleEnvoi({ ouvert, devis, onFermer, onEnvoyer }: ModaleEnvoiP
       }
     >
       <FormulaireEnvoi devis={devis} onEnvoyer={onEnvoyer} />
-    </Modale>
+    </Dialogue>
   )
 }

@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import '@/features/articles/articles.css'
-import { Bouton } from '@/components/ui/Bouton'
-import { Carte } from '@/components/ui/Carte'
-import { EtatVide } from '@/components/ui/EtatVide'
-import { ChampTexte } from '@/components/ui/Formulaire'
-import { Icone } from '@/components/ui/Icone'
-import { MenuDeroulant } from '@/components/ui/MenuDeroulant'
-import { Modale } from '@/components/ui/Modale'
-import { Onglets } from '@/components/ui/Onglets'
-import { Pagination } from '@/components/ui/Pagination'
+import { Bouton } from '@/ui/Bouton'
+import { Carte } from '@/ui/Carte'
+import { EtatVide } from '@/ui/EtatVide'
+import { ChampTexte } from '@/ui/Formulaire'
+import { Icone } from '@/ui/Icone'
+import { MenuDeroulant } from '@/ui/Menu'
+import { Dialogue } from '@/ui/Dialogue'
+import { Onglets } from '@/ui/Onglets'
+import { Pagination } from '@/ui/Pagination'
 import { apiClients } from '@/services/clientsApi'
 import { useSession } from '@/store/sessionContext'
 import { useToast } from '@/store/toastContext'
@@ -430,7 +430,7 @@ export function PageClients() {
         />
       ) : null}
 
-      <Modale
+      <Dialogue
         ouvert={dialogue?.genre === 'archiver'}
         onFermer={fermer}
         titre="Archiver ce client"
@@ -458,7 +458,7 @@ export function PageClients() {
           onChange={(e) => setMotif(e.target.value)}
           maxLength={255}
         />
-      </Modale>
+      </Dialogue>
     </>
   )
 }

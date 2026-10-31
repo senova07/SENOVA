@@ -1,4 +1,5 @@
-import { Icone } from '@/components/ui/Icone'
+import { Icone } from '@/ui/Icone'
+import './Pagination.css'
 
 /** Pages à afficher : toutes jusqu'à 7, sinon début, voisines et fin séparées par « … ». */
 function numerosPages(courante: number, total: number): (number | '…')[] {
@@ -12,7 +13,6 @@ function numerosPages(courante: number, total: number): (number | '…')[] {
   return pages
 }
 
-/** Styles `.pagination*` dans articles.css. */
 export function Pagination({
   page,
   pages,

@@ -1,7 +1,8 @@
 import { useRef, type KeyboardEvent } from 'react'
+import './Onglets.css'
 
 interface OngletsProps<T extends string> {
-  onglets: readonly { id: T; libelle: string }[]
+  onglets: readonly { id: T; libelle: string; compte?: number }[]
   actif: T
   onChoisir(id: T): void
   libelle: string
@@ -12,6 +13,7 @@ interface OngletsProps<T extends string> {
 const idPanneau = (prefixe: string) => `${prefixe}-panneau`
 const idOnglet = (prefixe: string, id: string) => `${prefixe}-onglet-${id}`
 
+/** Onglets soulignés (pas de pilules), flèches gauche / droite. */
 export function Onglets<T extends string>({ onglets, actif, onChoisir, libelle, prefixe }: OngletsProps<T>) {
   const refs = useRef<(HTMLButtonElement | null)[]>([])
 
@@ -25,7 +27,7 @@ export function Onglets<T extends string>({ onglets, actif, onChoisir, libelle, 
   }
 
   return (
-    <div className="onglets" role="tablist" aria-label={libelle}>
+    <div className="tabs" role="tablist" aria-label={libelle}>
       {onglets.map((onglet, rang) => (
         <button
           key={onglet.id}
@@ -35,7 +37,7 @@ export function Onglets<T extends string>({ onglets, actif, onChoisir, libelle, 
           type="button"
           role="tab"
           id={idOnglet(prefixe, onglet.id)}
-          className="onglet"
+          className="tabs__tab"
           aria-selected={onglet.id === actif}
           aria-controls={idPanneau(prefixe)}
           tabIndex={onglet.id === actif ? 0 : -1}
@@ -43,6 +45,7 @@ export function Onglets<T extends string>({ onglets, actif, onChoisir, libelle, 
           onKeyDown={(ev) => clavier(ev, rang)}
         >
           {onglet.libelle}
+          {onglet.compte != null ? <span className="tabs__count num">{onglet.compte}</span> : null}
         </button>
       ))}
     </div>

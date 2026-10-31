@@ -1,6 +1,6 @@
-import { Bouton } from '@/components/ui/Bouton'
-import { Icone, type NomIcone } from '@/components/ui/Icone'
-import { Modale } from '@/components/ui/Modale'
+import { Bouton } from '@/ui/Bouton'
+import { Icone, type NomIcone } from '@/ui/Icone'
+import { Dialogue } from '@/ui/Dialogue'
 import { useToast } from '@/store/toastContext'
 import type { Devis } from './donnees'
 
@@ -25,7 +25,7 @@ const CHOIX: { id: string; icone: NomIcone; titre: string; texte: string; toast:
 export function ModaleApresAccord({ devis, onFermer }: { devis: Devis | null; onFermer(): void }) {
   const { notifier } = useToast()
   return (
-    <Modale
+    <Dialogue
       ouvert={devis !== null}
       onFermer={onFermer}
       titre="Après l’accord"
@@ -53,6 +53,6 @@ export function ModaleApresAccord({ devis, onFermer }: { devis: Devis | null; on
           </li>
         ))}
       </ul>
-    </Modale>
+    </Dialogue>
   )
 }

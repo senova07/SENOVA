@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
-import { Bouton } from '@/components/ui/Bouton'
-import { ChampSelect, ChampTexte, ChampZone } from '@/components/ui/Formulaire'
-import { Modale } from '@/components/ui/Modale'
+import { Bouton } from '@/ui/Bouton'
+import { ChampSelect, ChampTexte, ChampZone } from '@/ui/Formulaire'
+import { Dialogue } from '@/ui/Dialogue'
 import { formaterEuro, formaterTaux, lireDecimal } from '@/lib/format'
 import { apiArticles, apiCategories } from '@/services/articlesApi'
 import { ErreurApi } from '@/services/http'
@@ -175,7 +175,7 @@ export function ModaleArticle({
   }
 
   return (
-    <Modale
+    <Dialogue
       ouvert
       onFermer={onFermer}
       titre={article ? 'Modifier l’article' : 'Nouvel article'}
@@ -330,6 +330,6 @@ export function ModaleArticle({
           Actif (proposé dans les documents)
         </label>
       </form>
-    </Modale>
+    </Dialogue>
   )
 }

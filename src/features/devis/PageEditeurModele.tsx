@@ -1,10 +1,10 @@
 import { useEffect, useState, type MouseEvent, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Bouton } from '@/components/ui/Bouton'
-import { EtatVide } from '@/components/ui/EtatVide'
-import { ChampTexte, ChampZone } from '@/components/ui/Formulaire'
-import { Icone } from '@/components/ui/Icone'
-import { Modale } from '@/components/ui/Modale'
+import { Bouton } from '@/ui/Bouton'
+import { EtatVide } from '@/ui/EtatVide'
+import { ChampTexte, ChampZone } from '@/ui/Formulaire'
+import { Icone } from '@/ui/Icone'
+import { Dialogue } from '@/ui/Dialogue'
 import { useToast } from '@/store/toastContext'
 import { ApercuDevis } from './ApercuDevis'
 import {
@@ -407,7 +407,7 @@ function Editeur({ enregistre }: { enregistre: ModeleDevis }) {
         </div>
       </div>
 
-      <Modale
+      <Dialogue
         ouvert={quitter !== null}
         onFermer={() => setQuitter(null)}
         titre="Quitter sans enregistrer ?"
@@ -422,7 +422,7 @@ function Editeur({ enregistre }: { enregistre: ModeleDevis }) {
         }
       >
         <p>Les réglages de « {enregistre.nom} » n’ont pas été enregistrés.</p>
-      </Modale>
+      </Dialogue>
     </>
   )
 }

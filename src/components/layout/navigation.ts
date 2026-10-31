@@ -1,4 +1,4 @@
-import type { NomIcone } from '@/components/ui/Icone'
+import type { NomIcone } from '@/ui/Icone'
 
 export interface EntreeNav {
   chemin: string

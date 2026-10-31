@@ -1,0 +1,22 @@
+/* Forme en pilule : seule exception de la direction artistique, c'est celle d'un interrupteur. */
+.switch {
+  appearance: none; flex: none; margin: 0;
+  width: 36px; height: 20px; border-radius: 999px;
+  background: var(--switch-off); position: relative; cursor: pointer;
+  transition: background-color .15s ease;
+}
+.switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--white); box-shadow: var(--shadow-knob);
+  transition: transform .15s ease;
+}
+.switch:checked { background: var(--teal); }
+.switch:checked::after { transform: translateX(16px); }
+.switch:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.switch:disabled { opacity: .5; cursor: not-allowed; }
+
+.interrupteur { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+.interrupteur .switch { margin-top: 1px; }
+.interrupteur__texte { display: flex; flex-direction: column; gap: 3px; }
+.interrupteur__libelle { font-weight: 600; color: var(--navy); }
+.interrupteur__aide { font-size: var(--fs-sm); color: var(--text-3); }

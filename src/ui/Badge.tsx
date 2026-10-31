@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import './Badge.css'
 
 export type TonBadge = 'neutre' | 'succes' | 'alerte' | 'danger' | 'info'
 
