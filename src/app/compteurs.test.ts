@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import type { Devis } from '@/features/devis/donnees'
+import type { Devis } from '@/features/devis/types'
 import { devisATraiter } from './compteurs'
 
 const devis = (statut: Devis['statut'], dateCreation = '2026-10-01') =>

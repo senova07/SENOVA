@@ -9,25 +9,14 @@ import { Pagination } from '@/ui/Pagination'
 import { formaterEuro } from '@/lib/format'
 import { apiClients } from '@/services/clientsApi'
 import { useToast } from '@/store/toastContext'
-import { nomAffichageClient, type Client } from '@shared/clients'
-import {
-  aujourdhuiIso,
-  calculerTotaux,
-  copierDevis,
-  nouvelId,
-  sansAccent,
-  dateFinValidite,
-  magasinDevis,
-  magasinModeles,
-  modeleParDefaut,
-  prochainNumero,
-  type Devis,
-  type StatutDevis,
-} from './donnees'
+import { apiDevis } from './api'
+import { aujourdhuiIso, dateFinValidite, sansAccent, totauxDevis } from './calculs'
+import { champsClient } from './champsClient'
 import { ListeDevis, type CleTri, type LigneListe, type Tri } from './ListeDevis'
-import { ModaleApresAccord } from './ModaleApresAccord'
+import { magasinDevis } from './magasin'
+import type { Devis, StatutDevis } from './types'
 import '../articles/articles.css'
-import './devis.css'
+import './liste-devis.css'
 
 const PAR_PAGE = 12
 
@@ -73,42 +62,6 @@ const OPTIONS_TRI: { valeur: string; cle: CleTri; sens: Tri['sens']; libelle: st
 
 const comparerTexte = new Intl.Collator('fr', { sensitivity: 'base', numeric: true }).compare
 
-/** Crée un brouillon vide (modèle par défaut, date du jour) et le renvoie. */
-/** Client de la fiche d'origine : nom, adresse par défaut (une ligne par partie) et courriel. */
-function champsClient(c: Client): Partial<Devis> {
-  const a = c.adresses?.find((x) => x.parDefaut) ?? c.adresses?.[0]
-  return {
-    clientNom: nomAffichageClient(c),
-    clientAdresse: a
-      ? [a.ligne1, a.ligne2, `${a.codePostal} ${a.ville}`.trim()].filter(Boolean).join('\n')
-      : '',
-    clientEmail: c.email ?? undefined,
-  }
-}
-
-function creerBrouillon(client: Partial<Devis> = {}): Devis {
-  const brouillon: Devis = {
-    id: nouvelId(),
-    numero: prochainNumero(magasinDevis.lire()),
-    clientNom: '',
-    clientAdresse: '',
-    objet: '',
-    statut: 'brouillon',
-    dateCreation: aujourdhuiIso(),
-    validiteJours: 30,
-    lignes: [],
-    remise: { mode: 'pourcent', valeur: 0 },
-    acomptePourcent: 30,
-    conditions: modeleParDefaut(magasinModeles.lire()).conditions,
-    notes: '',
-    modeleId: modeleParDefaut(magasinModeles.lire()).id,
-    majLe: new Date().toISOString(),
-    ...client,
-  }
-  magasinDevis.enregistrer(brouillon)
-  return brouillon
-}
-
 function valeurTri(l: LigneListe, cle: CleTri): string | number {
   switch (cle) {
     case 'numero':
@@ -141,9 +94,9 @@ export function PageDevis() {
   const [tri, setTri] = useState<Tri>({ cle: 'date', sens: 'desc' })
   const [numero, setNumero] = useState(1)
   const [aSupprimer, setASupprimer] = useState<Devis | null>(null)
-  const [accord, setAccord] = useState<Devis | null>(null)
 
   // « + Nouveau → Devis » de la topbar arrive ici avec ?nouveau=1 ; la ref évite un 2e brouillon en StrictMode.
+  const echec = () => notifier('Action impossible', { message: 'Réessayez dans un instant.', ton: 'alerte' })
   const creationFaite = useRef(false)
   const demandeCreation = parametres.has('nouveau')
   const clientId = parametres.get('client')
@@ -151,14 +104,17 @@ export function PageDevis() {
     if (!demandeCreation || creationFaite.current) return
     creationFaite.current = true
     const ouvrir = (client?: Partial<Devis>) =>
-      navigate(`/devis/${creerBrouillon(client).id}`, { replace: true })
+      apiDevis.creerBrouillon(client).then(
+        (d) => navigate(`/devis/${d.id}`, { replace: true }),
+        () => notifier('Création impossible', { message: 'Réessayez dans un instant.', ton: 'alerte' }),
+      )
     if (!clientId) ouvrir()
     else
       apiClients.lire(clientId).then(
         (c) => ouvrir(champsClient(c)),
         () => ouvrir(),
       )
-  }, [demandeCreation, clientId, navigate])
+  }, [demandeCreation, clientId, navigate, notifier])
 
   const ongletDemande = parametres.get('onglet')
   const onglet = ONGLETS.find((o) => o.id === ongletDemande) ?? ONGLETS[0]!
@@ -178,7 +134,7 @@ export function PageDevis() {
     const jours = Math.round(
       (new Date(`${fin}T12:00:00`).getTime() - new Date(`${auj}T12:00:00`).getTime()) / 864e5,
     )
-    return { devis, totaux: calculerTotaux(devis.lignes, devis.remise), fin, jours }
+    return { devis, totaux: totauxDevis(devis), fin, jours }
   })
 
   const limite = new Date(`${auj}T12:00:00`)
@@ -234,21 +190,16 @@ export function PageDevis() {
     { libelle: 'Brouillons', valeur: String(compte(['brouillon'])) },
   ]
 
-  const nouveau = () => navigate(`/devis/${creerBrouillon().id}`)
+  const nouveau = () => apiDevis.creerBrouillon().then((d) => navigate(`/devis/${d.id}`), echec)
 
-  const changerStatut = (d: Devis, statut: StatutDevis) =>
-    magasinDevis.enregistrer({
-      ...d,
-      statut,
-      envoyeLe: statut === 'envoye' ? aujourdhuiIso() : d.envoyeLe,
-      majLe: new Date().toISOString(),
-    })
+  const changerStatut = (d: Devis, statut: StatutDevis, titre: string, ton: 'succes' | 'info') =>
+    apiDevis.changerStatut(d.id, statut).then(() => notifier(titre, { message: d.numero, ton }), echec)
 
-  const dupliquer = (d: Devis) => {
-    const copie = copierDevis(d, magasinDevis.lire())
-    magasinDevis.enregistrer(copie)
-    notifier('Devis dupliqué', { message: `Brouillon ${copie.numero}`, ton: 'succes' })
-  }
+  const dupliquer = (d: Devis) =>
+    apiDevis.dupliquer(d.id).then(
+      (copie) => notifier('Devis dupliqué', { message: `Brouillon ${copie.numero}`, ton: 'succes' }),
+      echec,
+    )
 
   const trier = (cle: CleTri) => {
     setTri((t) => ({ cle, sens: t.cle === cle && t.sens === 'asc' ? 'desc' : 'asc' }))
@@ -289,7 +240,7 @@ export function PageDevis() {
           ))}
         </dl>
         <div className="devis-actions">
-          <Bouton onClick={() => navigate('/devis/modeles')}>Modèles</Bouton>
+          <Bouton onClick={() => navigate('/documents/apparence')}>Apparence des documents</Bouton>
           <Bouton variante="primaire" onClick={nouveau}>
             <Icone nom="plus" taille={18} className="devis-plus" />
             Nouveau devis
@@ -383,18 +334,9 @@ export function PageDevis() {
               onTrier={trier}
               onOuvrir={(d) => navigate(`/devis/${d.id}`)}
               onDupliquer={dupliquer}
-              onEnvoye={(d) => {
-                changerStatut(d, 'envoye')
-                notifier('Devis marqué comme envoyé', { message: d.numero, ton: 'succes' })
-              }}
-              onAccepte={(d) => {
-                changerStatut(d, 'accepte')
-                setAccord(d)
-              }}
-              onRefuse={(d) => {
-                changerStatut(d, 'refuse')
-                notifier('Devis marqué comme refusé', { message: d.numero, ton: 'info' })
-              }}
+              onEnvoye={(d) => changerStatut(d, 'envoye', 'Devis marqué comme envoyé', 'succes')}
+              onAccepte={(d) => changerStatut(d, 'accepte', 'Devis marqué comme accepté', 'succes')}
+              onRefuse={(d) => changerStatut(d, 'refuse', 'Devis marqué comme refusé', 'info')}
               onSupprimer={setASupprimer}
             />
           )}
@@ -409,7 +351,6 @@ export function PageDevis() {
         </footer>
       </section>
 
-      <ModaleApresAccord devis={accord} onFermer={() => setAccord(null)} />
       <Dialogue
         ouvert={aSupprimer !== null}
         onFermer={() => setASupprimer(null)}
@@ -423,9 +364,12 @@ export function PageDevis() {
               icone="poubelle"
               onClick={() => {
                 if (!aSupprimer) return
-                magasinDevis.supprimer(aSupprimer.id)
-                notifier('Brouillon supprimé', { message: aSupprimer.numero, ton: 'succes' })
+                const { id, numero } = aSupprimer
                 setASupprimer(null)
+                apiDevis.supprimer(id).then(
+                  () => notifier('Brouillon supprimé', { message: numero, ton: 'succes' }),
+                  echec,
+                )
               }}
             >
               Supprimer

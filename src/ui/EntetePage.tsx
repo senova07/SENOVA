@@ -10,6 +10,8 @@ export interface MiettePage {
 
 interface EntetePageProps {
   titre: string
+  /** Texte discret à la suite du titre, dans le <h1> (ex. un numéro de document). */
+  complement?: string
   sousTitre?: string
   /** Nombre affiché à côté du titre. */
   compteur?: number
@@ -18,7 +20,7 @@ interface EntetePageProps {
 }
 
 /** En-tête de page : fil d'Ariane optionnel, titre, description et actions. */
-export function EntetePage({ titre, sousTitre, compteur, filAriane, actions }: EntetePageProps) {
+export function EntetePage({ titre, complement, sousTitre, compteur, filAriane, actions }: EntetePageProps) {
   return (
     <header className="entete-page">
       <div className="entete-page__texte">
@@ -33,6 +35,7 @@ export function EntetePage({ titre, sousTitre, compteur, filAriane, actions }: E
         ) : null}
         <h1 className="entete-page__titre">
           {titre}
+          {complement ? <span className="entete-page__complement num">{complement}</span> : null}
           {compteur != null ? <span className="entete-page__compteur num">{compteur}</span> : null}
         </h1>
         {sousTitre ? <p className="entete-page__sous">{sousTitre}</p> : null}

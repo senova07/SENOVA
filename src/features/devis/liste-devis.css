@@ -1,0 +1,51 @@
+/* ---------- Liste des devis (complète articles.css) ---------- */
+.devis-actions { position: relative; z-index: 1; display: flex; gap: 10px; margin-bottom: 4px; }
+.devis-plus { display: none; }
+.devis-vide { color: var(--texte-doux); }
+
+.tableau-articles.devis-table { min-width: 940px; }
+.devis-ligne { cursor: pointer; }
+.devis-table .article__nom { white-space: nowrap; }
+.devis-table a.article__nom:hover { color: var(--bleu); text-decoration: underline; text-underline-offset: 3px; }
+.devis-c-client { font-weight: 500; color: var(--navy); }
+.devis-c-objet { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.devis-validite { display: block; font-size: 12.5px; font-weight: 600; }
+.devis-validite--orange { color: var(--alerte); }
+.devis-validite--rouge { color: var(--danger); }
+
+/* Statut : texte + petite icône, jamais la couleur seule, sans fond. */
+.devis-statut { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.devis-statut--brouillon { color: var(--texte-doux); }
+.devis-statut--envoye { color: var(--bleu); }
+.devis-statut--accepte { color: var(--succes); }
+.devis-statut--refuse { color: var(--danger); }
+.devis-statut--expire { color: var(--alerte); }
+
+/* ---------- Mobile : une carte par devis ---------- */
+@media (max-width: 767px) {
+  .devis-plus { display: inline-block; }
+  .devis-actions { width: 100%; }
+  .devis-actions .btn { flex: 1; }
+  .devis-defile { overflow: visible; padding: 0 14px; }
+  .tableau-articles.devis-table { min-width: 0; display: block; }
+  .devis-table thead { display: none; }
+  .devis-table tbody { display: block; }
+  .tableau-articles.devis-table tr {
+    position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; padding: 14px 0;
+    border-bottom: 1px solid var(--bordure-douce);
+    grid-template-areas: 'numero numero' 'client client' 'objet objet' 'date validite' 'ht ttc' 'statut statut';
+  }
+  .tableau-articles.devis-table td { display: block; height: auto; padding: 0; border: 0; text-align: left; min-width: 0; }
+  .devis-table td[data-zone='numero'] { grid-area: numero; padding-right: 44px; }
+  .devis-table td[data-zone='client'] { grid-area: client; }
+  .devis-table td[data-zone='objet'] { grid-area: objet; white-space: normal; max-width: none; color: var(--texte-doux); }
+  .devis-table td[data-zone='date'] { grid-area: date; }
+  .devis-table td[data-zone='validite'] { grid-area: validite; }
+  .devis-table td[data-zone='ht'] { grid-area: ht; }
+  .devis-table td[data-zone='ttc'] { grid-area: ttc; }
+  .devis-table td[data-zone='statut'] { grid-area: statut; }
+  .tableau-articles.devis-table td.num { text-align: left; }
+  .devis-table td[data-label]::before { content: attr(data-label); display: block; font-size: 12px; color: var(--texte-doux); }
+  .tableau-articles.devis-table td.c-actions { position: absolute; top: 8px; right: 0; width: auto; }
+}

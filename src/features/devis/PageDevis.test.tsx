@@ -1,11 +1,12 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { StrictMode } from 'react'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import { apiClients } from '@/services/clientsApi'
 import type { Client } from '@shared/clients'
 import { ToastProvider } from '@/store/ToastProvider'
-import { DEVIS_DEMO, magasinDevis } from './donnees'
+import { DEVIS_DEMO } from './demo'
+import { magasinDevis } from './magasin'
 import { PageDevis } from './PageDevis'
 
 function Lieu() {
@@ -48,22 +49,28 @@ describe('PageDevis', () => {
     expect(screen.getByText('Aucun devis ne correspond')).toBeTruthy()
   })
 
-  it('Nouveau devis crée un brouillon et ouvre sa page', () => {
+  it('Nouveau devis crée un brouillon et ouvre sa page', async () => {
     const avant = magasinDevis.lire().length
     monter('/devis')
     fireEvent.click(screen.getByRole('button', { name: /Nouveau devis/ }))
+    expect((await screen.findByTestId('lieu')).textContent).toBe(`/devis/${magasinDevis.lire()[0]!.id}`)
     expect(magasinDevis.lire()).toHaveLength(avant + 1)
-    expect(screen.getByTestId('lieu').textContent).toBe(`/devis/${magasinDevis.lire()[0]!.id}`)
   })
 
-  it('?nouveau=1 crée un seul brouillon, même en StrictMode', () => {
+  it('?nouveau=1 crée un seul brouillon, même en StrictMode', async () => {
     const avant = magasinDevis.lire().length
     monter('/devis?nouveau=1', true)
+    expect((await screen.findByTestId('lieu')).textContent).toMatch(/^\/devis\/\w+$/)
     expect(magasinDevis.lire()).toHaveLength(avant + 1)
-    expect(screen.getByTestId('lieu').textContent).toMatch(/^\/devis\/\w+$/)
   })
 
-  it('supprime un brouillon après confirmation', () => {
+  it('« Apparence des documents » mène à l’écran Apparence', () => {
+    monter('/devis')
+    fireEvent.click(screen.getByRole('button', { name: 'Apparence des documents' }))
+    expect(screen.getByTestId('lieu').textContent).toBe('/documents/apparence')
+  })
+
+  it('supprime un brouillon après confirmation', async () => {
     monter('/devis')
     fireEvent.click(screen.getByRole('tab', { name: /Brouillons/ }))
     const avant = magasinDevis.lire().length
@@ -71,7 +78,7 @@ describe('PageDevis', () => {
     fireEvent.click(screen.getByRole('menuitem', { name: /Supprimer/ }))
     const modale = screen.getByRole('dialog', { name: 'Supprimer ce brouillon ?' })
     fireEvent.click(within(modale).getByRole('button', { name: /Supprimer/ }))
-    expect(magasinDevis.lire()).toHaveLength(avant - 1)
+    await waitFor(() => expect(magasinDevis.lire()).toHaveLength(avant - 1))
   })
 
   it('?nouveau=1&client= préremplit le brouillon depuis la fiche client', async () => {

@@ -5,17 +5,11 @@ import { MenuDeroulant } from '@/ui/Menu'
 import { formaterEuro } from '@/lib/format'
 import { useSession } from '@/store/sessionContext'
 import { useToast } from '@/store/toastContext'
-import {
-  FACTURES_DEMO,
-  ICONE_STATUT_DEVIS,
-  LIBELLES_STATUT_DEVIS,
-  PRESTATIONS_DU_JOUR,
-  calculerTotaux,
-  dateFinValidite,
-  magasinDevis,
-  type Devis,
-  type StatutDevis,
-} from '@/features/devis/donnees'
+import { calculerTotaux, dateFinValidite } from '@/features/devis/calculs'
+import { FACTURES_DEMO, PRESTATIONS_DU_JOUR } from '@/features/devis/demo'
+import { magasinDevis } from '@/features/devis/magasin'
+import { ICONE_STATUT_DEVIS, LIBELLES_STATUT_DEVIS } from '@/features/devis/statuts'
+import type { Devis, StatutDevis } from '@/features/devis/types'
 import './aujourdhui.css'
 
 const dateDuJour = new Intl.DateTimeFormat('fr-FR', {

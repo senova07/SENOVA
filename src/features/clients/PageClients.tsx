@@ -14,7 +14,7 @@ import { apiClients } from '@/services/clientsApi'
 import { useSession } from '@/store/sessionContext'
 import { useToast } from '@/store/toastContext'
 import { nomAffichageClient, type Client } from '@shared/clients'
-import { sansAccent } from '@/features/devis/donnees'
+import { sansAccent } from '@/features/devis/calculs'
 import { resteDuClient } from './documentsClient'
 import {
   COLONNES_CLIENT,

@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import { Icone } from '@/ui/Icone'
 import { useMenu } from '@/ui/useMenu'
 import { formaterEuro } from '@/lib/format'
-import { ICONE_STATUT_DEVIS, LIBELLES_STATUT_DEVIS, type Devis, type Totaux } from './donnees'
+import { ICONE_STATUT_DEVIS, LIBELLES_STATUT_DEVIS } from './statuts'
+import type { Devis, Totaux } from './types'
 
 export type CleTri = 'numero' | 'client' | 'objet' | 'date' | 'validite' | 'ht' | 'ttc' | 'statut'
 export interface Tri {

@@ -1,10 +1,6 @@
-import {
-  FACTURES_DEMO,
-  calculerTotaux,
-  type Devis,
-  type FactureDemo,
-} from '@/features/devis/donnees'
-import { sansAccent } from '@/features/devis/donnees'
+import { calculerTotaux, sansAccent } from '@/features/devis/calculs'
+import { FACTURES_DEMO, type FactureDemo } from '@/features/devis/demo'
+import type { Devis } from '@/features/devis/types'
 import { nomAffichageClient, type Client } from '@shared/clients'
 
 /** Maquette : les pièces de vente sont rattachées au client par son nom affiché. */

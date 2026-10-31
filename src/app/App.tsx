@@ -11,9 +11,7 @@ import { PageClients } from '@/features/clients/PageClients'
 import { PageFicheClient } from '@/features/clients/PageFicheClient'
 import { PageBientot } from '@/pages/PageBientot'
 import { PageDevis } from '@/features/devis/PageDevis'
-import { PageEspaceDevis } from '@/features/devis/PageEspaceDevis'
-import { PageModelesDevis } from '@/features/devis/PageModelesDevis'
-import { PageEditeurModele } from '@/features/devis/PageEditeurModele'
+import { PageEditeurDevis } from '@/features/devis/PageEditeurDevis'
 
 /** Anciennes rubriques sorties du menu : les liens existants restent valides. */
 const ANCIENNES_PAGES = [
@@ -39,9 +37,9 @@ export const routeur = createBrowserRouter(
           <Route path="/clients" element={<PageClients />} />
           <Route path="/clients/:id" element={<PageFicheClient />} />
           <Route path="/devis" element={<PageDevis />} />
-          <Route path="/devis/modeles" element={<PageModelesDevis />} />
-          <Route path="/devis/modeles/:id" element={<PageEditeurModele />} />
-          <Route path="/devis/:id" element={<PageEspaceDevis />} />
+          <Route path="/devis/modeles" element={<Navigate replace to="/documents/apparence" />} />
+          <Route path="/devis/modeles/:id" element={<Navigate replace to="/documents/apparence" />} />
+          <Route path="/devis/:id" element={<PageEditeurDevis />} />
           {TOUTES_ENTREES.filter((e) => !e.disponible).map((e) => (
             <Route key={e.chemin} path={e.chemin} element={<PageBientot titre={e.libelle} icone={e.iconePage ?? 'vide'} />} />
           ))}

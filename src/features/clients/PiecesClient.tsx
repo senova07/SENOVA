@@ -3,12 +3,9 @@ import { Link } from 'react-router-dom'
 import { EtatVide } from '@/ui/EtatVide'
 import { Icone, type NomIcone } from '@/ui/Icone'
 import { formaterEuro } from '@/lib/format'
-import {
-  LIBELLES_STATUT_DEVIS,
-  type Devis,
-  type FactureDemo,
-  type StatutDevis,
-} from '@/features/devis/donnees'
+import type { FactureDemo } from '@/features/devis/demo'
+import { LIBELLES_STATUT_DEVIS } from '@/features/devis/statuts'
+import type { Devis, StatutDevis } from '@/features/devis/types'
 import { devisTtc } from './documentsClient'
 import { StatutPiece } from './ElementsClient'
 
