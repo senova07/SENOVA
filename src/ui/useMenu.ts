@@ -42,5 +42,11 @@ export function useMenu() {
     }
   }, [ouvert, conteneur])
 
-  return { ouvert, ancre, basculer: () => setOuvert((o) => !o), fermer: () => setOuvert(false) }
+  /** Ferme après un choix : le focus revient au déclencheur, comme avec Échap. */
+  const fermer = () => {
+    setOuvert(false)
+    conteneur?.querySelector<HTMLElement>('[aria-expanded]')?.focus()
+  }
+
+  return { ouvert, ancre, basculer: () => setOuvert((o) => !o), fermer }
 }

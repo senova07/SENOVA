@@ -1,0 +1,93 @@
+/* Règles encore partagées par Clients et Devis (classes tableau-articles, outil, entete-articles…).
+   À migrer vers src/ui quand ces écrans passeront au design system, puis supprimer ce fichier. */
+/* ---------- Articles : en-tête (fil d'Ariane, titre, stats en texte, rayures) ---------- */
+.entete-articles { position: relative; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; padding: 0 4px 18px; }
+.entete-articles__texte { position: relative; z-index: 1; min-width: 0; }
+.entete-articles__deco {
+  position: absolute; z-index: 0; top: -18px; right: 34%; width: 150px; height: calc(100% + 18px); pointer-events: none;
+  background: linear-gradient(115deg, transparent 38%, rgb(2 202 204 / 55%) 38% 52%, transparent 52% 60%, rgb(2 166 174 / 18%) 60% 74%, transparent 74%);
+  clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
+  opacity: 0.6;
+}
+.ariane { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--texte); margin-bottom: 4px; }
+.ariane svg { color: var(--texte-doux); }
+.entete-articles__titre { font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.025em; color: var(--navy); }
+.entete-articles__sous { color: var(--texte-doux); font-size: 15.5px; margin-top: 4px; }
+.stats-articles { position: relative; z-index: 1; display: flex; margin: 0 0 4px; }
+.stats-articles__item { display: flex; flex-direction: column-reverse; padding: 0 28px; border-left: 1px solid var(--bordure); }
+.stats-articles__item:first-child { border-left: 0; padding-left: 0; }
+.stats-articles dd { margin: 0; font-size: 22px; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; line-height: 1.2; }
+.stats-articles dt { font-size: 13.5px; color: var(--texte-doux); }
+
+/* ---------- Articles : surface de travail ---------- */
+.surface-articles { background: var(--surface); border: 1px solid var(--bordure-douce); border-radius: var(--rayon-lg); box-shadow: 0 1px 3px rgb(3 31 63 / 4%), 0 8px 24px rgb(3 31 63 / 3%); padding: 4px 0 0; }
+.surface-articles .tabs { margin: 0 18px; border-bottom-color: var(--bordure-douce); }
+.outils-articles { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding: 16px 18px; }
+.outils-articles__recherche { flex: 1 1 260px; max-width: 352px; }
+.outils-articles__recherche .recherche__saisie { min-height: 38px; padding-right: 12px; }
+.outils-articles__espace { flex: 1; }
+.outil {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 14px;
+  background: var(--surface); border: 1px solid var(--bordure); border-radius: var(--rayon);
+  color: var(--navy); font-size: 13px; font-weight: 600; white-space: nowrap;
+  transition: border-color 160ms, background 160ms;
+}
+.outil:hover { border-color: var(--bordure-forte); background: var(--surface-soft); }
+.outil[aria-expanded='true'] { border-color: var(--turquoise); }
+.outil--select {
+  appearance: none; min-width: 130px; padding-right: 34px; font-weight: 500; cursor: pointer;
+  background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 256 256'%3E%3Cpath fill='none' stroke='%23031f3f' stroke-width='24' stroke-linecap='round' stroke-linejoin='round' d='M208 96l-80 80-80-80'/%3E%3C/svg%3E") no-repeat right 12px center;
+}
+.menu__coche { width: 16px; display: inline-flex; color: var(--turquoise); }
+.menu__item--danger { color: var(--danger); }
+.menu__liste--dessus { top: auto; bottom: calc(100% + 6px); }
+
+/* ---------- Articles : tableau ---------- */
+/* shortcut: sous 1280px, avec 3 lignes ou moins, le menu ⋮ peut être rogné par le défilement horizontal ; passer en position fixe si gênant. */
+.tableau-defile { overflow-x: auto; padding: 0 18px; }
+@media (min-width: 1280px) { .tableau-defile { overflow: visible; } }
+.tableau-articles { width: 100%; min-width: 980px; border-collapse: collapse; font-size: 13.5px; }
+.tableau-articles th { height: 40px; padding: 0 12px; text-align: left; font-size: 13px; font-weight: 600; color: var(--navy); background: var(--surface-soft); white-space: nowrap; }
+.tableau-articles th:first-child { border-radius: var(--rayon) 0 0 var(--rayon); }
+.tableau-articles th:last-child { border-radius: 0 var(--rayon) var(--rayon) 0; }
+.tableau-articles td { height: 60px; padding: 0 12px; border-bottom: 1px solid var(--bordure-douce); color: var(--texte); vertical-align: middle; }
+.tableau-articles tbody tr { transition: background 140ms; }
+.tableau-articles tbody tr:hover, .tableau-articles tbody tr.ligne--cochee { background: #f8fbfd; }
+.tableau-articles .num { text-align: right; font-variant-numeric: tabular-nums; }
+.tri { display: inline-flex; align-items: center; gap: 6px; padding: 0; background: none; border: 0; font: inherit; color: inherit; }
+.article__nom { padding: 0; background: none; border: 0; font-weight: 600; color: var(--navy); text-align: left; font-size: 13.5px; }
+.article__nom:hover:not(:disabled) { color: var(--bleu); text-decoration: underline; text-underline-offset: 3px; }
+.article__nom:disabled { cursor: default; }
+.c-prix { font-weight: 600; color: var(--navy); }
+.statut { display: inline-flex; align-items: center; gap: 7px; padding: 2px 9px 2px 7px; border-radius: var(--rayon); font-size: 12.5px; font-weight: 500; }
+.statut::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.statut--actif { background: #e6f7f6; color: #0b7f80; }
+.statut--inactif { background: #fdf1e4; color: #b5600b; }
+.c-actions { width: 80px; text-align: right; }
+.tableau-articles th.c-actions { text-align: right; }
+.c-actions .menu-ancre { justify-content: flex-end; }
+.ligne-actions { width: 34px; height: 34px; display: grid; place-items: center; background: none; border: 0; border-radius: var(--rayon); color: var(--navy); }
+.ligne-actions:hover:not(:disabled), .ligne-actions[aria-expanded='true'] { background: var(--surface-soft); }
+.ligne-actions:disabled { opacity: 0.4; cursor: default; }
+.surface-articles .etat-vide { padding: 48px 16px; }
+
+/* ---------- Articles : pied (sélection, compte, pagination) ---------- */
+.pied-articles { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 18px; font-size: 13.5px; color: var(--texte-doux); }
+.pied-articles__compte { margin-left: auto; }
+
+.case { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 14px; color: var(--texte); cursor: pointer; }
+.case input { width: 18px; height: 18px; accent-color: var(--navy); }
+
+@media (max-width: 899px) {
+  .entete-articles__deco { display: none; }
+  .entete-articles__titre { font-size: 28px; }
+  .stats-articles__item { padding: 0 16px; }
+  .outils-articles__recherche { max-width: none; flex-basis: 100%; }
+  .outils-articles__espace { display: none; }
+  .pied-articles__compte { margin-left: 0; }
+}
+
+.tri svg { color: var(--texte-doux); }
+.tri--actif svg { color: var(--turquoise); }
+.outil--select:hover { background-color: var(--surface-soft); }
+.vignette { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: var(--rayon); background: var(--bg-tertiary); border: 1px solid var(--bordure-douce); color: var(--texte-doux); }
