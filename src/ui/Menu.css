@@ -1,0 +1,39 @@
+.menu-ancre { position: relative; display: inline-flex; }
+
+/* Panneau du composant Menu (ou panneau écrit par l'appelant avec la classe `menu`). */
+.menu {
+  position: absolute; z-index: 70; top: calc(100% + 6px); min-width: 200px; padding: 5px;
+  display: flex; flex-direction: column;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-pop);
+  animation: menu-entree .12s ease-out;
+}
+.menu--gauche { left: 0; }
+.menu--droite { right: 0; }
+/* Menu ⋮ des dernières lignes d'un tableau : s'ouvre vers le haut. */
+.menu-ligne--haut .menu { top: auto; bottom: calc(100% + 6px); }
+
+.menu__item {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  min-height: 32px; padding: 0 9px; border-radius: var(--r-sm);
+  font-size: var(--fs-base); color: var(--text); text-align: left; text-decoration: none;
+}
+.menu__item svg { color: var(--text-2); flex: none; }
+.menu__item:hover:not(:disabled), .menu__item:focus-visible { background: var(--bg-hover); outline: none; }
+.menu__item:disabled { color: var(--text-3); cursor: not-allowed; }
+.menu__item .kbd { margin-left: auto; }
+.menu__item--danger, .menu__item--danger svg { color: var(--danger); }
+.menu__item--danger:hover:not(:disabled) { background: var(--danger-bg); }
+.menu__item[aria-checked="true"] { font-weight: 600; color: var(--navy); }
+.menu__sep { height: 1px; margin: 5px -5px; background: var(--border-soft); }
+.menu__label { padding: 6px 9px 4px; font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); }
+.menu__note { margin-left: auto; font-size: var(--fs-sm); color: var(--text-3); }
+
+.kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 20px; padding: 0 5px;
+  border: 1px solid var(--border); border-radius: 4px;
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); background: var(--bg-subtle);
+}
+
+@keyframes menu-entree { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }

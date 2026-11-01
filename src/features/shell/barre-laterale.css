@@ -1,0 +1,188 @@
+/*
+ * Barre latérale SENOVA, reprise de la maquette (sidebar.css).
+ * 256 px · fond marine · en-tête blanc à silhouette polygonale · entrée active blanche
+ * avec facette turquoise en biais · coin bas droit blanc.
+ */
+.barre-laterale {
+  --sb-pad: 20px;
+  --sb-item-h: 34px;
+
+  position: sticky; top: 0;
+  display: flex; flex-direction: column;
+  flex: none; width: var(--sidebar-w); height: 100vh; height: 100dvh;
+  background: var(--navy);
+  color: var(--sb-text);
+  overflow: hidden;
+  transition: width .2s ease;
+  z-index: 40;
+}
+
+/* Les couleurs des SVG passent par ces classes (jetons uniquement). */
+.forme-turquoise { fill: var(--teal); }
+.forme-blanc { fill: var(--white); }
+.reflet-haut { stop-color: var(--sb-glow); stop-opacity: 0.38; }
+.reflet-bas { stop-color: var(--navy); stop-opacity: 0; }
+
+/* ───── En-tête 142 px ───── */
+.entete-barre { position: relative; flex: none; height: 142px; }
+.entete-barre__forme { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.entete-barre__logo {
+  position: absolute; left: 28px; top: 42px; z-index: 1;
+  display: flex; align-items: center; gap: 13px;
+  border-radius: 6px;
+}
+.entete-barre__marque { display: block; width: auto; height: 41px; }
+.entete-barre__mot { display: block; width: auto; height: 14.5px; }
+
+.entete-barre__replier {
+  position: absolute; top: 8px; right: 8px; z-index: 1;
+  width: 28px; height: 28px; border-radius: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--text-3); opacity: 0;
+  transition: opacity .15s ease, background-color .15s ease, color .15s ease;
+}
+.barre-laterale:hover .entete-barre__replier,
+.entete-barre__replier:focus-visible { opacity: 1; }
+.entete-barre__replier:hover { background: var(--bg-hover); color: var(--navy); }
+
+/* ───── Corps ───── */
+.corps-barre {
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
+  padding: 11px var(--sb-pad) 38px;
+}
+
+.nouveau-barre { position: relative; margin-bottom: 16px; }
+.nouveau-barre .menu-ancre { display: flex; width: 100%; }
+.nouveau-barre__bouton {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  width: 100%; height: 44px; border-radius: 6px;
+  background: var(--teal); color: var(--white);
+  font-size: 15px; font-weight: 600;
+  transition: background-color .15s ease;
+}
+.nouveau-barre__bouton:hover { background: var(--teal-dark); }
+.nouveau-barre .menu { width: 236px; color: var(--text); }
+
+/* ───── Navigation ───── */
+.navigation-barre {
+  flex: 1; min-height: 0; overflow-y: auto;
+  margin: 0 calc(-1 * var(--sb-pad)); padding: 0 var(--sb-pad);
+  scrollbar-width: thin; scrollbar-color: var(--sb-scroll) transparent;
+}
+.navigation-barre::-webkit-scrollbar-thumb { background-color: var(--sb-scroll); }
+.navigation-barre__groupe + .navigation-barre__groupe { margin-top: 10px; }
+.navigation-barre__titre {
+  height: 22px; display: flex; align-items: center; padding: 0 12px; margin-bottom: 2px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--sb-muted);
+}
+
+.element-nav {
+  position: relative; isolation: isolate;
+  display: flex; align-items: center; gap: 14px;
+  width: 100%; height: var(--sb-item-h); padding: 0 12px; margin-bottom: 2px;
+  border-radius: 6px;
+  color: var(--sb-text); text-decoration: none; text-align: left;
+  font-size: 14.5px; font-weight: 500;
+  transition: background-color .15s ease, color .15s ease;
+}
+.element-nav__icone { flex: none; color: var(--white); }
+.element-nav__libelle { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.element-nav__compteur { margin-left: auto; font-size: 13px; font-weight: 500; color: var(--white); font-variant-numeric: tabular-nums; }
+.element-nav__compteur--alerte { color: var(--sb-alert); font-weight: 600; }
+.element-nav:hover { background: var(--sb-hover); }
+.element-nav:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
+
+/* Actif : plaque blanche pleine ; facette turquoise en diagonale dans le coin droit, puis coin marine */
+.element-nav[aria-current="page"] {
+  background: var(--white);
+  color: var(--navy); font-weight: 600;
+  border-radius: 6px 0 0 6px;
+  overflow: hidden;
+  outline: none;
+}
+.element-nav[aria-current="page"]:hover { background: var(--white); }
+.element-nav[aria-current="page"] .element-nav__icone { color: var(--navy); }
+.element-nav[aria-current="page"] .element-nav__compteur { color: var(--text-2); margin-right: 22px; }
+.element-nav[aria-current="page"]::before,
+.element-nav[aria-current="page"]::after {
+  content: ""; position: absolute; top: -1px; right: -1px; bottom: -1px;
+  width: 31px; pointer-events: none;
+}
+.element-nav[aria-current="page"]::before {
+  background: var(--teal);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+.element-nav[aria-current="page"]::after {
+  background: var(--navy);
+  clip-path: polygon(100% 30%, 100% 100%, 30% 100%);
+}
+
+/* ───── Pied ───── */
+.pied-barre { flex: none; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--sb-line); }
+.pied-barre > .element-nav { margin-bottom: 8px; }
+.pied-barre .menu-ancre { display: flex; width: 100%; }
+.pied-barre .menu { top: auto; bottom: calc(100% + 6px); min-width: 216px; color: var(--text); }
+.utilisateur-barre {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 12px 4px 0 4px;
+  border-top: 1px solid var(--sb-line);
+  color: var(--white); text-align: left;
+}
+.utilisateur-barre__avatar {
+  flex: none;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--sb-avatar); color: var(--navy);
+  font-size: 14px; font-weight: 600;
+}
+.utilisateur-barre__texte { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3; }
+.utilisateur-barre__nom, .utilisateur-barre__org { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.utilisateur-barre__nom { font-size: 14.5px; font-weight: 600; }
+.utilisateur-barre__org { font-size: 13px; color: var(--sb-text); }
+.utilisateur-barre__chevron { flex: none; margin-right: 6px; color: var(--sb-text); }
+
+/* ───── Coin inférieur droit ───── */
+.coin-barre { position: absolute; right: 0; bottom: 0; width: 86px; height: 60px; display: block; pointer-events: none; }
+
+/* ───── Infobulle (mode réduit), aussi au focus ───── */
+.infobulle-barre {
+  position: fixed; top: var(--infobulle-haut); left: var(--infobulle-gauche); transform: translateY(-50%); z-index: 70;
+  padding: 5px 9px; border-radius: 5px;
+  background: var(--navy-deep); color: var(--white); box-shadow: var(--shadow-pop);
+  font-size: var(--fs-sm); font-weight: 500; white-space: nowrap; pointer-events: none;
+}
+
+/* ───── Mode réduit (rail de 76 px) ───── */
+/* Le menu « Nouveau » s'ouvre à droite du rail : il ne doit pas être rogné. */
+.barre-laterale[data-replie="true"] { width: var(--sidebar-rail); --sb-pad: 12px; overflow: visible; }
+.barre-laterale[data-replie="true"] .entete-barre { height: 84px; }
+.barre-laterale[data-replie="true"] .entete-barre__logo { left: 50%; top: 10px; transform: translateX(-50%); }
+.barre-laterale[data-replie="true"] .entete-barre__marque { height: 36px; }
+.barre-laterale[data-replie="true"] .nouveau-barre .menu { top: 0; left: calc(100% + 10px); }
+.barre-laterale[data-replie="true"] .navigation-barre { scrollbar-width: none; }
+.barre-laterale[data-replie="true"] .navigation-barre__titre { height: 1px; padding: 0; margin: 0 8px 10px; font-size: 0; background: var(--sb-line); }
+.barre-laterale[data-replie="true"] .element-nav { justify-content: center; padding: 0; height: 38px; --sb-item-h: 38px; }
+.barre-laterale[data-replie="true"] .element-nav[aria-current="page"]::before,
+.barre-laterale[data-replie="true"] .element-nav[aria-current="page"]::after { width: 20px; }
+.barre-laterale[data-replie="true"] .element-nav__compteur { position: absolute; top: 7px; right: 9px; width: 6px; height: 6px; margin: 0; border-radius: 50%; background: var(--sb-muted); font-size: 0; }
+.barre-laterale[data-replie="true"] .element-nav__compteur--alerte { background: var(--sb-alert); }
+.barre-laterale[data-replie="true"] .utilisateur-barre { justify-content: center; padding-inline: 0; }
+.barre-laterale[data-replie="true"] .pied-barre .menu { left: 0; }
+.barre-laterale[data-replie="true"] .coin-barre { width: 43px; height: 30px; }
+
+/* ───── Mobile : tiroir hors champ ───── */
+.barre-voile { display: none; }
+@media (max-width: 760px) {
+  .barre-laterale {
+    position: fixed; inset: 0 auto 0 0;
+    padding-top: env(safe-area-inset-top, 0px);
+    transform: translateX(-100%); transition: transform .22s ease;
+  }
+  .barre-laterale[data-mobile-ouvert="true"] { transform: none; box-shadow: var(--shadow-tiroir); }
+  .entete-barre__replier { display: none; }
+  .barre-voile { display: block; position: fixed; inset: 0; background: var(--overlay); z-index: 39; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  .barre-voile[data-ouvert="true"] { opacity: 1; pointer-events: auto; }
+}

@@ -1,0 +1,1 @@
+.case-cocher { display: inline-flex; align-items: center; gap: 10px; min-height: 32px; font-size: var(--fs-base); color: var(--text); cursor: pointer; }

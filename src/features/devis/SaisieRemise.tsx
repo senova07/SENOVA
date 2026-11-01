@@ -1,5 +1,7 @@
-import { arrondir, type Remise } from './donnees'
+import { ControleSegmente } from '@/ui/ControleSegmente'
+import { arrondir } from './calculs'
 import { ChampNombre } from './ChampNombre'
+import type { Remise } from './types'
 
 interface SaisieRemiseProps {
   remise: Remise
@@ -22,25 +24,18 @@ export function SaisieRemise({ remise, totalHtBrut, remiseMontant, onChange }: S
   }
 
   return (
-    <div className="espace-remise">
-      <div className="espace-bascule" role="group" aria-label="Type de remise">
-        <button
-          type="button"
-          aria-pressed={remise.mode === 'pourcent'}
-          onClick={() => basculer('pourcent')}
-        >
-          %
-        </button>
-        <button
-          type="button"
-          aria-pressed={remise.mode === 'montant'}
-          onClick={() => basculer('montant')}
-        >
-          €
-        </button>
-      </div>
+    <div className="devis-remise">
+      <ControleSegmente
+        libelle="Type de remise"
+        valeur={remise.mode}
+        onChoisir={basculer}
+        options={[
+          { id: 'pourcent', libelle: '%' },
+          { id: 'montant', libelle: '€' },
+        ]}
+      />
       <ChampNombre
-        className="espace-remise__valeur"
+        className="input"
         aria-label={
           remise.mode === 'pourcent' ? 'Remise globale en pourcentage' : 'Remise globale en euros'
         }

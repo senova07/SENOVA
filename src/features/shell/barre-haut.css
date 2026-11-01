@@ -1,0 +1,49 @@
+/* Barre du haut, reprise de la maquette (layout.css). */
+.barre-haut {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 16px;
+  height: var(--topbar-h); flex: none;
+  padding-left: max(38px, env(safe-area-inset-left, 0px));
+  padding-right: max(30px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.barre-haut__icone.barre-haut__menu { display: none; margin-left: -6px; color: var(--text-2); }
+
+.barre-haut__icone {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--r-sm);
+  color: var(--navy);
+  transition: background-color .15s ease, color .15s ease;
+}
+.barre-haut__icone:hover, .barre-haut__icone[aria-expanded="true"] { background: var(--bg-hover); }
+
+.recherche-globale {
+  display: flex; align-items: center; gap: 12px;
+  width: min(580px, 100%); height: 40px; padding: 0 8px 0 14px;
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--bg); color: var(--text-3); font-size: var(--fs-base);
+  transition: border-color .15s ease;
+}
+.recherche-globale svg { color: var(--navy); flex: none; }
+.recherche-globale:hover { border-color: var(--border-strong); }
+.recherche-globale__libelle { flex: 1; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.barre-haut__actions { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+
+.compte-haut { display: flex; align-items: center; gap: 8px; margin-left: 8px; padding: 3px 6px 3px 3px; border-radius: 999px; color: var(--text-2); transition: background-color .15s ease; }
+.compte-haut:hover { background: var(--bg-hover); }
+.compte-haut__avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--avatar-bg);
+  color: var(--navy); font-size: 12px; font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  :root { --topbar-h: 60px; }
+  .barre-haut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); gap: 8px; }
+  .barre-haut__icone.barre-haut__menu { display: inline-flex; }
+  .recherche-globale { width: 40px; padding: 0; justify-content: center; border-color: transparent; }
+  .recherche-globale__libelle, .compte-haut { display: none; }
+}

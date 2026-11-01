@@ -17,11 +17,11 @@ export const apiClients = {
       page: f.page,
       parPage: f.parPage,
     }),
-  lire: (id: string) => api.lire<Client>(`/clients/${id}`),
+  lire: (id: string) => api.lire<Client>(`/clients/${encodeURIComponent(id)}`),
   creer: (saisie: ClientSaisie) => api.creer<Client>('/clients', saisie),
-  modifier: (id: string, saisie: ClientSaisie) => api.remplacer<Client>(`/clients/${id}`, saisie),
+  modifier: (id: string, saisie: ClientSaisie) => api.remplacer<Client>(`/clients/${encodeURIComponent(id)}`, saisie),
   archiver: (id: string, motif: string | null) =>
-    api.creer<Client>(`/clients/${id}/archiver`, { motif }),
-  restaurer: (id: string) => api.creer<Client>(`/clients/${id}/restaurer`),
-  supprimer: (id: string) => api.supprimer(`/clients/${id}`),
+    api.creer<Client>(`/clients/${encodeURIComponent(id)}/archiver`, { motif }),
+  restaurer: (id: string) => api.creer<Client>(`/clients/${encodeURIComponent(id)}/restaurer`),
+  supprimer: (id: string) => api.supprimer(`/clients/${encodeURIComponent(id)}`),
 }

@@ -1,0 +1,29 @@
+.panneau-racine { position: fixed; inset: 0; z-index: 80; }
+.panneau-voile { position: absolute; inset: 0; background: var(--overlay); animation: panneau-fondu .22s ease-out; }
+.panneau {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(420px, 100vw);
+  display: flex; flex-direction: column;
+  background: var(--bg); border-left: 1px solid var(--border); box-shadow: var(--shadow-drawer);
+  animation: panneau-entree .24s var(--ease);
+}
+.panneau:focus { outline: none; }
+.panneau__entete {
+  position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding: 24px 22px 26px 28px; background: var(--bg-subtle); overflow: hidden;
+}
+.panneau__titre { font-size: 25px; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+.panneau__soustitre { margin-top: 6px; font-size: var(--fs-base); color: var(--text-2); }
+.panneau__entete .icon-btn { position: relative; z-index: 1; color: var(--navy); }
+/* Petite combinaison turquoise + marine dans le coin de l'en-tête */
+.panneau__facette {
+  position: absolute; right: 0; bottom: 0; width: 76px; height: 64px; pointer-events: none;
+  background: linear-gradient(315deg, var(--navy) 0 22px, var(--teal) 22px 30px, transparent 30px);
+}
+.panneau__corps { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding: 24px 28px; }
+.panneau__pied { display: flex; align-items: center; gap: 12px; margin: 0 28px; padding: 18px 0 22px; border-top: 1px solid var(--border); }
+@keyframes panneau-entree { from { transform: translateX(40px); opacity: 0; } }
+@keyframes panneau-fondu { from { opacity: 0; } }
+@media (max-width: 560px) {
+  .panneau__entete, .panneau__corps { padding-left: 18px; padding-right: 18px; }
+  .panneau__pied { margin: 0 18px; }
+}

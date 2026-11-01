@@ -1,0 +1,13 @@
+/* Pas de pilule : boutons à angle droit. */
+.pagination { display: flex; align-items: center; gap: 6px; }
+.pagination__btn {
+  min-width: 34px; height: 34px; padding: 0 8px; display: grid; place-items: center;
+  background: var(--bg); border: 1px solid transparent; border-radius: var(--r-sm);
+  color: var(--text); font-size: var(--fs-base); font-variant-numeric: tabular-nums;
+  transition: border-color .14s, background-color .14s;
+}
+.pagination__btn:first-child, .pagination__btn:last-child { border-color: var(--border); }
+.pagination__btn:hover:not(:disabled) { background: var(--bg-subtle); }
+.pagination__btn[aria-current='page'] { border-color: var(--teal); color: var(--navy); font-weight: 700; }
+.pagination__btn:disabled { opacity: .45; cursor: default; }
+.pagination__ellipse { padding: 0 4px; }

@@ -1,10 +1,25 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { PageArticles } from '@/features/articles/PageArticles'
+import { apiArticles, apiCategories } from '@/services/articlesApi'
 import { SessionContext, type SessionContextValue } from '@/store/sessionContext'
 import { ToastProvider } from '@/store/ToastProvider'
 import type { Article } from '@shared/articles'
+
+vi.mock('@/services/articlesApi', () => ({
+  apiArticles: {
+    lister: vi.fn(),
+    unites: vi.fn(),
+    creer: vi.fn(),
+    modifier: vi.fn(),
+    supprimer: vi.fn(),
+    favori: vi.fn(),
+    dupliquer: vi.fn(),
+    ordonner: vi.fn(),
+  },
+  apiCategories: { lister: vi.fn(), creer: vi.fn(), renommer: vi.fn(), supprimer: vi.fn() },
+}))
 
 const article = (o: Partial<Article>): Article => ({
   id: '1',
@@ -24,34 +39,13 @@ const article = (o: Partial<Article>): Article => ({
 })
 
 const CATALOGUE = [
-  article({ id: '1', nom: 'Pose de carrelage', prixUnitaireHt: 45, prixAchatHt: 30 }),
+  article({ id: '1', nom: 'Pose de carrelage' }),
   article({ id: '2', nom: 'Peinture murale', type: 'produit', unite: 'u', ordre: 2 }),
+  article({ id: '3', nom: 'Ancien tarif', actif: false, ordre: 3 }),
 ]
 
-let appels: { methode: string; url: string; corps?: unknown }[]
-
-function mockApi(articles: Article[] = CATALOGUE) {
-  appels = []
-  vi.stubGlobal(
-    'fetch',
-    vi.fn(async (url: string, init?: RequestInit) => {
-      const methode = init?.method ?? 'GET'
-      appels.push({ methode, url, corps: init?.body ? JSON.parse(String(init.body)) : undefined })
-      const json = (donnees: unknown, status = 200) =>
-        new Response(JSON.stringify(donnees), {
-          status,
-          headers: { 'content-type': 'application/json' },
-        })
-      if (methode === 'GET' && url.startsWith('/api/articles/unites')) return json(['u', 'm²'])
-      if (methode === 'GET' && url.startsWith('/api/articles')) return json(articles)
-      if (url.startsWith('/api/categories-articles')) return json([])
-      return json(article({ id: '9' }), 201)
-    }),
-  )
-}
-
-function monter(url = '/articles') {
-  const session = { peut: () => true } as unknown as SessionContextValue
+function monter(url = '/articles', peut = true) {
+  const session = { peut: () => peut } as unknown as SessionContextValue
   return render(
     <ToastProvider>
       <SessionContext.Provider value={session}>
@@ -63,89 +57,149 @@ function monter(url = '/articles') {
   )
 }
 
-describe('PageArticles', () => {
-  beforeEach(() => mockApi())
-  afterEach(() => vi.unstubAllGlobals())
+beforeEach(() => {
+  vi.clearAllMocks()
+  vi.mocked(apiArticles.lister).mockResolvedValue(CATALOGUE)
+  vi.mocked(apiArticles.unites).mockResolvedValue(['u', 'm²'])
+  vi.mocked(apiArticles.creer).mockResolvedValue(article({ id: '9' }))
+  vi.mocked(apiArticles.favori).mockResolvedValue(article({ favori: true }))
+  vi.mocked(apiCategories.lister).mockResolvedValue([])
+})
 
-  it('affiche la liste avec prix, TVA et, sur demande, la marge', async () => {
+describe('PageArticles', () => {
+  it('affiche la liste active, les compteurs et cache les archivés', async () => {
     monter()
-    await screen.findByText('Pose de carrelage')
-    fireEvent.click(screen.getByRole('button', { name: 'Colonnes' }))
-    fireEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Marge' }))
-    const ligne = screen.getByText('Pose de carrelage').closest('tr') as HTMLElement
+    const ligne = (await screen.findByText('Pose de carrelage')).closest('tr') as HTMLElement
     expect(within(ligne).getByText(/45,00/)).toBeInTheDocument()
     expect(within(ligne).getByText(/10 %/)).toBeInTheDocument()
-    expect(within(ligne).getByText(/15,00.*50 %/)).toBeInTheDocument()
     expect(screen.getByText('Peinture murale')).toBeInTheDocument()
+    expect(screen.queryByText('Ancien tarif')).not.toBeInTheDocument()
+    expect(screen.getByText('articles').closest('li')).toHaveTextContent('2 articles')
+    expect(screen.queryByText(/utilisés ce mois/)).not.toBeInTheDocument()
   })
 
-  it('filtre par recherche et par onglet', async () => {
+  it('montre les archivés via le filtre de statut', async () => {
+    monter()
+    await screen.findByText('Pose de carrelage')
+    fireEvent.click(screen.getByRole('button', { name: /Filtres/ }))
+    fireEvent.click(screen.getByLabelText('Archivés'))
+    expect(screen.getByText('Ancien tarif')).toBeInTheDocument()
+    expect(screen.queryByText('Pose de carrelage')).not.toBeInTheDocument()
+  })
+
+  it('filtre par onglet et par recherche', async () => {
     monter()
     await screen.findByText('Peinture murale')
-    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'carre' } })
-    expect(screen.queryByText('Peinture murale')).not.toBeInTheDocument()
-    expect(screen.getByText('Pose de carrelage')).toBeInTheDocument()
-
-    fireEvent.change(screen.getByRole('searchbox'), { target: { value: '' } })
     fireEvent.click(screen.getByRole('tab', { name: 'Produits' }))
     expect(screen.queryByText('Pose de carrelage')).not.toBeInTheDocument()
     expect(screen.getByText('Peinture murale')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Tous' }))
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'CARRE' } })
+    expect(screen.queryByText('Peinture murale')).not.toBeInTheDocument()
+    expect(screen.getByText('Pose de carrelage')).toBeInTheDocument()
   })
 
-  it('crée un article via la modale ouverte par ?nouveau=1', async () => {
-    monter('/articles?nouveau=1')
-    const modale = await screen.findByRole('dialog')
-
-    fireEvent.click(within(modale).getByRole('button', { name: 'Créer l’article' }))
-    expect(within(modale).getByText('Donnez un nom à l’article.')).toBeInTheDocument()
-
-    fireEvent.change(within(modale).getByLabelText('Nom'), { target: { value: 'Dépose' } })
-    fireEvent.change(within(modale).getByLabelText('Prix HT (€)'), { target: { value: '12,5' } })
-    fireEvent.click(within(modale).getByRole('button', { name: 'Créer l’article' }))
-
-    await waitFor(() => expect(appels.some((a) => a.methode === 'POST')).toBe(true))
-    const envoi = appels.find((a) => a.methode === 'POST')
-    expect(envoi?.url).toBe('/api/articles')
-    expect(envoi?.corps).toMatchObject({
-      nom: 'Dépose',
-      prixUnitaireHt: 12.5,
-      tauxTva: 20,
-      type: 'service',
-      unite: 'u',
-      prixAchatHt: null,
-    })
-  })
-
-  it('calcule la marge en direct', async () => {
-    monter('/articles?nouveau=1')
-    const modale = await screen.findByRole('dialog')
-    fireEvent.change(within(modale).getByLabelText('Prix HT (€)'), { target: { value: '100' } })
-    fireEvent.change(within(modale).getByLabelText(/Prix d’achat/), { target: { value: '60' } })
-    expect(within(modale).getByText(/Marge/)).toHaveTextContent(/40,00.*66,67 %/)
-  })
-
-  it('trie, sélectionne et pagine', async () => {
-    mockApi(Array.from({ length: 14 }, (_, i) => article({ id: String(i + 1), nom: `Article ${i + 1}`, prixUnitaireHt: i + 1, ordre: i })))
+  it('ouvre le panneau et crée un article via l’API', async () => {
     monter()
-    await screen.findByText('Article 1')
-    expect(screen.getByText('Affichage 1 – 12 sur 14')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Page suivante' }))
-    expect(screen.getByText('Article 14')).toBeInTheDocument()
-    expect(screen.queryByText('Article 1')).not.toBeInTheDocument()
+    await screen.findByText('Pose de carrelage')
+    fireEvent.click(screen.getByRole('button', { name: 'Nouvel article' }))
+    const panneau = await screen.findByRole('dialog')
 
-    fireEvent.click(screen.getByRole('button', { name: /Prix HT/ }))
-    fireEvent.click(screen.getByRole('button', { name: /Prix HT/ }))
-    expect(screen.getByRole('button', { name: '1' })).toHaveAttribute('aria-current', 'page')
-    expect(screen.getAllByRole('row')[1]).toHaveTextContent('Article 14')
+    fireEvent.click(within(panneau).getByRole('button', { name: 'Enregistrer l’article' }))
+    expect(within(panneau).getByText('Donnez un nom à l’article.')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByLabelText('Tout sélectionner sur la page'))
-    expect(screen.getByText('12 articles sélectionnés')).toBeInTheDocument()
+    fireEvent.change(within(panneau).getByLabelText('Nom de l’article'), { target: { value: 'Dépose' } })
+    fireEvent.change(within(panneau).getByLabelText('Prix de vente HT'), { target: { value: '12,5' } })
+    fireEvent.click(within(panneau).getByRole('button', { name: 'Enregistrer l’article' }))
+
+    await waitFor(() => expect(apiArticles.creer).toHaveBeenCalledTimes(1))
+    expect(apiArticles.creer).toHaveBeenCalledWith(
+      expect.objectContaining({ nom: 'Dépose', prixUnitaireHt: 12.5, tauxTva: 20, type: 'service', unite: 'u', prixAchatHt: null }),
+    )
+  })
+
+  it('ouvre le panneau de création avec ?nouveau=1 et calcule la marge', async () => {
+    monter('/articles?nouveau=1')
+    const panneau = await screen.findByRole('dialog')
+    expect(within(panneau).getByText('Nouvel article')).toBeInTheDocument()
+    fireEvent.change(within(panneau).getByLabelText('Prix de vente HT'), { target: { value: '100' } })
+    fireEvent.change(within(panneau).getByLabelText(/Prix d’achat/), { target: { value: '60' } })
+    expect(within(panneau).getByText(/Marge/)).toHaveTextContent(/40,00.*66,67 %/)
+  })
+
+  it('bascule le favori par l’API', async () => {
+    monter()
+    await screen.findByText('Pose de carrelage')
+    fireEvent.click(screen.getByRole('button', { name: 'Favori : Pose de carrelage' }))
+    await waitFor(() => expect(apiArticles.favori).toHaveBeenCalledWith('1', true))
+  })
+
+  it('archive depuis le menu de ligne', async () => {
+    vi.mocked(apiArticles.modifier).mockResolvedValue(article({ actif: false }))
+    monter()
+    await screen.findByText('Pose de carrelage')
+    fireEvent.click(screen.getByRole('button', { name: 'Actions pour Pose de carrelage' }))
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Archiver' }))
+    await waitFor(() =>
+      expect(apiArticles.modifier).toHaveBeenCalledWith('1', expect.objectContaining({ actif: false, nom: 'Pose de carrelage' })),
+    )
+  })
+
+  it('duplique un article puis ouvre la copie', async () => {
+    vi.mocked(apiArticles.dupliquer).mockResolvedValue(article({ id: '10', nom: 'Pose de carrelage (copie)' }))
+    monter()
+    await screen.findByText('Pose de carrelage')
+    fireEvent.click(screen.getByRole('button', { name: 'Actions pour Pose de carrelage' }))
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Dupliquer' }))
+    await waitFor(() => expect(apiArticles.dupliquer).toHaveBeenCalledWith('1'))
+    const panneau = await screen.findByRole('dialog')
+    expect(within(panneau).getByDisplayValue('Pose de carrelage (copie)')).toBeInTheDocument()
+  })
+
+  it('supprime après confirmation', async () => {
+    vi.mocked(apiArticles.supprimer).mockResolvedValue(undefined)
+    monter()
+    await screen.findByText('Pose de carrelage')
+    fireEvent.click(screen.getByRole('button', { name: 'Actions pour Pose de carrelage' }))
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Supprimer' }))
+    expect(apiArticles.supprimer).not.toHaveBeenCalled()
+    const dialogue = await screen.findByRole('dialog')
+    fireEvent.click(within(dialogue).getByRole('button', { name: 'Supprimer' }))
+    await waitFor(() => expect(apiArticles.supprimer).toHaveBeenCalledWith('1'))
+    expect(apiArticles.supprimer).toHaveBeenCalledTimes(1)
+  })
+
+  it('est en lecture seule sans la permission de gérer', async () => {
+    monter('/articles?nouveau=1', false)
+    await screen.findByText('Pose de carrelage')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Nouvel article' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Importer' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /Actions pour/ })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Favori : Pose de carrelage' })).toBeDisabled()
+  })
+
+  it('signale un rejet de l’API par un toast', async () => {
+    vi.mocked(apiArticles.favori).mockRejectedValue(new Error('Serveur indisponible'))
+    monter()
+    await screen.findByText('Pose de carrelage')
+    fireEvent.click(screen.getByRole('button', { name: 'Favori : Pose de carrelage' }))
+    expect(await screen.findByText('Action impossible')).toBeInTheDocument()
+    expect(screen.getByText('Serveur indisponible')).toBeInTheDocument()
   })
 
   it('affiche un état vide avec action de création', async () => {
-    mockApi([])
+    vi.mocked(apiArticles.lister).mockResolvedValue([])
     monter()
     expect(await screen.findByText('Votre catalogue est vide')).toBeInTheDocument()
-    expect(screen.getAllByRole('button', { name: 'Créer un article' }).length).toBeGreaterThan(0)
+    expect(screen.getByRole('button', { name: 'Créer un article' })).toBeInTheDocument()
+  })
+
+  it('affiche une erreur de chargement avec réessai', async () => {
+    vi.mocked(apiArticles.lister).mockRejectedValue(new Error('Hors ligne'))
+    monter()
+    expect(await screen.findByText('Hors ligne')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Réessayer' })).toBeInTheDocument()
   })
 })

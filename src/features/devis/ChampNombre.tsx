@@ -40,7 +40,7 @@ export function ChampNombre({
       type="text"
       inputMode="decimal"
       autoComplete="off"
-      className={['espace-nombre', className ?? ''].filter(Boolean).join(' ')}
+      className={['devis-nombre', className ?? ''].filter(Boolean).join(' ')}
       value={affiche}
       aria-invalid={lu === null || lu < min || lu > max ? true : undefined}
       onFocus={(ev) => {

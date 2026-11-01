@@ -1,0 +1,10 @@
+/* Pas de pilule : angle droit. Le sens passe par le texte, la couleur n'est qu'un renfort. */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px;
+  border-radius: var(--r-sm); font-size: var(--fs-sm); font-weight: 600;
+  background: var(--bg-tertiary); color: var(--text);
+}
+.badge--succes { background: var(--success-bg); color: var(--success); }
+.badge--alerte { background: var(--warning-bg); color: var(--warning); }
+.badge--danger { background: var(--danger-bg); color: var(--danger); }
+.badge--info { background: var(--teal-soft); color: var(--teal-ink); }
